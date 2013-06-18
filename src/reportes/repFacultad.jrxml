@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repFacultad" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a65240cb-423a-4ca6-a80c-c1b1dfc46e00">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="13"/>
+	<queryString language="SQL">
+		<![CDATA[select * from facultad_view]]>
+	</queryString>
+	<field name="idfacultad" class="java.lang.Object"/>
+	<field name="nombreF" class="java.lang.Object"/>
+	<field name="nombreU" class="java.lang.Object"/>
+	<group name="nombreU">
+		<groupExpression><![CDATA[$F{nombreU}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement uuid="29bafb80-f523-4da0-88ba-8b4f20b689b4" x="0" y="7" width="304" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{nombreU}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0b0466d3-a3b3-4f7f-9ac8-33b23efac670" x="183" y="36" width="210" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Catálogo de Facultades]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="50b0513d-863d-4cb4-86bf-40dcfac93821" x="3" y="0" width="65" height="35"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Emisión]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="0e9b217f-7ea8-4fdd-8704-e5bee56611ae" x="70" y="9" width="113" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c350db0d-9dad-4f1f-9579-1de0363c3f5b" x="13" y="2" width="76" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Facultad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1765330a-454c-4fad-84a7-af438a45e8c1" x="115" y="2" width="446" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Facultad]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="541d531d-6539-444a-90dc-aae3da6a4665" x="3" y="22" width="569" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="d1a0f3dc-188b-4c99-8a04-c3659d40e480" x="3" y="2" width="569" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c1598a6b-ea6c-4be3-b79d-ea1c0ac3b17a" x="13" y="6" width="76" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""+$F{idfacultad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e3536387-145a-4779-ad04-475af8f15193" x="115" y="6" width="446" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""+$F{nombreF}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2bc9fa83-e59f-4e9c-b4b9-d2ef8fb12635" x="436" y="3" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="28774dfc-faa8-4c6c-888b-836b5cd8304c" x="516" y="3" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="885baaa7-7f8e-4227-9a9c-f7484b5ed8b5" x="3" y="2" width="569" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
