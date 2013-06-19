@@ -54,7 +54,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     
     public void Habilitar(){
         txtUniversidad.setEnabled(true);
-        va.LetrasEspacios(txtUniversidad);
+        va.SoloLetras(txtUniversidad);
         txtUniversidad.requestFocus();
         txtSiglas.setEnabled(true);
         va.SoloLetras(txtSiglas);

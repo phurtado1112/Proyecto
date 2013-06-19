@@ -61,7 +61,7 @@ public class CarreraIF extends javax.swing.JInternalFrame {
     
     public void Habilitar(){
         txtCarrera.setEnabled(true);
-        va.LetrasEspacios(txtCarrera);
+        va.SoloLetras(txtCarrera);
         txtCarrera.requestFocus();
         cbxUniversidad.setEnabled(true);
         cbxFacultad.setEnabled(true);

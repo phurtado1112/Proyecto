@@ -18,9 +18,12 @@ public class Valida {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if(((int)c>=00 && (int)c<=64) ||                         
+                if(((c=='¡') ||
+                        (int)c>=00 && (int)c<=31) ||
+                        ((int)c>=33 && (int)c<=64) ||
                         ((int)c>=91 && (int)c<=96) || 
-                        ((int)c>=123 && (int)c<=128) || 
+                        ((int)c>=123 && (int)c<=128) ||
+                        
                         ((int)c>=131 && (int)c<=143) || 
                         ((int)c>=145 && (int)c<=159) || 
                         ((int)c>=166 && (int)c<=180) || 
@@ -54,31 +57,31 @@ public class Valida {
         }
     }
     
-    public void LetrasEspacios(JTextField jt){
-        try{
-            jt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e){
-                char c = e.getKeyChar();
-                if(((int)c>=00 && (int)c<=31) || 
-                        ((int)c>=33 && (int)c<=64) ||
-                        ((int)c>=91 && (int)c<=96) || 
-                        ((int)c>=123 && (int)c<=128) || 
-                        ((int)c>=131 && (int)c<=143) || 
-                        ((int)c>=145 && (int)c<=159) || 
-                        ((int)c>=166 && (int)c<=180) || 
-                        ((int)c>=182 && (int)c<=213) || 
-                        ((int)c>=215 && (int)c<=223) || 
-                        ((int)c>=225 && (int)c<=232) || 
-                        ((int)c>=234 && (int)c<=255)){                    
-                    e.consume();
-                }
-            }
-        });
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
-        }               
-    }
+//    public void LetrasEspacios(JTextField jt){
+//        try{
+//            jt.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyTyped(KeyEvent e){
+//                char c = e.getKeyChar();
+//                if(((int)c>=00 && (int)c<=31) || 
+//                        ((int)c>=33 && (int)c<=64) ||
+//                        ((int)c>=91 && (int)c<=96) || 
+//                        ((int)c>=123 && (int)c<=128) || 
+//                        ((int)c>=131 && (int)c<=143) || 
+//                        ((int)c>=145 && (int)c<=159) || 
+//                        ((int)c>=166 && (int)c<=180) || 
+//                        ((int)c>=182 && (int)c<=213) || 
+//                        ((int)c>=215 && (int)c<=223) || 
+//                        ((int)c>=225 && (int)c<=232) || 
+//                        ((int)c>=234 && (int)c<=255)){                    
+//                    e.consume();
+//                }
+//            }
+//        });
+//        } catch (Exception e){
+//            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+//        }               
+//    }
     
     public void LetrasNumeros(JTextField jt){
         try{
@@ -99,6 +102,30 @@ public class Valida {
                         ((int)c>=234 && (int)c<=255)){                    
                     e.consume();
                 }
+            }
+        });
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+        }               
+    }
+    
+    public void LetrasSinEspacios(JTextField jt){ //Para las siglas que no permiten espacios
+        try{
+            jt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(
+                   ((int)c==45)||                       //Para permitir el "-"
+                   ((int)c>=65 && (int)c<=90) ||        //Mayusculas de A-Z
+                   ((int)c>=97 && (int)c<=122) ||       //Minusculas de a-z
+                   ((int)c==209) ||                     //Para permitir ñ
+                   ((int)c==241)                        //Para permitir Ñ                               
+                   ){
+                    //Saber como se hace para  que se haga mayuscula
+                } else { //Si no esta dentro del rango de caracteres especificados en el if superior, no se ingresa.
+                    e.consume();
+                }                
             }
         });
         } catch (Exception e){

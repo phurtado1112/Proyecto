@@ -50,9 +50,9 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     
     public void Habilitar(){
         txtNombres.setEnabled(true);
-        va.LetrasEspacios(txtNombres);
+        va.SoloLetras(txtNombres);
         txtApellidos.setEnabled(true);
-        va.LetrasEspacios(txtApellidos);
+        va.SoloLetras(txtApellidos);
         txtCarnet.setEnabled(true);
         va.LetrasNumeros(txtCarnet);
         cbxAsignatura.setEnabled(true);

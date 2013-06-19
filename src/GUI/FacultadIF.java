@@ -55,7 +55,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
     
     public void Habilitar(){
         txtFacultad.setEnabled(true);
-        va.LetrasEspacios(txtFacultad);
+        va.SoloLetras(txtFacultad);
         txtFacultad.requestFocus();
         cbxUniversidad.setEnabled(true);
     }

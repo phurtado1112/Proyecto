@@ -90,7 +90,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         cnx.Conecta();
         try{
             String [] titulos ={"ID","Fecha","Actividad","Asignatura"};
-            String SQL = "Select * from calendario_view";
+            String SQL = "Select * from calendario_view where idasignatura = " + id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);

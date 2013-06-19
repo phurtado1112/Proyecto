@@ -43,7 +43,7 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
     
     private void Habilitar(){
         txtTipoEvaluacion.setEnabled(true);
-        va.LetrasEspacios(txtTipoEvaluacion);
+        va.SoloLetras(txtTipoEvaluacion);
         txtTipoEvaluacion.requestFocus();
     }
     

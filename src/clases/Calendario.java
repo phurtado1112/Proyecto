@@ -56,4 +56,15 @@ public class Calendario {
         this.idasignatura = idasignatura;
     }
 
+    public void ActualizaCalendario(){
+        
+    }
+    
+    public void EliminaCalendario(){
+        
+    }
+    
+    public void GuardaCalendario(){
+        
+    }
 }

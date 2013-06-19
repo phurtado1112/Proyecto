@@ -63,7 +63,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     
     private void Habilitar(){
         txtNobreEvaluacion.setEnabled(true);
-        va.LetrasEspacios(txtNobreEvaluacion);
+        va.SoloLetras(txtNobreEvaluacion);
         txtValor.setEnabled(true);
         va.SoloNumeros(txtValor);
         cbxAsignatura.setEnabled(true);
