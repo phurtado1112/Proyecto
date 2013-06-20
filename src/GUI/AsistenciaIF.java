@@ -330,9 +330,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             int fila = tblAsistencia.getSelectedRow();
             String dato = (String)tblAsistencia.getValueAt(fila, 0);
             PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-            //ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText());
             ps.setInt(1, a.consultaIdA(cbxFecha.getSelectedItem().toString()));
-            //ps.setInt(3, a.consultaIdTA(txtAsignatura.getText().toString()));
             ps.setString(4, dato);
 
             int n = ps.executeUpdate();

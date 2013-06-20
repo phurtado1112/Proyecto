@@ -1,5 +1,11 @@
 package clases;
+import java.awt.HeadlessException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import util.Conecta;
 
 /**
  * @author Pablo Hurtado
@@ -12,6 +18,10 @@ public class Calendario {
     private int idcalendario;
     private int idtipoactividad;
     private int idasignatura;
+    Conecta cnx = new Conecta();
+    Statement stm;
+    ResultSet rs;
+    
 
     public Calendario(){
 
@@ -56,15 +66,35 @@ public class Calendario {
         this.idasignatura = idasignatura;
     }
 
-    public void ActualizaCalendario(){
+    public void ActualizarCalendario(){
+        cnx.Conecta();
+            try{
+                String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
+                + "where idcalendario=?";
+                //int fila = tblCalendario.getSelectedRow();
+//                String dato = (String)tblCalendario.getValueAt(fila, 0);
+//                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
+//                ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText().trim());
+//                ps.setInt(2, ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString()));
+//                ps.setInt(3, a.consultaIdA(txtAsignatura.getText().toString()));
+//                ps.setString(4, dato);
+                stm = cnx.conn.createStatement();
+                int n = stm.executeUpdate(SQL);
+                if(n>0){
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
+                }
+            }catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
+            } finally {
+                cnx.Desconecta();
+            }
+    }
+    
+    public void EliminarCalendario(){
         
     }
     
-    public void EliminaCalendario(){
-        
-    }
-    
-    public void GuardaCalendario(){
+    public void GuardarCalendario(){
         
     }
 }

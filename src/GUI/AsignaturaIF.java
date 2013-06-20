@@ -8,8 +8,6 @@ import clases.Asignatura;
 import clases.Carrera;
 import clases.Facultad;
 import clases.Universidad;
-import java.awt.HeadlessException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

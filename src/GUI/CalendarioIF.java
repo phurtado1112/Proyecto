@@ -24,7 +24,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
     TipoActividad ta = new TipoActividad();
-    Asignatura a = new Asignatura();
+    Asignatura a = new Asignatura();    
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
@@ -365,32 +365,38 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try{
-                String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
-                + "where idcalendario=?";
-                int fila = tblCalendario.getSelectedRow();
-                String dato = (String)tblCalendario.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText().trim());
-                ps.setInt(2, ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString()));
-                ps.setInt(3, a.consultaIdA(txtAsignatura.getText().toString()));
-                ps.setString(4, dato);
-
-                int n = ps.executeUpdate();
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            int fila = tblCalendario.getSelectedRow();
+            
+//            cnx.Conecta();
+//            try{
+//                String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
+//                + "where idcalendario=?";
+//                int fila = tblCalendario.getSelectedRow();
+//                String dato = (String)tblCalendario.getValueAt(fila, 0);
+//                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
+//                ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText().trim());
+//                ps.setInt(2, ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString()));
+//                ps.setInt(3, a.consultaIdA(txtAsignatura.getText().toString()));
+//                ps.setString(4, dato);
+//
+//                int n = ps.executeUpdate();
+//                if(n>0){
+//                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
+//                }
+//            }catch(SQLException | HeadlessException e){
+//                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
+//            } finally {
+//                LlenarTabla();
+//                limpiar();
+//                Deshabilitar();
+//                BotonesInicio();
+//                cnx.Desconecta();
+//            }
         }
+        LlenarTabla();
+        limpiar();
+        Deshabilitar();
+        BotonesInicio();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
