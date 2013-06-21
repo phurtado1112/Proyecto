@@ -1,9 +1,8 @@
 package GUI;
 
 import clases.Asignatura;
+import clases.Calendario;
 import clases.TipoActividad;
-import java.awt.HeadlessException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,7 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
@@ -24,7 +22,8 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
     TipoActividad ta = new TipoActividad();
-    Asignatura a = new Asignatura();    
+    Asignatura a = new Asignatura();
+    Calendario c = new Calendario();
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
@@ -366,32 +365,10 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
-            
-//            cnx.Conecta();
-//            try{
-//                String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
-//                + "where idcalendario=?";
-//                int fila = tblCalendario.getSelectedRow();
-//                String dato = (String)tblCalendario.getValueAt(fila, 0);
-//                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-//                ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText().trim());
-//                ps.setInt(2, ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString()));
-//                ps.setInt(3, a.consultaIdA(txtAsignatura.getText().toString()));
-//                ps.setString(4, dato);
-//
-//                int n = ps.executeUpdate();
-//                if(n>0){
-//                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-//                }
-//            }catch(SQLException | HeadlessException e){
-//                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
-//            } finally {
-//                LlenarTabla();
-//                limpiar();
-//                Deshabilitar();
-//                BotonesInicio();
-//                cnx.Desconecta();
-//            }
+            c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
+            c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
+            c.setIdasignatura(a.getIdasignatura());
+            c.setIdcalendario(Integer.parseInt(this.tblCalendario.getValueAt(fila, 0).toString()));
         }
         LlenarTabla();
         limpiar();
@@ -412,24 +389,12 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
-            cnx.Conecta();
-            try {
-                String SQL = "delete from calendario where idcalendario= " + tblCalendario.getValueAt(fila, 0);
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
-            } finally {
-                limpiar();
-                Deshabilitar();
-                LlenarTabla();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+//            
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -443,26 +408,14 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try {
-                String SQL = "insert into calendario(fecha,idtipoactividad,idasignatura)"
-                + "values(?,?,?)";
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText().trim());
-                ps.setInt(2, ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString()));
-                ps.setInt(3, a.consultaIdA(txtAsignatura.getText()));
-                int n = ps.executeUpdate();
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
-                    LlenarTabla();
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar: " + e.getMessage());
-            } finally {
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
+            c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
+            c.setIdasignatura(a.getIdasignatura());
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblCalendarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCalendarioMouseClicked

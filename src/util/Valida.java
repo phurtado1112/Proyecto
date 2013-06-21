@@ -18,8 +18,7 @@ public class Valida {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if(((c=='¡') ||
-                        (int)c>=00 && (int)c<=31) ||
+                if(((int)c>=00 && (int)c<=31) ||
                         ((int)c>=33 && (int)c<=64) ||
                         ((int)c>=91 && (int)c<=96) || 
                         ((int)c>=123 && (int)c<=128) ||

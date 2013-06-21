@@ -3,7 +3,6 @@ import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import util.Conecta;
 
@@ -14,7 +13,7 @@ import util.Conecta;
  */
 public class Calendario {
 
-    private Date fecha;
+    private String fecha;
     private int idcalendario;
     private int idtipoactividad;
     private int idasignatura;
@@ -27,19 +26,19 @@ public class Calendario {
 
     }
 
-    public Calendario(Date fecha, int idcalendario, int idtipoactividad, int idasignatura) {
+    public Calendario(String fecha, int idcalendario, int idtipoactividad, int idasignatura) {
         this.fecha = fecha;
         this.idcalendario = idcalendario;
         this.idtipoactividad = idtipoactividad;
         this.idasignatura = idasignatura;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public String getFecha() {
+            return fecha;
     }
-
-    public void setfecha(Date fecha){
-            this.fecha = fecha;
+    
+    public void setFecha(String fecha){
+        this.fecha = fecha;
     }
 
     public int getIdcalendario() {
@@ -71,13 +70,6 @@ public class Calendario {
             try{
                 String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
                 + "where idcalendario=?";
-                //int fila = tblCalendario.getSelectedRow();
-//                String dato = (String)tblCalendario.getValueAt(fila, 0);
-//                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-//                ps.setString(1, ((JTextField)jdcFecha.getDateEditor().getUiComponent()).getText().trim());
-//                ps.setInt(2, ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString()));
-//                ps.setInt(3, a.consultaIdA(txtAsignatura.getText().toString()));
-//                ps.setString(4, dato);
                 stm = cnx.conn.createStatement();
                 int n = stm.executeUpdate(SQL);
                 if(n>0){
@@ -91,10 +83,35 @@ public class Calendario {
     }
     
     public void EliminarCalendario(){
-        
+        cnx.Conecta();
+            try {
+                String SQL = "delete from calendario where idcalendario= " + getIdcalendario();
+                stm = cnx.conn.createStatement();            
+                int n = stm.executeUpdate(SQL);
+                if(n>0){
+                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
+                }
+            } catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
+            } finally {                
+                cnx.Desconecta();
+            }
     }
     
     public void GuardarCalendario(){
-        
+        cnx.Conecta();
+            try {
+                String SQL = "insert into calendario(fecha,idtipoactividad,idasignatura)"
+                + "values('"+getFecha()+"','"+getIdtipoactividad()+"','"+getIdasignatura()+"')";
+                stm = cnx.conn.createStatement();
+                int n = stm.executeUpdate(SQL);
+                if (n>0){
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                    
+                }
+            } catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Guardar: " + e.getMessage());
+            } finally {                
+                cnx.Desconecta();
+            }
     }
 }
