@@ -369,6 +369,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
             c.setIdasignatura(a.getIdasignatura());
             c.setIdcalendario(Integer.parseInt(this.tblCalendario.getValueAt(fila, 0).toString()));
+            c.ActualizarCalendario();
         }
         LlenarTabla();
         limpiar();
@@ -389,7 +390,8 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
-//            
+            c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString().trim()));
+            c.EliminarCalendario();
         }
         limpiar();
         Deshabilitar();
@@ -411,6 +413,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
             c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
             c.setIdasignatura(a.getIdasignatura());
+            c.GuardarCalendario();
         }
         limpiar();
         Deshabilitar();
