@@ -442,35 +442,12 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Actualizar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){        
-            cnx.Conecta();
-            try{
-                String SQL ="update estudiante set nombreE=?,apellidoE=?,carnet=?"
-                        + ",celular=?, email=? where idestudiante=?";
-                int fila = tblEstudiantes.getSelectedRow();
-                String dato = (String)tblEstudiantes.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtNombres.getText().trim());
-                ps.setString(2, txtApellidos.getText().trim());
-                ps.setString(3, txtCarnet.getText().trim());
-                ps.setString(4, txtCelular.getText().trim());
-                ps.setString(5, txtEmail.getText().trim());
-                ps.setInt(5, a.consultaIdA((String)cbxAsignatura.getSelectedItem()));
-                ps.setString(6, dato);
-
-                int n = ps.executeUpdate();
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                cnx.Desconecta();
+            int fila = tblEstudiantes.getSelectedRow();
             }
-            }
+        LlenarTabla();
+        limpiar();
+        Deshabilitar();
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 

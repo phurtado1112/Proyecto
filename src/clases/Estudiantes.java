@@ -15,78 +15,118 @@ import util.Conecta;
  */
 public class Estudiantes {
 
-	private String apellidos;
-	private int carne;
-	private int celular;
-	private String email;
-	private String nombre;
-	public Asistencia m_Asistencia;
-	public Notas m_Notas;
-	public Asignatura m_Asignatura;
-        Conecta cnx = new Conecta();
-        Statement stm;
+    private int idestudiante;
+    private String apellidos;
+    private int carne;
+    private int celular;
+    private String email;
+    private String nombre;
+    private int idasignatura;
+    Conecta cnx = new Conecta();
+    Statement stm;
 
 	public Estudiantes(){
 
 	}
 
-    public Estudiantes(String apellidos, int carne, int celular, String email, String nombre, Asistencia m_Asistencia, Notas m_Notas, Asignatura m_Asignatura) {
+    public Estudiantes(String apellidos, int carne, int celular, String email, String nombre, int idestudiante, int idasignatura) {
         this.apellidos = apellidos;
         this.carne = carne;
         this.celular = celular;
         this.email = email;
         this.nombre = nombre;
-        this.m_Asistencia = m_Asistencia;
-        this.m_Notas = m_Notas;
-        this.m_Asignatura = m_Asignatura;
+        this.idestudiante = idestudiante;
+        this.idasignatura = idasignatura;
+    }
+
+    public int getIdestudiante() {
+        return idestudiante;
+    }
+
+    public void setIdestudiante(int idestudiante) {
+        this.idestudiante = idestudiante;
     }
         
-	public String getapellidos(){
-		return apellidos;
-	}
+    public String getapellidos(){
+            return apellidos;
+    }
 
-	public int getcarne(){
-		return carne;
-	}
+    public int getcarne(){
+            return carne;
+    }
 
-	public int getcelular(){
-		return celular;
-	}
+    public int getcelular(){
+            return celular;
+    }
 
-	public String getemail(){
-		return email;
-	}
+    public String getemail(){
+            return email;
+    }
 
-	public String getnombre(){
-		return nombre;
-	}
+    public String getnombre(){
+            return nombre;
+    }
 
-	public void setapellidos(String apellid){
-		apellidos = apellid;
-	}
+    public void setapellidos(String apellid){
+            apellidos = apellid;
+    }
 
-	public void setcarne(int carn){
-		carne = carn;
-	}
+    public void setcarne(int carn){
+            carne = carn;
+    }
 
-	public void setcelular(int celula){
-		celular = celula;
-	}
+    public void setcelular(int celula){
+            celular = celula;
+    }
 
-	public void setemail(String correo){
-		email = correo;
-	}
+    public void setemail(String correo){
+            email = correo;
+    }
 
-	public void setnombre(String nombr){
-		nombre = nombr;
-	}
+    public void setnombre(String nombr){
+            nombre = nombr;
+    }
+
+    public int getIdasignatura() {
+        return idasignatura;
+    }
+
+    public void setIdasignatura(int idasignatura) {
+        this.idasignatura = idasignatura;
+    }
+
+    @Override
+    public String toString(){
+        return this.nombre+" "+this.apellidos;
+    }
+
+    public void ActualizarEstudiante(){
+        cnx.Conecta();
+            try{
+                String SQL ="update estudiante set nombreE=?,apellidoE=?,carnet=?"
+                        + ",celular=?, email=? where idestudiante=?";
+
+                stm = cnx.conn.createStatement();
+                int n = stm.executeUpdate(SQL);
+                if(n>0){
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
+                }
+            }catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
+            } finally {                
+                cnx.Desconecta();
+            }
+    }
+    
+    public void EliminarEstudiante(){
         
-        @Override
-        public String toString(){
-            return this.nombre+" "+this.apellidos;
-        }
+    }
+    
+    public void GuardarEstudiante(){
         
-        public int consultaId(String Nombr, String Apell){
+    }
+    
+    public int consultaId(String Nombr, String Apell){
         int id = 0;
         cnx.Conecta();
         try{
@@ -103,10 +143,9 @@ public class Estudiantes {
         cnx.Desconecta();       
         }
         return id;
-        }
-        
-        public String[] consultaEstudiante(int id){
-        
+    }
+
+    public String[] consultaEstudiante(int id){
         String [] fila = new String[2];
         cnx.Conecta();
         try{
@@ -123,9 +162,9 @@ public class Estudiantes {
         cnx.Desconecta();
         }
         return fila;
-        }
-        
-        public ArrayList<String> listaEstudiante(){
+    }
+
+    public ArrayList<String> listaEstudiante(){
         cnx.Conecta();
         ArrayList<String> ls = new ArrayList<>();
         try{
@@ -143,5 +182,4 @@ public class Estudiantes {
         }
         return ls;                                  
     } 
-
 }

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repCarrera" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f1536ea-bea8-40a9-b155-bc136631c93a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="4"/>
+	<queryString language="SQL">
+		<![CDATA[select * from carrera_compl_view]]>
+	</queryString>
+	<field name="idcarrera" class="java.lang.Object"/>
+	<field name="nombreC" class="java.lang.Object"/>
+	<field name="nombreF" class="java.lang.Object"/>
+	<field name="nombreU" class="java.lang.Object"/>
+	<group name="nombreU">
+		<groupExpression><![CDATA[$F{nombreU}]]></groupExpression>
+		<groupHeader>
+			<band height="36">
+				<textField>
+					<reportElement uuid="0766d9c7-b4ea-4208-85bd-2786eb4c912c" x="5" y="8" width="245" height="20"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{nombreU}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="nombreF">
+		<groupExpression><![CDATA[$F{nombreF}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField>
+					<reportElement uuid="712cdd13-c58c-43a3-8c8d-9f2dd349d8de" x="26" y="7" width="282" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{nombreF}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="be00c6e3-8853-4bd3-97d1-10ed67d335d8" x="150" y="16" width="272" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Catálogo de Carreras]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="223b4c48-15c1-4d85-a44b-d42c126c1dac" x="4" y="0" width="70" height="34"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Emisión:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="a6b695b0-e151-45c2-bbfd-8fa5c0b661af" x="74" y="9" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="28695749-b33a-48e9-9ed4-4708a8148835" x="5" y="2" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Carrera]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="be3a2dc6-63a5-44bf-9055-89cb7496bc5e" x="2" y="25" width="570" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="92599a3e-1230-41f3-8b50-feb7ca77e23a" x="2" y="2" width="570" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0dbbca52-f739-48fd-9c9e-7a9c195922c0" x="89" y="2" width="219" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carrera]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4d476fc8-5dc9-4186-b363-ce7313d62d5f" x="5" y="6" width="69" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{idcarrera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bbeddc77-68d4-4faf-8c2d-7468fec0eb37" x="89" y="6" width="219" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{nombreC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement uuid="d5fe7448-2952-46e5-bb65-12d39e5144bc" x="0" y="0" width="570" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="6cccf830-c375-4bb5-8cf7-a7647d560715" x="446" y="7" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="9ee7821e-0b9b-4d88-9c74-88d4f59ac2b4" x="526" y="7" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
