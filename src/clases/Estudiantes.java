@@ -39,59 +39,59 @@ public class Estudiantes {
         this.idasignatura = idasignatura;
     }
 
-    public int getIdestudiante() {
+    public int getIdEstudiante() {
         return idestudiante;
     }
 
-    public void setIdestudiante(int idestudiante) {
+    public void setIdEstudiante(int idestudiante) {
         this.idestudiante = idestudiante;
     }
         
-    public String getapellidos(){
+    public String getApellidos(){
             return apellidos;
     }
 
-    public int getcarne(){
+    public int getCarnet(){
             return carne;
     }
 
-    public int getcelular(){
+    public int getCelular(){
             return celular;
     }
 
-    public String getemail(){
+    public String getEmail(){
             return email;
     }
 
-    public String getnombre(){
+    public String getNombre(){
             return nombre;
     }
 
-    public void setapellidos(String apellid){
+    public void setApellidos(String apellid){
             apellidos = apellid;
     }
 
-    public void setcarne(int carn){
+    public void setCarnet(int carn){
             carne = carn;
     }
 
-    public void setcelular(int celula){
+    public void setCelular(int celula){
             celular = celula;
     }
 
-    public void setemail(String correo){
+    public void setEmail(String correo){
             email = correo;
     }
 
-    public void setnombre(String nombr){
+    public void setNombre(String nombr){
             nombre = nombr;
     }
 
-    public int getIdasignatura() {
+    public int getIdAsignatura() {
         return idasignatura;
     }
 
-    public void setIdasignatura(int idasignatura) {
+    public void setIdAsignatura(int idasignatura) {
         this.idasignatura = idasignatura;
     }
 
@@ -119,11 +119,36 @@ public class Estudiantes {
     }
     
     public void EliminarEstudiante(){
-        
+        cnx.Conecta();
+            try {
+                String SQL = "delete from estudiante where idestudiante= " + getIdEstudiante();
+                stm = cnx.conn.createStatement();            
+                int n = stm.executeUpdate(SQL);
+                if(n>0){                
+                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
+                }
+            } catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
+            } finally {                
+                cnx.Desconecta();
+            }
     }
     
     public void GuardarEstudiante(){
-        
+        cnx.Conecta();
+            try {
+                String SQL = "insert into estudiante(nombreE,apellidoE,carnet,celular,email,idasignatura) "
+                + "values('"+getNombre()+"','"+getApellidos()+"','"+getCarnet()+"','"+getCelular()+"','"+getEmail()+"','"+getIdAsignatura()+"')";
+                stm = cnx.conn.createStatement();            
+                int n = stm.executeUpdate(SQL);
+                if (n>0){
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
+                }
+            } catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Guardar: " + e.getMessage());
+            } finally {
+                cnx.Desconecta();
+            }
     }
     
     public int consultaId(String Nombr, String Apell){

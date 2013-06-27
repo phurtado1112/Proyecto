@@ -1,6 +1,7 @@
 package GUI;
 
 import clases.Asignatura;
+import clases.Estudiantes;
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +24,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
     Asignatura a = new Asignatura();
+    Estudiantes e = new Estudiantes();
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     Statement stm;
@@ -34,7 +36,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
      */
     public EstudianteIF() {
         initComponents();
-        cbxAsignatura.setModel(new DefaultComboBoxModel(new String[] {}));        
+        //cbxAsignatura.setModel(new DefaultComboBoxModel(new String[] {}));        
         cnx.Conecta();
         Deshabilitar();
         LlenarTabla();
@@ -55,9 +57,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         va.SoloLetras(txtApellidos);
         txtCarnet.setEnabled(true);
         va.LetrasNumeros(txtCarnet);
-        cbxAsignatura.setEnabled(true);
         txtEmail.setEnabled(true);
-        //va.esEmail(txtEmail.toString());
         txtCelular.setEnabled(true);
         va.SoloNumeros(txtCelular);
         txtNombres.requestFocus();
@@ -67,7 +67,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         txtNombres.setEnabled(false);
         txtApellidos.setEnabled(false);
         txtCarnet.setEnabled(false);
-        cbxAsignatura.removeAllItems();
         txtEmail.setEnabled(false);
         txtCelular.setEnabled(false);
     }
@@ -76,7 +75,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
          txtNombres.setText("");
          txtApellidos.setText("");
          txtCarnet.setText("");         
-         cbxAsignatura.setEnabled(true);
          txtEmail.setText("");
          txtCelular.setText("");
     }
@@ -105,24 +103,24 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
     }
     
-    public final void llenarCB() {
-        cnx.Conecta();
-        try {            
-            modeloCombo = new DefaultComboBoxModel();            
-            String SQL = "select nombreA from asignatura where idasignatura =" + id;
-            stm = cnx.conn.createStatement();            
-            rs = stm.executeQuery(SQL);
-            while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("nombreA"));
-            }
-            rs.close();
-            cbxAsignatura.setModel(modeloCombo);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
-        } finally {
-            cnx.Desconecta();
-        }
-    }
+//    public final void llenarCB() {
+//        cnx.Conecta();
+//        try {            
+//            modeloCombo = new DefaultComboBoxModel();            
+//            String SQL = "select nombreA from asignatura where idasignatura =" + id;
+//            stm = cnx.conn.createStatement();            
+//            rs = stm.executeQuery(SQL);
+//            while (rs.next()) {
+//                modeloCombo.addElement(rs.getObject("nombreA"));
+//            }
+//            rs.close();
+//            cbxAsignatura.setModel(modeloCombo);
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
+//        } finally {
+//            cnx.Desconecta();
+//        }
+//    }
     
     //Llena con datos el JTable con un consulta
     private void LlenarTabla() {
@@ -164,11 +162,28 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             tblEstudiantes.getColumnModel().getColumn(4).setCellRenderer(centraCelda);
             tblEstudiantes.getColumnModel().getColumn(5).setHeaderRenderer(centraCelda);
             tblEstudiantes.getColumnModel().getColumn(5).setCellRenderer(centraCelda);
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error de llenarTabla: " + e.getMessage());
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error de llenarTabla: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
+    }
+    
+    public void llenarTXT() {
+        cnx.Conecta();
+         try {             
+            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                txtAsignatura.setText(rs.getString("nombreA"));
+            }
+            rs.close();            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+         }
     }
     
     private boolean validar(){
@@ -206,12 +221,12 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         txtNombres = new javax.swing.JTextField();
         txtApellidos = new javax.swing.JTextField();
         txtCarnet = new javax.swing.JTextField();
-        cbxAsignatura = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
+        txtAsignatura = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEstudiantes = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
@@ -242,13 +257,13 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Carnet");
 
-        cbxAsignatura.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setText("Asignatura");
 
         jLabel5.setText("E mail");
 
         jLabel6.setText("Celular");
+
+        txtAsignatura.setEnabled(false);
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -269,20 +284,17 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                                 .add(jLabel5))
                             .add(18, 18, 18)
                             .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jPanel2Layout.createSequentialGroup()
-                                    .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                        .add(txtApellidos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 238, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(txtEmail, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 237, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(txtCelular, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(0, 0, Short.MAX_VALUE))
+                                .add(txtApellidos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 238, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(txtEmail, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 237, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(txtCelular, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(jPanel2Layout.createSequentialGroup()
                                     .add(txtCarnet, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                     .add(34, 34, 34)
                                     .add(jLabel4)
                                     .add(18, 18, 18)
-                                    .add(cbxAsignatura, 0, 141, Short.MAX_VALUE)))))
+                                    .add(txtAsignatura, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 162, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))
                     .add(jLabel6))
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -299,8 +311,8 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel3)
                     .add(txtCarnet, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(cbxAsignatura, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel4))
+                    .add(jLabel4)
+                    .add(txtAsignatura, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel5)
@@ -402,7 +414,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btnGuardar)
@@ -434,7 +446,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         Habilitar();
         limpiar();
         BotonesNuevo();
-        llenarCB();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -443,6 +454,13 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){        
             int fila = tblEstudiantes.getSelectedRow();
+            e.setNombre(txtNombres.getText().trim());
+            e.setApellidos(txtApellidos.getText().trim());
+            e.setCarnet(Integer.parseInt(txtCarnet.getText().trim()));
+            e.setCelular(Integer.parseInt(txtCelular.getText().trim()));
+            e.setEmail(txtEmail.getText().trim());
+            e.setIdEstudiante(Integer.parseInt(tblEstudiantes.getValueAt(fila, 0).toString()));
+            e.ActualizarEstudiante();
             }
         LlenarTabla();
         limpiar();
@@ -456,24 +474,13 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstudiantes.getSelectedRow();
-            cnx.Conecta();
-            try {
-                String SQL = "delete from estudiante where idestudiante= " + tblEstudiantes.getValueAt(fila, 0);
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
-                if(n>0){                
-                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
-            } finally {
-                limpiar();
-                Deshabilitar();
-                LlenarTabla();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            e.setIdEstudiante(Integer.parseInt(tblEstudiantes.getValueAt(fila, 0).toString()));
+            e.EliminarEstudiante();
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -481,32 +488,18 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try {
-                String SQL = "insert into estudiante(nombreE,apellidoE,carnet,celular,email,idasignatura) "
-                + "values(?,?,?,?,?,?)";
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtNombres.getText().trim());
-                ps.setString(2, txtApellidos.getText().trim());
-                ps.setString(3, txtCarnet.getText().trim());
-                ps.setString(4, txtCelular.getText().trim());
-                ps.setString(5, txtEmail.getText().trim());
-                ps.setInt(6, a.consultaIdA(cbxAsignatura.getSelectedItem().toString()));
-
-                int n = ps.executeUpdate();
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            e.setNombre(txtNombres.getText().trim());
+            e.setApellidos(txtApellidos.getText().trim());
+            e.setCarnet(Integer.parseInt(txtCarnet.getText().trim()));
+            e.setCelular(Integer.parseInt(txtCelular.getText().trim()));
+            e.setEmail(txtEmail.getText().trim());
+            e.setIdAsignatura(a.consultaIdA(txtAsignatura.getText()));
+            e.GuardarEstudiante();
         }
+        LlenarTabla();
+        limpiar();
+        Deshabilitar();
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -530,7 +523,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             int fila = tblEstudiantes.getSelectedRow();
             Habilitar();
             BotonesClick();
-            llenarCB();
             cnx.Conecta();
             try{                                               
                 String SQL = "Select * from estudiante where idestudiante = " + tblEstudiantes.getValueAt(fila, 0);
@@ -543,9 +535,8 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                 txtCarnet.setText(rs.getString("carnet"));
                 txtCarnet.setText(rs.getString("celular"));
                 txtEmail.setText(rs.getString("email"));
-                cbxAsignatura.setSelectedItem(a.consultaAsignatura(rs.getInt("idcurso")));
-            } catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error MouseCliked: " + e.getMessage());
+            } catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Error MouseCliked: " + ex.getMessage());
             }  finally {
                 cnx.Desconecta();
             }
@@ -559,7 +550,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxAsignatura;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -571,6 +561,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEstudiantes;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtAsignatura;
     private javax.swing.JTextField txtCarnet;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtEmail;

@@ -39,25 +39,23 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         Deshabilitar();
         BotonesInicio();
         LlenarTabla();
+        llenarTXT();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
     
     private void limpiar(){
         jdcFecha.cleanup();
         cbxTipoActividad.removeAllItems();
-        txtAsignatura.setText("");
     }
     
     private void Deshabilitar() {
         jdcFecha.setEnabled(false);        
         cbxTipoActividad.setEnabled(false);
-        txtAsignatura.setEnabled(false);
     }
     
     private void Habilitar(){
         jdcFecha.setEnabled(true);
         cbxTipoActividad.setEnabled(true);
-        txtAsignatura.setEnabled(true);
         jdcFecha.requestFocus();
     }
     
@@ -88,17 +86,16 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     private void LlenarTabla() {
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Fecha","Actividad","Asignatura"};
+            String [] titulos ={"ID","Fecha","Actividad"};
             String SQL = "Select * from calendario_view where idasignatura = " + id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
-            String [] fila = new String[4];
+            String [] fila = new String[3];
             while(rs.next()){
                 fila[0] = rs.getString("idcalendario");
                 fila[1] = rs.getString("fecha");
                 fila[2] = rs.getString("actividad");
-                fila[3] = rs.getString("nombreA");
                 model.addRow(fila);
             }
             tblCalendario.setModel(model);
@@ -128,7 +125,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         }
     }
     
-    public void llenarTXT() {
+    private void llenarTXT() {
         cnx.Conecta();
          try {             
             String SQL = "select nombreA from asignatura where idasignatura = " + id;
@@ -239,17 +236,17 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
 
         tblCalendario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -265,7 +262,6 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         tblCalendario.getColumnModel().getColumn(0).setResizable(false);
         tblCalendario.getColumnModel().getColumn(1).setResizable(false);
         tblCalendario.getColumnModel().getColumn(2).setResizable(false);
-        tblCalendario.getColumnModel().getColumn(3).setResizable(false);
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -346,7 +342,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnSalir))
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addGap(0, 87, Short.MAX_VALUE))
         );
 
         pack();
