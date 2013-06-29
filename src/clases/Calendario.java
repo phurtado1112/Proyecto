@@ -65,7 +65,7 @@ public class Calendario {
         this.idasignatura = idasignatura;
     }
 
-    public void ActualizarCalendario(){
+    public void actualizarCalendario(){
         cnx.Conecta();
             try{
                 String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
@@ -82,7 +82,7 @@ public class Calendario {
             }
     }
     
-    public void EliminarCalendario(){
+    public void eliminarCalendario(){
         cnx.Conecta();
             try {
                 String SQL = "delete from calendario where idcalendario= " + getIdcalendario();
@@ -98,7 +98,7 @@ public class Calendario {
             }
     }
     
-    public void GuardarCalendario(){
+    public void guardarCalendario(){
         cnx.Conecta();
             try {
                 String SQL = "insert into calendario(fecha,idtipoactividad,idasignatura)"

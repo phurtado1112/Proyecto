@@ -10,13 +10,13 @@ public class EstructuraEvaluacion {
     private String nombreE;
     private double valor;
     public Asignatura m_Asignatura;
-    public Evaluaciones m_Evaluaciones;
+    public TipoEvaluacion m_Evaluaciones;
 
     public EstructuraEvaluacion(){
 
     }
 
-    public EstructuraEvaluacion(String nombreE, double valor, Asignatura m_Asignatura, Evaluaciones m_Evaluaciones) {
+    public EstructuraEvaluacion(String nombreE, double valor, Asignatura m_Asignatura, TipoEvaluacion m_Evaluaciones) {
         this.nombreE = nombreE;
         this.valor = valor;
         this.m_Asignatura = m_Asignatura;

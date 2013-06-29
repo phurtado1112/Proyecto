@@ -16,7 +16,7 @@ import util.Conecta;
 
 /**
  *
- * @author Pablo
+ * @author Pablo Hurtado
  */
 public class CalendarioIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
@@ -363,9 +363,9 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             int fila = tblCalendario.getSelectedRow();
             c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
             c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
-            c.setIdasignatura(a.getIdasignatura());
-            c.setIdcalendario(Integer.parseInt(this.tblCalendario.getValueAt(fila, 0).toString()));
-            c.ActualizarCalendario();
+            c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+            c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString()));
+            c.actualizarCalendario();
         }
         LlenarTabla();
         limpiar();
@@ -387,7 +387,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
             c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString().trim()));
-            c.EliminarCalendario();
+            c.eliminarCalendario();
         }
         limpiar();
         Deshabilitar();
@@ -408,8 +408,8 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
             c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
-            c.setIdasignatura(a.getIdasignatura());
-            c.GuardarCalendario();
+            c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+            c.guardarCalendario();
         }
         limpiar();
         Deshabilitar();

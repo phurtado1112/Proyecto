@@ -376,6 +376,7 @@ public class CarreraIF extends javax.swing.JInternalFrame {
                 c.setnombreC(this.txtCarrera.getText().trim());
                 c.setIdfacultad(f.consultaId(this.cbxFacultad.getSelectedItem().toString().trim()));
                 c.setIdcarrera(Integer.parseInt(this.tblCarrera.getValueAt(fila, 0).toString()));
+                c.actualizarCarrera();
             }
             LlenarTabla();
             limpiar();
@@ -390,7 +391,7 @@ public class CarreraIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             c.setIdcarrera(Integer.parseInt(tblCarrera.getValueAt(fila, 0).toString()));
-            c.EliminarCarrera();
+            c.eliminarCarrera();
         }
         LlenarTabla();
         limpiar();
@@ -405,7 +406,7 @@ public class CarreraIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             c.setnombreC(txtCarrera.getText().trim());
             c.setIdfacultad(f.consultaId(this.cbxFacultad.getSelectedItem().toString()));
-            c.GuardarCarrera();
+            c.guardarCarrera();
         }
         LlenarTabla();
         limpiar();

@@ -57,11 +57,11 @@ public class Carrera {
         this.idfacultad = idfacultad;
     }       
     
-    public void ActualizarCarrera(){
+    public void actualizarCarrera(){
         cnx.Conecta();
             try{
-                String SQL ="update carrera set nombreC=?, idfacultad=?"
-                + "where idcarrera=?";                
+                String SQL ="update carrera set nombreC='"+getnombreC()+"', idfacultad='"+getIdfacultad()+"'"
+                + "where idcarrera='"+getIdcarrera()+"'";                
                 stm = cnx.conn.createStatement();
 
                 int n = stm.executeUpdate(SQL);
@@ -75,7 +75,7 @@ public class Carrera {
             }
     }
     
-    public void EliminarCarrera(){
+    public void eliminarCarrera(){
         cnx.Conecta();
                 try {
                     String SQL = "delete from carrera where idcarrera= " + getIdcarrera();
@@ -91,10 +91,11 @@ public class Carrera {
                 }
     }
     
-    public void GuardarCarrera(){
+    public void guardarCarrera(){
         cnx.Conecta();
             try {
-                String SQL = "insert into carrera(nombreC,idfacultad) values('"+getnombreC()+"','"+getIdfacultad()+"')";
+                String SQL = "insert into carrera(nombreC,idfacultad) values('"+getnombreC()+"',"
+                        + "'"+getIdfacultad()+"')";
                 stm = cnx.conn.createStatement();
                 int n = stm.executeUpdate(SQL);
                 if (n>0){

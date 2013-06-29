@@ -17,7 +17,7 @@ public class Estudiantes {
 
     private int idestudiante;
     private String apellidos;
-    private int carne;
+    private String carne;
     private int celular;
     private String email;
     private String nombre;
@@ -29,7 +29,7 @@ public class Estudiantes {
 
 	}
 
-    public Estudiantes(String apellidos, int carne, int celular, String email, String nombre, int idestudiante, int idasignatura) {
+    public Estudiantes(String apellidos, String carne, int celular, String email, String nombre, int idestudiante, int idasignatura) {
         this.apellidos = apellidos;
         this.carne = carne;
         this.celular = celular;
@@ -51,7 +51,7 @@ public class Estudiantes {
             return apellidos;
     }
 
-    public int getCarnet(){
+    public String getCarnet(){
             return carne;
     }
 
@@ -71,7 +71,7 @@ public class Estudiantes {
             apellidos = apellid;
     }
 
-    public void setCarnet(int carn){
+    public void setCarnet(String carn){
             carne = carn;
     }
 
@@ -100,11 +100,12 @@ public class Estudiantes {
         return this.nombre+" "+this.apellidos;
     }
 
-    public void ActualizarEstudiante(){
+    public void actualizarEstudiante(){
         cnx.Conecta();
             try{
-                String SQL ="update estudiante set nombreE=?,apellidoE=?,carnet=?"
-                        + ",celular=?, email=? where idestudiante=?";
+                String SQL ="update estudiante set nombreE='"+getNombre()+"',apellidoE='"+getApellidos()+"',"
+                        + "carnet='"+getCarnet()+"',celular='"+getCelular()+"', email='"+getEmail()+"',"
+                        + " idasignatura='"+getIdAsignatura()+"' where idestudiante='"+getIdEstudiante()+"'";
 
                 stm = cnx.conn.createStatement();
                 int n = stm.executeUpdate(SQL);
@@ -118,7 +119,7 @@ public class Estudiantes {
             }
     }
     
-    public void EliminarEstudiante(){
+    public void eliminarEstudiante(){
         cnx.Conecta();
             try {
                 String SQL = "delete from estudiante where idestudiante= " + getIdEstudiante();
@@ -134,11 +135,12 @@ public class Estudiantes {
             }
     }
     
-    public void GuardarEstudiante(){
+    public void guardarEstudiante(){
         cnx.Conecta();
             try {
                 String SQL = "insert into estudiante(nombreE,apellidoE,carnet,celular,email,idasignatura) "
-                + "values('"+getNombre()+"','"+getApellidos()+"','"+getCarnet()+"','"+getCelular()+"','"+getEmail()+"','"+getIdAsignatura()+"')";
+                + "values('"+getNombre()+"','"+getApellidos()+"','"+getCarnet()+"','"+getCelular()+"',"
+                        + "'"+getEmail()+"','"+getIdAsignatura()+"')";
                 stm = cnx.conn.createStatement();            
                 int n = stm.executeUpdate(SQL);
                 if (n>0){

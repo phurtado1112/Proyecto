@@ -1,5 +1,7 @@
 package GUI;
 
+import clases.Asignatura;
+import clases.TipoEvaluacion;
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,35 +18,40 @@ import util.Valida;
  *
  * @author Pablo
  */
-public class EvaluacionIF extends javax.swing.JInternalFrame {
+public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
+    TipoEvaluacion te = new TipoEvaluacion();
+    Asignatura a = new Asignatura();
     Statement stm;
+    ResultSet rs;
+    int id = 1;
     
     /**
      * Creates new form TipoEvaluacionIF
      */
-    public EvaluacionIF() {
+    public TipoEvaluacionIF() {
         initComponents();
         limpiar();
         Deshabilitar();
         BotonesInicio();
         LlenarTabla();
+        llenarTXT();
     }
     
     private void limpiar(){
-        txtTipoEvaluacion.setText("");
+        txtAsignatura.setText("");
     }
     
     private void Deshabilitar() {
-        txtTipoEvaluacion.setEnabled(false);
+        txtAsignatura.setEnabled(false);
     }
     
     private void Habilitar(){
-        txtTipoEvaluacion.setEnabled(true);
-        va.SoloLetras(txtTipoEvaluacion);
-        txtTipoEvaluacion.requestFocus();
+        txtAsignatura.setEnabled(true);
+        va.SoloLetras(txtAsignatura);
+        txtAsignatura.requestFocus();
     }
     
     private void BotonesInicio(){
@@ -80,7 +87,7 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
             String SQL = "Select * from evaluacion";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);
+            rs = stm.executeQuery(SQL);
             String [] fila = new String[2];
             while(rs.next()){
                 fila[0] = rs.getString("idevaluacion");
@@ -105,9 +112,26 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         }
     }
     
+    private void llenarTXT() {
+        cnx.Conecta();
+         try {             
+            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                txtAsignatura.setText(rs.getString("nombreA"));
+            }
+            rs.close();            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+         }
+    }
+    
     private boolean validar(){
         boolean val;
-        if(txtTipoEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
+        if(txtAsignatura.getText().trim().length()==0){ //Valida campo Nombre
             JOptionPane.showMessageDialog(this, "El campo de texto Tipo de Evaluación está vacío,por favor llenarlo");
             val = false;
         } else {
@@ -135,7 +159,9 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtTipoEvaluacion = new javax.swing.JTextField();
+        txtAsignatura = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtTipoEvaluacion1 = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -210,7 +236,11 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Evaluación"));
 
-        jLabel1.setText("Tipo de Evaluación");
+        jLabel1.setText("Asignatura");
+
+        txtAsignatura.setEnabled(false);
+
+        jLabel2.setText("Tipo de Evaluación");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -218,18 +248,28 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(txtTipoEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTipoEvaluacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(4, 4, 4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtTipoEvaluacion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtTipoEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -273,7 +313,7 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnSalir))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -297,27 +337,15 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         if (validar()==true){            
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try {
-                String SQL = "insert into evaluacion(evaluacion) "
-                + "values(?)";
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtTipoEvaluacion.getText().trim());
-                int n = ps.executeUpdate();
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                limpiar();
-                Deshabilitar();
-                LlenarTabla();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+        if(i==JOptionPane.OK_OPTION){            
+            te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
+            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
+            te.guardarTipoEvaluacion();
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -326,28 +354,16 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Acutalizar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try{
-                String SQL ="update evaluacion set evaluacion=?"
-                + "where idevaluacion=?";
-                int fila = tblTipoEvaluacion.getSelectedRow();
-                String dato = (String)tblTipoEvaluacion.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtTipoEvaluacion.getText().trim());
-                ps.setString(2, dato);
-
-                int n = ps.executeUpdate();
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            int fila = tblTipoEvaluacion.getSelectedRow();
+            te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
+            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
+            te.setIdevaluacion(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
+            te.actualizarTipoEvaluacion();
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -367,10 +383,10 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
             try{                
                 String SQL = "Select * from evaluacion where idevaluacion = " + tblTipoEvaluacion.getValueAt(fila, 0);
                 PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ResultSet rs = ps.executeQuery(SQL);
+                rs = ps.executeQuery(SQL);
 
                 rs.next();
-                txtTipoEvaluacion.setText(rs.getString("evaluacion"));
+                txtAsignatura.setText(rs.getString("evaluacion"));
             } catch(Exception e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {
@@ -384,23 +400,13 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
         int fila = tblTipoEvaluacion.getSelectedRow();
-            cnx.Conecta();
-            try {
-                String SQL = "delete from evaluacion where idevaluacion= " + tblTipoEvaluacion.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);          
-                int n = ps.executeUpdate(SQL);
-                if(n>0){                
-                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                limpiar();
-                LlenarTabla();
-                BotonesInicio();
-                cnx.Desconecta();        
-            }
+            te.setIdevaluacion(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
+            te.eliminarTipoEvaluacion();
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -411,9 +417,11 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTipoEvaluacion;
-    private javax.swing.JTextField txtTipoEvaluacion;
+    private javax.swing.JTextField txtAsignatura;
+    private javax.swing.JTextField txtTipoEvaluacion1;
     // End of variables declaration//GEN-END:variables
 }

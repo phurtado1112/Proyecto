@@ -40,6 +40,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         cnx.Conecta();
         Deshabilitar();
         LlenarTabla();
+        llenarTXT();
         BotonesInicio();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
@@ -103,45 +104,25 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
     }
     
-//    public final void llenarCB() {
-//        cnx.Conecta();
-//        try {            
-//            modeloCombo = new DefaultComboBoxModel();            
-//            String SQL = "select nombreA from asignatura where idasignatura =" + id;
-//            stm = cnx.conn.createStatement();            
-//            rs = stm.executeQuery(SQL);
-//            while (rs.next()) {
-//                modeloCombo.addElement(rs.getObject("nombreA"));
-//            }
-//            rs.close();
-//            cbxAsignatura.setModel(modeloCombo);
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
-//        } finally {
-//            cnx.Desconecta();
-//        }
-//    }
-    
     //Llena con datos el JTable con un consulta
     private void LlenarTabla() {
         int[] anchos = {30, 150, 150, 80, 80, 100, 150};
         cnx.Conecta();
         try{
             String [] titulos ={"ID","Nombres", "Apellidos", "Carnet","Email",
-                "Celular","Asignatura"};
+                "Celular"};
             String SQL = "Select * from estudiante_view";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
-            String [] fila = new String[7];
+            String [] fila = new String[6];
             while(rs.next()){
                 fila[0] = rs.getString("idestudiante");
                 fila[1] = rs.getString("nombreE");
                 fila[2] = rs.getString("apellidoE");
                 fila[3] = rs.getString("carnet");
                 fila[4] = rs.getString("celular");
-                fila[5] = rs.getString("email");
-                fila[6] = rs.getString("nombreA");
+                fila[5] = rs.getString("email");                
                 model.addRow(fila);
             }
             tblEstudiantes.setModel(model);
@@ -169,7 +150,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         }
     }
     
-    public void llenarTXT() {
+    private void llenarTXT() {
         cnx.Conecta();
          try {             
             String SQL = "select nombreA from asignatura where idasignatura = " + id;
@@ -194,15 +175,15 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             } else if(txtApellidos.getText().trim().length()==0){ //Valida campo Apellido
             JOptionPane.showMessageDialog(this, "El campo de texto Apellidos está vacío,por favor llenarlo");
             val = false;
-            } else if(txtCarnet.getText().trim().length()==0){ //Valida campo Apellido
-            JOptionPane.showMessageDialog(this, "El campo de texto Carnet está vacío,por favor llenarlo");
-            val = false;
-            } else if(txtCelular.getText().trim().length()==0){ //Valida campo Apellido
-            JOptionPane.showMessageDialog(this, "El campo de texto Celular está vacío,por favor llenarlo");
-            val = false;
-            } else if(txtEmail.getText().trim().length()==0){ //Valida campo Apellido
-            JOptionPane.showMessageDialog(this, "El campo de texto e-mail está vacío,por favor llenarlo");
-            val = false;
+//            } else if(txtCarnet.getText().trim().length()==0){ //Valida campo Apellido
+//            JOptionPane.showMessageDialog(this, "El campo de texto Carnet está vacío,por favor llenarlo");
+//            val = false;
+//            } else if(txtCelular.getText().trim().length()==0){ //Valida campo Apellido
+//            JOptionPane.showMessageDialog(this, "El campo de texto Celular está vacío,por favor llenarlo");
+//            val = false;
+//            } else if(txtEmail.getText().trim().length()==0){ //Valida campo Apellido
+//            JOptionPane.showMessageDialog(this, "El campo de texto e-mail está vacío,por favor llenarlo");
+//            val = false;
         } else {
             val=true;
         }       
@@ -456,11 +437,12 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             int fila = tblEstudiantes.getSelectedRow();
             e.setNombre(txtNombres.getText().trim());
             e.setApellidos(txtApellidos.getText().trim());
-            e.setCarnet(Integer.parseInt(txtCarnet.getText().trim()));
+            e.setCarnet(txtCarnet.getText().trim());
             e.setCelular(Integer.parseInt(txtCelular.getText().trim()));
             e.setEmail(txtEmail.getText().trim());
+            e.setIdAsignatura(a.consultaIdA(txtAsignatura.getText()));
             e.setIdEstudiante(Integer.parseInt(tblEstudiantes.getValueAt(fila, 0).toString()));
-            e.ActualizarEstudiante();
+            e.actualizarEstudiante();
             }
         LlenarTabla();
         limpiar();
@@ -475,7 +457,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstudiantes.getSelectedRow();
             e.setIdEstudiante(Integer.parseInt(tblEstudiantes.getValueAt(fila, 0).toString()));
-            e.EliminarEstudiante();
+            e.eliminarEstudiante();
         }
         limpiar();
         Deshabilitar();
@@ -490,11 +472,11 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             e.setNombre(txtNombres.getText().trim());
             e.setApellidos(txtApellidos.getText().trim());
-            e.setCarnet(Integer.parseInt(txtCarnet.getText().trim()));
+            e.setCarnet(txtCarnet.getText().trim());
             e.setCelular(Integer.parseInt(txtCelular.getText().trim()));
             e.setEmail(txtEmail.getText().trim());
             e.setIdAsignatura(a.consultaIdA(txtAsignatura.getText()));
-            e.GuardarEstudiante();
+            e.guardarEstudiante();
         }
         LlenarTabla();
         limpiar();

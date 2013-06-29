@@ -523,7 +523,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             int fila = tblAsignatura.getSelectedRow();
             a.setIdasignatura(Integer.parseInt(tblAsignatura.getValueAt(fila, 0).toString()));
-            a.EliminarAsignatura();
+            a.eliminarAsignatura();
         }
         limpiar();
         LlenarTabla();
@@ -541,7 +541,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 a.setanio(Integer.parseInt(this.txtAnio.getText().trim()));
                 a.setperiodo(this.txtPeriodo.getText().trim());
                 a.setIdcarrera(c.consultaIdCa(this.cbxCarrera.getSelectedItem().toString().trim()));
-                c.GuardarCarrera();
+                c.guardarCarrera();
             }
             LlenarTabla();
             limpiar();

@@ -87,7 +87,7 @@ public class Asignatura {
         this.idcarrera = idcarrera;
     }
     
-    public void ActualizarAsignatura(){
+    public void actualizarAsignatura(){
         cnx.Conecta();
             try{
                 String SQL ="update asignatura set nombreA=?,"
@@ -106,7 +106,7 @@ public class Asignatura {
             }
     }
     
-    public void EliminarAsignatura(){
+    public void eliminarAsignatura(){
         cnx.Conecta();
                 try {
                     String SQL = "delete from asignatura where idasignatura= " + getIdasignatura();
@@ -122,7 +122,7 @@ public class Asignatura {
                 }
     }
     
-    public void GuardaAsignatura(){
+    public void guardaAsignatura(){
         cnx.Conecta();
             try {
                 String SQL = "insert into asignatura(nombreA,"

@@ -40,7 +40,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         initComponents();
         cnx.Conecta();
         limpiar();
-        
+        llenarTXT();
         BotonesInicio();
         LlenarTabla();
         llenarCB();
@@ -129,6 +129,23 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         cnx.Desconecta();
     }
     
+    private void llenarTXT() {
+        cnx.Conecta();
+         try {             
+            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                txtAsignatura.setText(rs.getString("nombreA"));
+            }
+            rs.close();            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+         }
+    }
+    
     private static void cbxAsis(TableColumn columna){
         String Asis[] = {"Presente","Ausente"};
         JComboBox Combo = new JComboBox(Asis);
@@ -147,6 +164,8 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbxFecha = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        txtAsignatura = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -174,6 +193,10 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
         cbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel2.setText("Asignatura");
+
+        txtAsignatura.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -183,6 +206,10 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -191,7 +218,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -410,9 +439,11 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox cbxFecha;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAsistencia;
+    private javax.swing.JTextField txtAsignatura;
     // End of variables declaration//GEN-END:variables
 }
 

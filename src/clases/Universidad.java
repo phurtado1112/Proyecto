@@ -1,6 +1,7 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,8 +16,10 @@ import util.Conecta;
  */
 public class Universidad {
 
+    private int iduniversidad;
     private String nombreU;
-    public Facultad m_Facultad;
+    private String siglas;
+    private Blob logo;
     Conecta cnx = new Conecta();
     Statement stm;
 
@@ -24,9 +27,11 @@ public class Universidad {
 
     }
 
-    public Universidad(String nombreU, Facultad m_Facultad) {
+    public Universidad(int iduniversidad, String nombreU, String siglas, Blob logo) {
+        this.iduniversidad = iduniversidad;
         this.nombreU = nombreU;
-        this.m_Facultad = m_Facultad;
+        this.siglas = siglas;
+        this.logo = logo;
     }
 
     public String getnombreU(){
@@ -35,6 +40,82 @@ public class Universidad {
 
     public void setnombreU(String nombrU){
             nombreU = nombrU;
+    }
+
+    public int getIduniversidad() {
+        return iduniversidad;
+    }
+
+    public void setIduniversidad(int iduniversidad) {
+        this.iduniversidad = iduniversidad;
+    }
+
+    public String getSiglas() {
+        return siglas;
+    }
+
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
+
+    public Blob getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Blob logo) {
+        this.logo = logo;
+    }
+    
+    public void actualizarUniversidad(){
+        cnx.Conecta();
+        try{
+            String SQL ="update universidad set nombreU='"+getnombreU()+"', siglas='"+getSiglas()+"',"
+                    + "'"+getLogo()+"' where iduniversidad='"+getIduniversidad()+"'";
+            stm = cnx.conn.createStatement();
+
+            int n = stm.executeUpdate(SQL);
+            if(n>0){
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");               
+                }
+            }catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            } finally {                
+                cnx.Desconecta();
+            }
+    }
+    
+    public void eliminarUniversidad(){
+        cnx.Conecta();
+            try {
+                String SQL = "delete from universidad where iduniversidad= " + getIduniversidad();
+                stm = cnx.conn.createStatement();            
+                int n = stm.executeUpdate(SQL);
+                if(n>0){                
+                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
+                }
+            } catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
+            } finally {                
+                cnx.Desconecta();
+            }
+    }
+    
+    public void guardarUniversidad(){
+        cnx.Conecta();
+        try{
+            String SQL = "insert into universidad(nombreU,siglas,logo) "
+                    + "values('"+getnombreU()+"','"+getSiglas()+"','"+getLogo()+"')";
+            stm = cnx.conn.createStatement();            
+           
+            int n = stm.executeUpdate(SQL);
+            if (n>0){
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
+            }
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        } finally {                
+            cnx.Desconecta();
+        }
     }
         
     public int consultaIdU(String Univer){

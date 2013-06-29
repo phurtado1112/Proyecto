@@ -7,7 +7,7 @@ import GUI.CarreraIF;
 import GUI.DocenteIF;
 import GUI.EstructuraEvaluacionIF;
 import GUI.EstudianteIF;
-import GUI.EvaluacionIF;
+import GUI.TipoEvaluacionIF;
 import GUI.FacultadIF;
 import GUI.TipoActividadIF;
 import GUI.UniversidadIF;
@@ -384,7 +384,7 @@ public class Cnae extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MnuEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEvaluacionActionPerformed
-        EvaluacionIF evaluacionVent = new EvaluacionIF();
+        TipoEvaluacionIF evaluacionVent = new TipoEvaluacionIF();
         centerJIF(evaluacionVent);
         Escritorio.add(evaluacionVent);
     }//GEN-LAST:event_MnuEvaluacionActionPerformed
@@ -440,7 +440,7 @@ public class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuEstudiantesActionPerformed
 
     private void MnuTipoEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoEvaluacionActionPerformed
-        EvaluacionIF tipoevaluacionVent = new EvaluacionIF();
+        TipoEvaluacionIF tipoevaluacionVent = new TipoEvaluacionIF();
         centerJIF(tipoevaluacionVent);
         Escritorio.add(tipoevaluacionVent);
     }//GEN-LAST:event_MnuTipoEvaluacionActionPerformed

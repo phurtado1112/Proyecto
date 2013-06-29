@@ -8,13 +8,13 @@ package clases;
 public class Notas {
 
 	private double valor;
-	public Evaluaciones m_Evaluaciones;
+	public TipoEvaluacion m_Evaluaciones;
 
 	public Notas(){
 
 	}
 
-        public Notas(double valor, Evaluaciones m_Evaluaciones) {
+        public Notas(double valor, TipoEvaluacion m_Evaluaciones) {
             this.valor = valor;
             this.m_Evaluaciones = m_Evaluaciones;
         }
