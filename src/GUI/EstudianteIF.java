@@ -2,8 +2,6 @@ package GUI;
 
 import clases.Asignatura;
 import clases.Estudiantes;
-import java.awt.HeadlessException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,8 +33,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
      * Creates new form EstudianteIF
      */
     public EstudianteIF() {
-        initComponents();
-        //cbxAsignatura.setModel(new DefaultComboBoxModel(new String[] {}));        
+        initComponents();       
         cnx.Conecta();
         Deshabilitar();
         LlenarTabla();
@@ -175,15 +172,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             } else if(txtApellidos.getText().trim().length()==0){ //Valida campo Apellido
             JOptionPane.showMessageDialog(this, "El campo de texto Apellidos está vacío,por favor llenarlo");
             val = false;
-//            } else if(txtCarnet.getText().trim().length()==0){ //Valida campo Apellido
-//            JOptionPane.showMessageDialog(this, "El campo de texto Carnet está vacío,por favor llenarlo");
-//            val = false;
-//            } else if(txtCelular.getText().trim().length()==0){ //Valida campo Apellido
-//            JOptionPane.showMessageDialog(this, "El campo de texto Celular está vacío,por favor llenarlo");
-//            val = false;
-//            } else if(txtEmail.getText().trim().length()==0){ //Valida campo Apellido
-//            JOptionPane.showMessageDialog(this, "El campo de texto e-mail está vacío,por favor llenarlo");
-//            val = false;
         } else {
             val=true;
         }       

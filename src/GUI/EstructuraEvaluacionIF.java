@@ -5,9 +5,8 @@
 package GUI;
 
 import clases.Asignatura;
+import clases.EstructuraEvaluacion;
 import clases.TipoEvaluacion;
-import java.awt.HeadlessException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,6 +30,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     Statement stm;
     TipoEvaluacion ev = new TipoEvaluacion();
     Asignatura a = new Asignatura();
+    EstructuraEvaluacion ee = new EstructuraEvaluacion();
     int id = 1;    
     
     /**
@@ -43,7 +43,6 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         BotonesInicio();
         LlenarTabla();
         llenarTXT();
-        //llenarCBA();
         llenarCBTE();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
@@ -51,14 +50,12 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private void limpiar(){        
         txtNobreEvaluacion.setText("");
         txtValor.setText("");
-        //cbxAsignatura.removeAllItems();
         cbxTipoEvaluacion.removeAllItems();
     }
     
     private void Deshabilitar() {
         txtNobreEvaluacion.setEnabled(false);        
         txtValor.setEnabled(false);
-        //cbxAsignatura.setEnabled(false);
         cbxTipoEvaluacion.setEnabled(false);
     }
     
@@ -67,7 +64,6 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         va.SoloLetras(txtNobreEvaluacion);
         txtValor.setEnabled(true);
         va.SoloNumeros(txtValor);
-        //cbxAsignatura.setEnabled(true);
         cbxTipoEvaluacion.setEnabled(true);
         txtNobreEvaluacion.requestFocus();
     }
@@ -138,25 +134,6 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             cnx.Desconecta();
         }
     }
-    
-//    private void llenarCBA() {
-//        cnx.Conecta();
-//        try {            
-//            modeloCombo1 = new DefaultComboBoxModel();            
-//            String SQL = "select nombreA from asignatura where idasignatura = " + id;
-//            stm = cnx.conn.createStatement();            
-//            rs = stm.executeQuery(SQL);
-//            while (rs.next()) {
-//                modeloCombo1.addElement(rs.getObject("nombreA"));
-//            }
-//            rs.close();
-//            cbxAsignatura.setModel(modeloCombo1);
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error LlenarCBA: " + ex.getMessage());
-//        } finally {
-//            cnx.Desconecta();
-//        }
-//    }
     
     private void llenarTXT() {
         cnx.Conecta();
@@ -239,6 +216,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 
         cbxTipoEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        txtAsignatura.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -277,7 +256,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         tblEstructuraEvaluacion.setModel(new javax.swing.table.DefaultTableModel(
@@ -399,35 +378,19 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try{
-                String SQL ="update estructuraevaluacion set nombreE=?, valor=?, idevaluacion=?,"
-                + "idasignatura=? where idestructuraevaluacion=?";
-                int fila = tblEstructuraEvaluacion.getSelectedRow();
-                String dato = (String)tblEstructuraEvaluacion.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtNobreEvaluacion.getText().trim());
-                ps.setString(2, txtValor.getText().trim());
-                ps.setInt(3, ev.consultaId(cbxTipoEvaluacion.getSelectedItem().toString()));
-                ps.setInt(4, a.consultaIdA(txtAsignatura.getText().trim()));
-                ps.setString(5, dato);
-
-                int n = ps.executeUpdate();
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-//                llenarCBA();
-                llenarCBTE();
-                limpiar();
-                Deshabilitar();        
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            int fila = tblEstructuraEvaluacion.getSelectedRow();
+            ee.setnombreE(txtNobreEvaluacion.getText().trim());
+            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
+            ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
+            ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
+            ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
+            ee.actualizarEstructuraEvaluacion();
         }
+        LlenarTabla();
+        llenarCBTE();
+        limpiar();
+        Deshabilitar();        
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -436,26 +399,14 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
-            cnx.Conecta();
-            try {
-                String SQL = "delete from estructuraevaluacion where idestructuraevaluacion= " + tblEstructuraEvaluacion.getValueAt(fila, 0);
-                stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
-                if(n>0){                
-                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
-            } finally {
-                limpiar();
-                Deshabilitar();
-                LlenarTabla();
-//                llenarCBA();
-                llenarCBTE();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
+            ee.eliminarEstructuraEvaluacion();
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        llenarCBTE();
+        BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -463,31 +414,17 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try {
-                String SQL = "insert into estructuraevaluacion(nombreE,valor,idevaluacion,idasignatura) "
-                + "values(?,?,?,?)";
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtNobreEvaluacion.getText());
-                ps.setString(2, txtValor.getText());
-                ps.setInt(3, ev.consultaId(cbxTipoEvaluacion.getSelectedItem().toString()));
-                ps.setInt(4, a.consultaIdA(txtAsignatura.getText().trim()));
-                int n = ps.executeUpdate();
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-//                llenarCBA();
-                llenarCBTE();
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            ee.setnombreE(txtNobreEvaluacion.getText().trim());
+            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
+            ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
+            ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
+            ee.guardarEstructuraEvaluacion();
         }
+        LlenarTabla();
+        llenarCBTE();
+        limpiar();
+        Deshabilitar();
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

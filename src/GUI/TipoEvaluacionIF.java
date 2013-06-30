@@ -2,7 +2,6 @@ package GUI;
 
 import clases.Asignatura;
 import clases.TipoEvaluacion;
-import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

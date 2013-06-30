@@ -1,14 +1,9 @@
 package GUI;
 
-import java.awt.HeadlessException;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.sql.PreparedStatement;
+import clases.Docente;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +17,7 @@ import util.Valida;
 public class DocenteIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     Valida va = new Valida();
+    Docente d = new Docente();
     DefaultTableModel model;
     Statement stm;
     ResultSet rs;
@@ -361,33 +357,18 @@ public class DocenteIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try{
-                String SQL ="update docente set nombre=?, apellido=?, usuario=?, contrasena=?"
-                + "where iddocente=?";
-                int fila = tblDocente.getSelectedRow();
-                String dato = (String)tblDocente.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtNombre.getText().trim());
-                ps.setString(2, txtApellido.getText().trim());
-                ps.setString(3, txtUsuario.getText().trim());
-                ps.setString(4, pswContrasena.getSelectedText().trim());
-                ps.setString(5, dato);
-
-                int n = ps.executeUpdate();
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                                
-                }
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            int fila = tblDocente.getSelectedRow();
+            d.setNombre(txtNombre.getText().trim());
+            d.setApellido(txtApellido.getText().trim());
+            d.setUsuario(txtUsuario.getText().trim());
+            d.setPassword(pswContrasena.getSelectedText().trim());
+            d.setIdDocente(Integer.parseInt(tblDocente.getValueAt(fila, 0).toString()));
+            d.actualizarDocente();
         }
+        LlenarTabla();
+        limpiar();
+        Deshabilitar();
+        BotonesInicio();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -396,29 +377,16 @@ public class DocenteIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            cnx.Conecta();
-            try {
-                String SQL = "insert into docente(nombre, apellido, usuario, contrasena) "
-                + "values(?,?,?,?)";
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
-                ps.setString(1, txtNombre.getText());
-                ps.setString(2, txtApellido.getText());
-                ps.setString(3, txtUsuario.getText());
-                ps.setString(4, pswContrasena.getSelectedText());
-                int n = ps.executeUpdate();
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            } finally {
-                LlenarTabla();
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            d.setNombre(txtNombre.getText().trim());
+            d.setApellido(txtApellido.getText().trim());
+            d.setUsuario(txtUsuario.getText().trim());
+            d.setPassword(pswContrasena.getSelectedText().trim());
+            d.guardarDocente();
         }
+        LlenarTabla();
+        limpiar();
+        Deshabilitar();
+        BotonesInicio();                
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -451,24 +419,13 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblDocente.getSelectedRow();
-            cnx.Conecta();
-            try {
-                String SQL = "delete from docente where iddocente= " + tblDocente.getValueAt(fila, 0);
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
-                if(n>0){                
-                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
-            } finally {
-                limpiar();
-                Deshabilitar();
-                LlenarTabla();
-                BotonesInicio();
-                cnx.Desconecta();
-            }
+            d.setIdDocente(Integer.parseInt(tblDocente.getValueAt(fila, 0).toString()));
+            d.eliminarDocente();
         }
+        limpiar();
+        Deshabilitar();
+        LlenarTabla();
+        BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
