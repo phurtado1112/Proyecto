@@ -18,32 +18,35 @@ public class Valida {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if(((int)c>=00 && (int)c<=31) || //32 es para la barra espaciadora
-                   ((int)c>=33 && (int)c<=64) || //65-90 es para A-Z (sin Ñ, ni vocales con dieresis o tilde)   
-                   ((int)c>=91 && (int)c<=96) || //97-122 es para a-z (sin ñ, ni vocales con dieresis o tilde)
-                   ((int)c>=123 && (int)c<=192)||
-                   ((int)c>=194 && (int)c<=195)|| //193 es para Á
-                   ((int)c>=197 && (int)c<=200)|| //196 es para Ä
-                   ((int)c==202)               || //201 es para É
-                   ((int)c==204)               || //203 es para Ë
-                   ((int)c==206)               || //205 es para Í
-                   ((int)c==208)               || //207 es para Ï
-                   ((int)c==210)               || //209 es para Ñ
-                   ((int)c>=212 && (int)c<=213)|| //211 es para Ó
-                   ((int)c>=215 && (int)c<=217)|| //214 es para Ö
-                   ((int)c==219)               || //218 es para Ú
-                   ((int)c>=221 && (int)c<=224)|| //220 es para Ü
-                   ((int)c>=226 && (int)c<=227)|| //225 es para á
-                   ((int)c>=229 && (int)c<=232)|| //228 es para ä
-                   ((int)c==234)               || //233 es para é
-                   ((int)c==236)               || //235 es para ë
-                   ((int)c==238)               || //237 es para í
-                   ((int)c==240)               || //239 es ï
-                   ((int)c==242)               || //241 es para ñ
-                   ((int)c>=244 && (int)c<=245)|| //243 es para ó
-                   ((int)c>=247 && (int)c<=249)|| //246 es para ö
-                   ((int)c==251)               || //250 es para ú
-                   ((int)c>=253))     {             //252 es para ü                     
+                if(
+                   ((int)c==32) || //32 es para la barra espaciadora      
+                    (c>='A' && c<='Z') ||
+                    (c=='Ñ')           ||
+                    (c=='Á') ||
+                    (c=='Ä') ||
+                    (c=='É') ||
+                    (c=='Ë') ||
+                    (c=='Í') ||
+                    (c=='Ï') ||
+                    (c=='Ó') ||
+                    (c=='Ö') ||
+                    (c=='Ú') ||
+                    (c=='Ü') ||
+                    (c>='a' && c<='z') ||
+                    (c=='ñ')||
+                    (c=='á') ||
+                    (c=='ä') ||
+                    (c=='é') ||
+                    (c=='ë') ||
+                    (c=='í') ||
+                    (c=='ï') ||
+                    (c=='ó') ||
+                    (c=='ö') ||
+                    (c=='ú') ||
+                    (c=='ü')                  
+                  )                                    
+                {}
+                else {
                     e.consume();
                 }
             }
@@ -53,65 +56,54 @@ public class Valida {
         }               
     }
     
-    public void LetrasNumeros(JTextField jt){
+    public void LetrasSinEspacios(final JTextField jt){ //Para las siglas en Universidad
         try{
             jt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if(((int)c>=00 && (int)c<=31) ||  //32 es para la barra espaciadora
-                        ((int)c>=33 && (int)c<=44) || //45 es para -
-                        ((int)c>=46 && (int)c<=47) || //48-57 es para numeros
-                        ((int)c>=58 && (int)c<=64) || //65-90 es para A-Z (sin Ñ, ni vocales con dieresis o tilde)
-                        ((int)c>=91 && (int)c<=96) || //97-122 es para a-z(sin ñ, ni vocales con dieresis o tilde)
-                        ((int)c>=123 && (int)c<=208) || //209 es para Ñ
-                        ((int)c>=210 && (int)c<=240) || //241 es para ñ
-                        ((int)c>=242)){                    
+                if(                    
+                    (c>='A' && c<='Z') ||
+                    (c=='Ñ')           ||
+                    (c>='a' && c<='z') ||
+                    (c=='ñ') ||
+                    (c=='-')
+                   ){
                     e.consume();
-                }
-            }
-        });
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
-        }               
-    }
-    
-    public void LetrasSinEspacios(JTextField jt){ //Para las siglas que no permiten espacios
-        try{
-            jt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e){
-                char c = e.getKeyChar();
-                if(((int)c>=00 && (int)c<=64) || //65-90 es para A-Z (sin Ñ, ni vocales con dieresis o tilde)
-                   ((int)c>=91 && (int)c<=96) || //97-122 es para a-z (sin ñ, ni vocales con dieresis o tilde)
-                   ((int)c>=97 && (int)c<=122)|| //***Para que no permita minusculas.
-                   ((int)c>=123 && (int)c<=192)||
-                   ((int)c>=194 && (int)c<=195)|| //193 es para Á
-                   ((int)c>=197 && (int)c<=200)|| //196 es para Ä
-                   ((int)c==202)               || //201 es para É
-                   ((int)c==204)               || //203 es para Ë
-                   ((int)c==206)               || //205 es para Í
-                   ((int)c==208)               || //207 es para Ï
-                   ((int)c==210)               || //209 es para Ñ
-                   ((int)c==209)               || //**209 para la Ñ
-                   ((int)c>=212 && (int)c<=213)|| //211 es para Ó
-                   ((int)c>=215 && (int)c<=217)|| //214 es para Ö
-                   ((int)c==219)               || //218 es para Ú
-                   ((int)c>=221 && (int)c<=224)|| //220 es para Ü
-                   ((int)c>=226 && (int)c<=227)|| //225 es para á
-                   ((int)c>=229 && (int)c<=232)|| //228 es para ä
-                   ((int)c==234)               || //233 es para é
-                   ((int)c==236)               || //235 es para ë
-                   ((int)c==238)               || //237 es para í
-                   ((int)c==240)               || //239 es ï
-                   ((int)c==242)               || //241 es para ñ
-                   ((int)c>=244 && (int)c<=245)|| //243 es para ó
-                   ((int)c>=247 && (int)c<=249)|| //246 es para ö
-                   ((int)c==251)               || //250 es para ú
-                   ((int)c>=253)                  //252 es para ü                                        
-                   ){               
-                    e.consume();
+                    String mayuscula=String.valueOf(c).toUpperCase();                                                           
+                    jt.setText(jt.getText().concat(mayuscula));                    
+                } 
+                else {
+                        e.consume();
                 }                
+            }
+        });
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+        }               
+    }
+    
+    public void LetrasNumeros(final JTextField jt){
+        try{
+            jt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();          
+                if (((int)c==32)|| // es par la barra espaciadora
+                    ((int)c=='-')|| 
+                    (c>='0' && c<='9') ||
+                    (c>='A' && c<='Z') ||
+                    (c=='Ñ')           ||
+                    (c>='a' && c<='z') ||
+                    (c=='ñ')
+                   ){
+                    e.consume();
+                    String mayuscula=String.valueOf(c).toUpperCase();                                                           
+                    jt.setText(jt.getText().concat(mayuscula));                    
+                }
+                else {
+                    e.consume();
+                }
             }
         });
         } catch (Exception e){
@@ -125,13 +117,10 @@ public class Valida {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if(
-                   ((int)c>=00 && (int)c<=47) || //Solo agarra los numeros. (Omite la barra espaciadora)
-                   ((int)c>=58)
-                        
-                   //PREGUNTAR en el caso de ESTRUCTURA EVALUACION como se hace con las notas que llevan decimal.
-                   //este metodo no pemite punto para decimales.
-                   ){                    
+                if ((c>='0' && c<='9') ||
+                     c=='.'
+                    ){} 
+                else{
                     e.consume();
                 }
             }
@@ -141,18 +130,18 @@ public class Valida {
         }
     }
                     
-    public void SeleccionarTodo(final JTextField jt){  
-            try{
-                jt.addFocusListener(new FocusAdapter() {                        
-                @Override
-                public void focusGained(FocusEvent e){
-                    jt.selectAll();
-                }                
-            });
-            } catch (Exception e){
-                JOptionPane.showMessageDialog(null, "Error en la validación " + e);
-            }               
-        }
+public void SeleccionarTodo(final JTextField jt){  
+        try{
+            jt.addFocusListener(new FocusAdapter() {                        
+            @Override
+            public void focusGained(FocusEvent e){
+                jt.selectAll();
+            }                
+        });
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+        }               
+    }
     
 //    public void email(JTextField jt){
 //        try{

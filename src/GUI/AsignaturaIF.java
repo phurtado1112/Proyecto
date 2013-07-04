@@ -217,6 +217,13 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
             } else if(txtAnio.getText().trim().length()==0){ //Valida campo Apellido
             JOptionPane.showMessageDialog(this, "El campo de texto Año está vacío,por favor llenarlo");
             val = false;
+            //Para que no permita puntos decimales en el campo del Año
+            } else if(txtAnio.getText().trim().indexOf(".")!=-1){
+            JOptionPane.showMessageDialog(this, "El campo de texto Año no debe incluir puntos");    
+            val=false;
+            } else if(txtAnio.getText().trim().length()!=4){ //Valida campo Apellido
+            JOptionPane.showMessageDialog(this, "El campo de texto Año debe tener 4 Digitos");
+            val = false;
             } else if(txtPeriodo.getText().trim().length()==0){ //Valida campo Apellido
             JOptionPane.showMessageDialog(this, "El campo de texto Período está vacío,por favor llenarlo");
             val = false;

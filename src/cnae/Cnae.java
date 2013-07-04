@@ -19,6 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import GUI.repUniversidadIF;
 import java.awt.Dimension;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 
 /**
@@ -45,6 +48,18 @@ public class Cnae extends javax.swing.JFrame {
     int height = (desktopSize.height - jInternalFrameSize.height) / 2;
     jif.setLocation(width, height);
     jif.setVisible(true);
+    }
+    
+    public boolean validar(JInternalFrame jif){
+        boolean estado;
+        
+        if(jif.isClosed()){
+            estado=true;            
+        }else
+        {
+            estado=false;
+        }
+        return estado;        
     }
 
     /**
@@ -387,18 +402,36 @@ public class Cnae extends javax.swing.JFrame {
         TipoEvaluacionIF evaluacionVent = new TipoEvaluacionIF();
         centerJIF(evaluacionVent);
         Escritorio.add(evaluacionVent);
+        evaluacionVent.toFront();
+        try {
+            evaluacionVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuEvaluacionActionPerformed
 
     private void MnuCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCalendarioActionPerformed
         CalendarioIF calendarioVent = new CalendarioIF();
         centerJIF(calendarioVent);
         Escritorio.add(calendarioVent);
+        calendarioVent.toFront();
+        try {
+                calendarioVent.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_MnuCalendarioActionPerformed
 
     private void MnuTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoActividadActionPerformed
         TipoActividadIF tipoActividadVent = new TipoActividadIF();
         centerJIF(tipoActividadVent);
         Escritorio.add(tipoActividadVent);
+        tipoActividadVent.toFront();
+        try {
+            tipoActividadVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_MnuTipoActividadActionPerformed
 
@@ -413,36 +446,72 @@ public class Cnae extends javax.swing.JFrame {
         UniversidadIF universidadVent = new UniversidadIF();
         centerJIF(universidadVent);
         Escritorio.add(universidadVent);
+        universidadVent.toFront();
+        try {
+            universidadVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuUniversidadesActionPerformed
 
     private void MnuFacultadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuFacultadesActionPerformed
         FacultadIF facultadVent = new FacultadIF();
         centerJIF(facultadVent);
         Escritorio.add(facultadVent);
+        facultadVent.toFront();
+        try {
+            facultadVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuFacultadesActionPerformed
 
     private void MnuCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCarrerasActionPerformed
         CarreraIF carreraVent = new CarreraIF();
         centerJIF(carreraVent);
         Escritorio.add(carreraVent);
+        carreraVent.toFront();
+        try {
+            carreraVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuCarrerasActionPerformed
 
     private void MnuAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuAsignaturaActionPerformed
         AsignaturaIF asignaturaVent = new AsignaturaIF();
         centerJIF(asignaturaVent);
         Escritorio.add(asignaturaVent);
+        asignaturaVent.toFront();
+        try {
+            asignaturaVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuAsignaturaActionPerformed
 
     private void MnuEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEstudiantesActionPerformed
         EstudianteIF estudianteVent = new EstudianteIF();
         centerJIF(estudianteVent);
         Escritorio.add(estudianteVent);
+        estudianteVent.toFront();
+        try {
+            estudianteVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuEstudiantesActionPerformed
 
     private void MnuTipoEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoEvaluacionActionPerformed
         TipoEvaluacionIF tipoevaluacionVent = new TipoEvaluacionIF();
         centerJIF(tipoevaluacionVent);
         Escritorio.add(tipoevaluacionVent);
+        tipoevaluacionVent.toFront();
+        try {
+            tipoevaluacionVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuTipoEvaluacionActionPerformed
 
     private void mnuCatalogosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCatalogosActionPerformed
@@ -453,48 +522,96 @@ public class Cnae extends javax.swing.JFrame {
         repUniversidadIF universidadRep = new repUniversidadIF();
         centerJIF(universidadRep);
         Escritorio.add(universidadRep);
+        universidadRep.toFront();
+        try {
+            universidadRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mnuUniversidadActionPerformed
 
     private void mnuFacultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFacultadActionPerformed
         repFacultadIF facultadRep = new repFacultadIF();
         centerJIF(facultadRep);
-        Escritorio.add(facultadRep);               
+        Escritorio.add(facultadRep);
+        facultadRep.toFront();
+        try {
+            facultadRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mnuFacultadActionPerformed
 
     private void mnuCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCarreraActionPerformed
         repCarreraIF carreraRep = new repCarreraIF();
         centerJIF(carreraRep);
         Escritorio.add(carreraRep);
+        carreraRep.toFront();
+        try {
+            carreraRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mnuCarreraActionPerformed
 
     private void mnuAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignaturaActionPerformed
         repAsignaturaIF asignaturaRep = new repAsignaturaIF();
         centerJIF(asignaturaRep);
         Escritorio.add(asignaturaRep);
+        asignaturaRep.toFront();
+        try {
+            asignaturaRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mnuAsignaturaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         DocenteIF  docenteVent = new DocenteIF();
         centerJIF(docenteVent);
         Escritorio.add(docenteVent);
+        docenteVent.toFront();
+        try {
+            docenteVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void MnuEstructuraEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEstructuraEvaluacionActionPerformed
         EstructuraEvaluacionIF estructuraVent = new EstructuraEvaluacionIF();
         centerJIF(estructuraVent);
         Escritorio.add(estructuraVent);
+        estructuraVent.toFront();
+        try {
+            estructuraVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuEstructuraEvaluacionActionPerformed
 
     private void MnuRegistroAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRegistroAsistenciaActionPerformed
         AsistenciaIF asistenciaVent = new AsistenciaIF();
         centerJIF(asistenciaVent);
         Escritorio.add(asistenciaVent);
+        asistenciaVent.toFront();
+        try {
+            asistenciaVent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuRegistroAsistenciaActionPerformed
 
     private void MnuRepDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepDocenteActionPerformed
         repDocenteIF docenteRep = new repDocenteIF();
         centerJIF(docenteRep);
         Escritorio.add(docenteRep);
+         docenteRep.toFront();        
+        try {
+            docenteRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MnuRepDocenteActionPerformed
 
     private void MnuCambioAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCambioAsignaturaActionPerformed

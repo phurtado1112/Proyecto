@@ -154,11 +154,31 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     
     private boolean validar(){
 	boolean val;
+        int contador=0;   //Para que cuente cuantos puntos decimales escribio el usuario
+        String valor=txtValor.getText().trim(); //Hace referencia al txtValor
+        if(valor.length()>0)
+        {            
+            for(int i=0; i<=valor.length()-1; i++)
+            {
+                if(valor.charAt(i)=='.'){
+                    contador+=1;                    
+                }
+            }            
+        }
         if(txtNobreEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
             JOptionPane.showMessageDialog(this, "El campo de texto Evaluación está vacío,por favor llenarlo");
             val = false;
-        } else if(txtValor.getText().trim().length()==0){ //Valida campo Apellido
+        } else if(valor.length()==0){ //Valida la nota
             JOptionPane.showMessageDialog(this, "El campo de texto Valor está vacío,por favor llenarlo");
+            val = false;
+        } else if(valor.startsWith(".")&& valor.endsWith(".")){  //Valida si solamente se puso 1 punto
+            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
+            val = false;
+        } else if(contador>1){ //Valida que no haya mas de 1 punto decimal
+            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
+            val = false;
+        }  else if(Integer.parseInt(valor)>100){ //Valida que la nota no sea mayor que 100
+            JOptionPane.showMessageDialog(this, "El valor máximo para el campo de texto Valor es 100");
             val = false;
         } else {
             val=true;
