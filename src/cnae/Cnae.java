@@ -3,6 +3,7 @@ package cnae;
 import GUI.AsignaturaIF;
 import GUI.AsistenciaIF;
 import GUI.CalendarioIF;
+import GUI.CambioContrasena;
 import GUI.CarreraIF;
 import GUI.DocenteIF;
 import GUI.EstructuraEvaluacionIF;
@@ -357,6 +358,11 @@ public class Cnae extends javax.swing.JFrame {
 
         MnuCambioContrasena.setMnemonic('c');
         MnuCambioContrasena.setText("Cambio Contraseña");
+        MnuCambioContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuCambioContrasenaActionPerformed(evt);
+            }
+        });
         MnuPrUtilitarios.add(MnuCambioContrasena);
 
         MnuRespaldoDatos.setMnemonic('r');
@@ -606,7 +612,7 @@ public class Cnae extends javax.swing.JFrame {
         repDocenteIF docenteRep = new repDocenteIF();
         centerJIF(docenteRep);
         Escritorio.add(docenteRep);
-         docenteRep.toFront();        
+        docenteRep.toFront();        
         try {
             docenteRep.setSelected(true);
         } catch (PropertyVetoException ex) {
@@ -615,8 +621,20 @@ public class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuRepDocenteActionPerformed
 
     private void MnuCambioAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCambioAsignaturaActionPerformed
-        // TODO add your handling code here:
+                
     }//GEN-LAST:event_MnuCambioAsignaturaActionPerformed
+
+    private void MnuCambioContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCambioContrasenaActionPerformed
+        CambioContrasena cambio= new CambioContrasena();
+        centerJIF(cambio);
+        Escritorio.add(cambio);
+        cambio.toFront();
+        try {
+            cambio.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuCambioContrasenaActionPerformed
 
     /**
      * @param args the command line arguments
