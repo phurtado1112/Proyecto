@@ -51,11 +51,15 @@ public class DocenteIF extends javax.swing.JInternalFrame {
     private void Habilitar(){
         txtNombre.setEnabled(true);
         va.SoloLetras(txtNombre);
+        va.SeleccionarTodo(txtNombre);
         txtApellido.setEnabled(true);
         va.SoloLetras(txtApellido);
+        va.SeleccionarTodo(txtApellido);
         txtUsuario.setEnabled(true);
         va.LetrasNumeros(txtUsuario);
-        pswContrasena.setEnabled(true);        
+        va.SeleccionarTodo(txtUsuario);
+        pswContrasena.setEnabled(true);
+        va.SeleccionarTodo(pswContrasena);
         txtNombre.requestFocus();
     }
     

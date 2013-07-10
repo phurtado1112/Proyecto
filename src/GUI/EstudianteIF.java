@@ -51,13 +51,18 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     public void Habilitar(){
         txtNombres.setEnabled(true);
         va.SoloLetras(txtNombres);
+        va.SeleccionarTodo(txtNombres);
         txtApellidos.setEnabled(true);
         va.SoloLetras(txtApellidos);
+        va.SeleccionarTodo(txtApellidos);
         txtCarnet.setEnabled(true);
         va.LetrasNumeros(txtCarnet);
+        va.SeleccionarTodo(txtCarnet);
         txtEmail.setEnabled(true);
-        txtCelular.setEnabled(true);
+        va.SeleccionarTodo(txtEmail);
+        txtCelular.setEnabled(true);        
         va.SoloNumeros(txtCelular);
+        va.SeleccionarTodo(txtCelular);
         txtNombres.requestFocus();
     }
     

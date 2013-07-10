@@ -54,10 +54,12 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     
     public void Habilitar(){
         txtUniversidad.setEnabled(true);
-        va.SoloLetras(txtUniversidad);
-        txtUniversidad.requestFocus();
+        va.SoloLetras(txtUniversidad); 
+        va.SeleccionarTodo(txtUniversidad);
         txtSiglas.setEnabled(true);
         va.SoloLetras(txtSiglas);
+        va.SeleccionarTodo(txtSiglas);
+        txtUniversidad.requestFocus();
     }
     
     private void BotonesInicio(){

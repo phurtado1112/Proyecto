@@ -80,12 +80,16 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
     private void Habilitar(){
         txtAsignatura.setEnabled(true);
         va.SoloLetras(txtAsignatura);
+        va.SeleccionarTodo(txtAsignatura);
         txtCodigoGrupo.setEnabled(true);
         va.LetrasNumeros(txtCodigoGrupo);
+        va.SeleccionarTodo(txtCodigoGrupo);
         txtPeriodo.setEnabled(true);
         va.LetrasNumeros(txtPeriodo);
+        va.SeleccionarTodo(txtPeriodo);
         txtAnio.setEnabled(true);
         va.SoloNumeros(txtAnio);
+        va.SeleccionarTodo(txtAnio);
         cbxUniversidad.setEnabled(true);
         cbxFacultad.setEnabled(true);
         cbxCarrera.setEnabled(true);

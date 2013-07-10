@@ -62,8 +62,10 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private void Habilitar(){
         txtNobreEvaluacion.setEnabled(true);
         va.SoloLetras(txtNobreEvaluacion);
+        va.SeleccionarTodo(txtNobreEvaluacion);
         txtValor.setEnabled(true);
         va.SoloNumeros(txtValor);
+        va.SeleccionarTodo(txtValor);
         cbxTipoEvaluacion.setEnabled(true);
         txtNobreEvaluacion.requestFocus();
     }

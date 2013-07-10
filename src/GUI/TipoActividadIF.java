@@ -46,6 +46,7 @@ public class TipoActividadIF extends javax.swing.JInternalFrame {
     public void Habilitar(){
         txtTipoActividad.setEnabled(true);
         va.SoloLetras(txtTipoActividad);
+        va.SeleccionarTodo(txtTipoActividad);
         txtTipoActividad.requestFocus();
     }
     

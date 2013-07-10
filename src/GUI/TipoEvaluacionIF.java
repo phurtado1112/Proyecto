@@ -50,6 +50,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
     private void Habilitar(){
         txtAsignatura.setEnabled(true);
         va.SoloLetras(txtAsignatura);
+        va.SeleccionarTodo(txtAsignatura);
         txtAsignatura.requestFocus();
     }
     
