@@ -170,10 +170,8 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
-        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Catálogo de Calendario");
         try {
             setSelected(true);
@@ -342,7 +340,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnSalir))
-                .addGap(0, 87, Short.MAX_VALUE))
+                .addGap(0, 95, Short.MAX_VALUE))
         );
 
         pack();

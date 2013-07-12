@@ -226,11 +226,9 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setClosable(true);
         setForeground(java.awt.Color.blue);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Catálogo de Estudiantes");
         try {
             setSelected(true);
@@ -404,7 +402,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btnGuardar)

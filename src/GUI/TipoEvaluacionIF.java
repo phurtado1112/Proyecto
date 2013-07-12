@@ -339,7 +339,6 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){            
             te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
-            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
             te.guardarTipoEvaluacion();
         }
         limpiar();
@@ -356,7 +355,6 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             int fila = tblTipoEvaluacion.getSelectedRow();
             te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
-            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
             te.setIdevaluacion(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
             te.actualizarTipoEvaluacion();
         }

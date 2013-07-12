@@ -264,10 +264,8 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Catálogo Asignatura");
         try {
             setSelected(true);
@@ -296,7 +294,6 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
 
         cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxUniversidad.addItemListener(new java.awt.event.ItemListener() {
-            @Override
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxUniversidadItemStateChanged(evt);
             }
@@ -304,7 +301,6 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
 
         cbxFacultad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxFacultad.addItemListener(new java.awt.event.ItemListener() {
-            @Override
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxFacultadItemStateChanged(evt);
             }
@@ -394,14 +390,12 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 false, false, false, false, false, true, true, true
             };
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         tblAsignatura.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblAsignatura.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JTableMouseClikedPerformed(evt);
             }
@@ -493,7 +487,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnSalir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();

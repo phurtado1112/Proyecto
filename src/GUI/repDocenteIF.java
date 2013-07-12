@@ -72,6 +72,8 @@ public class repDocenteIF extends javax.swing.JInternalFrame {
         btnEjecutar = new javax.swing.JButton();
         Salir = new javax.swing.JButton();
 
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Reporte de Catálogo de Docente");
 
         btnEjecutar.setText("Ejecutar");
@@ -106,7 +108,7 @@ public class repDocenteIF extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEjecutar)
                     .addComponent(Salir))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();

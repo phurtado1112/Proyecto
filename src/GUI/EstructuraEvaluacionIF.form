@@ -2,10 +2,8 @@
 
 <Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
-    <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
-    <Property name="resizable" type="boolean" value="true"/>
     <Property name="selected" type="boolean" value="true"/>
     <Property name="visible" type="boolean" value="true"/>
   </Properties>
@@ -120,7 +118,7 @@
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <Component id="txtAsignatura" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="51" max="32767" attributes="0"/>
+                  <EmptySpace pref="55" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
