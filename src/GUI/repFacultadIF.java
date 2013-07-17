@@ -69,10 +69,6 @@ public class repFacultadIF extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnEjecutar = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Reporte de Catálogo de Facultades");
         try {
             setSelected(true);
@@ -113,7 +109,7 @@ public class repFacultadIF extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEjecutar)
                     .addComponent(jButton1))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();

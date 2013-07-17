@@ -264,8 +264,6 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Catálogo Asignatura");
         try {
             setSelected(true);

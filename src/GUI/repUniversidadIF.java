@@ -123,10 +123,6 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
         rbDetalle = new javax.swing.JRadioButton();
         rbListado = new javax.swing.JRadioButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Reporte de Universidades");
         try {
             setSelected(true);
@@ -218,7 +214,7 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEjecutar)
                     .addComponent(jButton1))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();

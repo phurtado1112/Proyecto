@@ -175,8 +175,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAsistencia = new javax.swing.JTable();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Lista de Asistencia");
         try {
             setSelected(true);

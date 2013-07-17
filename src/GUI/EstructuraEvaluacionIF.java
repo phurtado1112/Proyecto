@@ -215,8 +215,6 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {

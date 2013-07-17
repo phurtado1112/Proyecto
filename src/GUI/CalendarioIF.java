@@ -170,8 +170,6 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Catálogo de Calendario");
         try {
             setSelected(true);

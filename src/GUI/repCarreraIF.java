@@ -69,8 +69,6 @@ public class repCarreraIF extends javax.swing.JInternalFrame {
         btnEjecutar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Reporte de Catálogo de Carreras");
         try {
             setSelected(true);

@@ -227,8 +227,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
 
         setForeground(java.awt.Color.blue);
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Catálogo de Estudiantes");
         try {
             setSelected(true);

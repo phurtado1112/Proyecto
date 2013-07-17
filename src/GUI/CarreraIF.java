@@ -194,8 +194,6 @@ public class CarreraIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Catálogo Carrera");
         try {
             setSelected(true);

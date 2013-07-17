@@ -163,10 +163,6 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtTipoEvaluacion1 = new javax.swing.JTextField();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Catálogo de Tipo de Evaluación");
         try {
             setSelected(true);
@@ -313,7 +309,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnSalir))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -339,6 +335,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){            
             te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
+            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
             te.guardarTipoEvaluacion();
         }
         limpiar();
@@ -355,6 +352,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             int fila = tblTipoEvaluacion.getSelectedRow();
             te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
+            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
             te.setIdevaluacion(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
             te.actualizarTipoEvaluacion();
         }

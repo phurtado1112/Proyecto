@@ -69,8 +69,6 @@ public class repAsignaturaIF extends javax.swing.JInternalFrame {
         btnEjecutar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Reporte de Catálogo Asignaturas");
         try {
             setSelected(true);

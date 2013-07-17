@@ -172,8 +172,6 @@ public class FacultadIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Catálogo Facultad");
         try {
             setSelected(true);
