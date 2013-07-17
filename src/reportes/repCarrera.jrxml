@@ -2,9 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repCarrera" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f1536ea-bea8-40a9-b155-bc136631c93a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="4"/>
-	<queryString language="SQL">
-		<![CDATA[select * from carrera_compl_view]]>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IdUniversidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from carrera_compl_view where iduniversidad=$P{IdUniversidad}]]>
 	</queryString>
 	<field name="idcarrera" class="java.lang.Object"/>
 	<field name="nombreC" class="java.lang.Object"/>
@@ -44,11 +47,11 @@
 	<title>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="be00c6e3-8853-4bd3-97d1-10ed67d335d8" x="150" y="16" width="272" height="34"/>
+				<reportElement uuid="be00c6e3-8853-4bd3-97d1-10ed67d335d8" x="114" y="14" width="348" height="34"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Catálogo de Carreras]]></text>
+				<text><![CDATA[Catálogo de Detallado de Universidad]]></text>
 			</staticText>
 		</band>
 	</title>

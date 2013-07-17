@@ -1,11 +1,14 @@
 package GUI;
 
+import clases.Universidad;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -30,6 +33,7 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     DefaultComboBoxModel modeloCombo;
     ResultSet rs;
+    Universidad u = new Universidad();
     
     
     /**
@@ -68,11 +72,17 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
+            int Univer = u.consultaIdU(cbUniversidad.getSelectedItem().toString());
+            
             File f1 = new File("src/reportes/repCarrera.jasper");            
             String template = f1.getPath();
             reporte = (JasperReport) JRLoader. loadObject(template);                                    
             
-            jasperprint = JasperFillManager.fillReport(reporte, null, conn);
+            Map parametros = new HashMap<>();
+            parametros.put("IdUniversidad", Univer);
+        //parametros.put("titulo", "Reporte Participantes");
+            
+            jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
             JasperViewer visor=new JasperViewer(jasperprint,false);
             visor.setTitle("Universidades - CNAE");
             visor.setVisible(true);

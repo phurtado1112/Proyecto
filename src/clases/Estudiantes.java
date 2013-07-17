@@ -18,7 +18,7 @@ public class Estudiantes {
     private int idestudiante;
     private String apellidos;
     private String carne;
-    private int celular;
+    private String celular;
     private String email;
     private String nombre;
     private int idasignatura;
@@ -29,7 +29,7 @@ public class Estudiantes {
 
 	}
 
-    public Estudiantes(String apellidos, String carne, int celular, String email, String nombre, int idestudiante, int idasignatura) {
+    public Estudiantes(String apellidos, String carne, String celular, String email, String nombre, int idestudiante, int idasignatura) {
         this.apellidos = apellidos;
         this.carne = carne;
         this.celular = celular;
@@ -55,7 +55,7 @@ public class Estudiantes {
             return carne;
     }
 
-    public int getCelular(){
+    public String getCelular(){
             return celular;
     }
 
@@ -75,7 +75,7 @@ public class Estudiantes {
             carne = carn;
     }
 
-    public void setCelular(int celula){
+    public void setCelular(String celula){
             celular = celula;
     }
 

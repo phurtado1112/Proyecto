@@ -108,11 +108,10 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     
     //Llena con datos el JTable con un consulta
     private void LlenarTabla() {
-        int[] anchos = {30, 150, 150, 80, 80, 100, 150};
+        int[] anchos = {30, 140, 140, 80, 80, 80, 250};
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Nombres", "Apellidos", "Carnet","Email",
-                "Celular"};
+            String [] titulos ={"ID","Nombres", "Apellidos", "Carnet","Celular","Email"};
             String SQL = "Select * from estudiante_view";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
@@ -175,24 +174,18 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El campo de texto Nombres está vacío,por favor llenarlo");
             val = false;       
             } else if(txtApellidos.getText().trim().length()==0){ //Valida campo Apellido
-            JOptionPane.showMessageDialog(this, "El campo de texto Apellidos está vacío,por favor llenarlo");
-            val = false;
-//        } else if(txtCarnet.getText().trim().length()==0){ //Valida campo Apellido
-//            JOptionPane.showMessageDialog(this, "El campo de texto Carnet está vacío,por favor llenarlo");
-//            val = false;
-//            } else if(txtCelular.getText().trim().length()==0){ //Valida campo Apellido
-//                JOptionPane.showMessageDialog(this, "El campo de texto Celular está vacío,por favor llenarlo");
-//                val = false;
-             //Para que no permita puntos decimales en el campo del Año
-            } else if(txtCelular.getText().trim().indexOf(".")!=-1){
+                JOptionPane.showMessageDialog(this, "El campo de texto Apellidos está vacío,por favor llenarlo");
+                val = false;
+            } else if(txtCelular.getText().trim().length()!=0){ //Valida campo Apellido                                
+                if(txtCelular.getText().trim().indexOf(".")!=-1){
                 JOptionPane.showMessageDialog(this, "El campo de texto Celular no debe incluir puntos");    
                 val=false;
-            } else if (txtCelular.getText().trim().length()!=8) {
+                } else if (txtCelular.getText().trim().length()!=8) {
                     JOptionPane.showMessageDialog(this, "El campo de texto Celular debe contener 8 dígitos");                
-                val = false;
-//            } else if(txtEmail.getText().trim().length()==0){ //Valida campo Apellido
-//                JOptionPane.showMessageDialog(this, "El campo de texto e-mail está vacío,por favor llenarlo");
-//                val = false;
+                val = false;}
+                else {
+                    val=true;
+                }
             } else {
                 val=true;
             }       
@@ -280,7 +273,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                                     .add(18, 18, 18)
                                     .add(txtAsignatura, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 162, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))
                     .add(jLabel6))
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -392,7 +385,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                 .add(btnCancelar)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(btnSalir)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(316, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
@@ -400,7 +393,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btnGuardar)
@@ -443,7 +436,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             e.setNombre(txtNombres.getText().trim());
             e.setApellidos(txtApellidos.getText().trim());
             e.setCarnet(txtCarnet.getText().trim());
-            e.setCelular(Integer.parseInt(txtCelular.getText().trim()));
+            e.setCelular(txtCelular.getText().trim());
             e.setEmail(txtEmail.getText().trim());
             e.setIdAsignatura(a.consultaIdA(txtAsignatura.getText()));
             e.setIdEstudiante(Integer.parseInt(tblEstudiantes.getValueAt(fila, 0).toString()));
@@ -478,7 +471,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             e.setNombre(txtNombres.getText().trim());
             e.setApellidos(txtApellidos.getText().trim());
             e.setCarnet(txtCarnet.getText().trim());
-            e.setCelular(Integer.parseInt(txtCelular.getText().trim()));
+            e.setCelular(txtCelular.getText().trim());
             e.setEmail(txtEmail.getText().trim());
             e.setIdAsignatura(a.consultaIdA(txtAsignatura.getText()));
             e.guardarEstudiante();
@@ -520,7 +513,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                 txtNombres.setText(rs.getString("nombreE"));
                 txtApellidos.setText(rs.getString("apellidoE"));
                 txtCarnet.setText(rs.getString("carnet"));
-                txtCarnet.setText(rs.getString("celular"));
+                txtCelular.setText(rs.getString("celular"));
                 txtEmail.setText(rs.getString("email"));
             } catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "Error MouseCliked: " + ex.getMessage());
