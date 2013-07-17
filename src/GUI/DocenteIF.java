@@ -172,9 +172,6 @@ public class DocenteIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Catálogo de Docente");
         try {
             setSelected(true);
@@ -336,7 +333,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
                     .addComponent(btnSalir))
-                .addGap(0, 61, Short.MAX_VALUE))
+                .addGap(0, 85, Short.MAX_VALUE))
         );
 
         pack();

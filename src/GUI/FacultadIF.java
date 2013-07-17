@@ -172,10 +172,6 @@ public class FacultadIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Catálogo Facultad");
         try {
             setSelected(true);
@@ -319,7 +315,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addGap(0, 49, Short.MAX_VALUE))
+                .addGap(0, 89, Short.MAX_VALUE))
         );
 
         pack();

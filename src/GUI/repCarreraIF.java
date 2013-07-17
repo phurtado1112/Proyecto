@@ -69,10 +69,6 @@ public class repCarreraIF extends javax.swing.JInternalFrame {
         btnEjecutar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Reporte de Catálogo de Carreras");
         try {
             setSelected(true);
@@ -113,7 +109,7 @@ public class repCarreraIF extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEjecutar)
                     .addComponent(jButton1))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
