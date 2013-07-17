@@ -206,7 +206,8 @@ public class NotasIF extends javax.swing.JInternalFrame {
 //        LlenarTabla();
 //        BotonesInicio();
 //    }//GEN-LAST:event_btnCancelarActionPerformed
-
+ private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {}
+ 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         int i = JOptionPane.showConfirmDialog(null, "Desea Salir?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
@@ -277,6 +278,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
 //        }
 //    }//GEN-LAST:event_btnEliminarActionPerformed
 //
+    }
 //    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 //        if (validar()==true){
 //            int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
@@ -308,6 +310,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
 //                }
 //            }
 //        }
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
