@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import util.Conecta;
+import util.Globales;
 
 /**
  *
@@ -31,7 +32,8 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
-    int id = 1;
+    //Globales g = new Globales();
+    //int id = 1;
     
     /**
      * Creates new form Asistencia
@@ -132,7 +134,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private void llenarTXT() {
         cnx.Conecta();
          try {             
-            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {

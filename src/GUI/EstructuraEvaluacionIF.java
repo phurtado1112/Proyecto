@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
+import util.Globales;
 import util.Valida;
 
 /**
@@ -31,7 +32,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     TipoEvaluacion ev = new TipoEvaluacion();
     Asignatura a = new Asignatura();
     EstructuraEvaluacion ee = new EstructuraEvaluacion();
-    int id = 1;    
+    //int id = 1;    
     
     /**
      * Creates new form EstructuraEvaluacionIF
@@ -140,7 +141,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private void llenarTXT() {
         cnx.Conecta();
          try {             
-            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {

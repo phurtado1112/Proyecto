@@ -30,7 +30,7 @@ import javax.swing.JInternalFrame;
  * @author PabloAntonio
  */
 public class Cnae extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form cnae
      */

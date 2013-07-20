@@ -72,7 +72,7 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            int Univer = u.consultaIdU(cbUniversidad.getSelectedItem().toString());
+            int Univer = u.consultaIdU(cbUniversidad.getSelectedItem().toString());            
             
             File f1 = new File("src/reportes/repCarrera.jasper");            
             String template = f1.getPath();
@@ -80,7 +80,8 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
             
             Map parametros = new HashMap<>();
             parametros.put("IdUniversidad", Univer);
-        //parametros.put("titulo", "Reporte Participantes");
+            
+            //JOptionPane.showMessageDialog(null, "El valor de Univer: " + parametros);
             
             jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
             JasperViewer visor=new JasperViewer(jasperprint,false);
@@ -240,16 +241,11 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
        
-             if(rbDetalle.isSelected()==true){
-//            cbUniversidad.setEnabled(true);
-//            llenarCB();
-                 this.reporteUDet();
-            //codigo para llenar el combobox
+        if(rbDetalle.isSelected()==true){
+            this.reporteUDet();
         } else{
             this.reporteU();
-        }
-       
-        
+        }        
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
     private void rbDetalleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbDetalleItemStateChanged

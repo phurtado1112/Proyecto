@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
+import util.Globales;
 
 /**
  *
@@ -27,7 +28,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
-    int id = 1;
+    //int id = 1;
     String Asignatura;
 
     /**
@@ -87,7 +88,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         cnx.Conecta();
         try{
             String [] titulos ={"ID","Fecha","Actividad"};
-            String SQL = "Select * from calendario_view where idasignatura = " + id;
+            String SQL = "Select * from calendario_view where idasignatura = " + Globales.id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
@@ -128,7 +129,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     private void llenarTXT() {
         cnx.Conecta();
          try {             
-            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {

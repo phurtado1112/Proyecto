@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from carrera_compl_view where iduniversidad=$P{IdUniversidad}]]>
+		<![CDATA[select * from carrera_compl_view where $P{IdUniversidad}]]>
 	</queryString>
 	<field name="idcarrera" class="java.lang.Object"/>
 	<field name="nombreC" class="java.lang.Object"/>

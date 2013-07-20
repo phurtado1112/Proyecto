@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
+import util.Globales;
 import util.Valida;
 
 /**
@@ -27,7 +28,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     Valida va = new Valida();
     Statement stm;
     ResultSet rs;
-    int id = 1;
+    //int id = 1;
     
     /**
      * Creates new form EstudianteIF
@@ -154,7 +155,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
     private void llenarTXT() {
         cnx.Conecta();
          try {             
-            String SQL = "select nombreA from asignatura where idasignatura = " + id;
+            String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
