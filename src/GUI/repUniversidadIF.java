@@ -79,9 +79,9 @@ public class repUniversidadIF extends javax.swing.JInternalFrame {
             reporte = (JasperReport) JRLoader. loadObject(template);                                    
             
             Map parametros = new HashMap<>();
-            parametros.put("IdUniversidad", Univer);
+            parametros.put("iduniv", Univer);
             
-            //JOptionPane.showMessageDialog(null, "El valor de Univer: " + parametros);
+            JOptionPane.showMessageDialog(null, "El valor de iduniv: " + parametros);
             
             jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
             JasperViewer visor=new JasperViewer(jasperprint,false);
