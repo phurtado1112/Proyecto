@@ -3,16 +3,14 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="IdUniversidad" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
-		<![CDATA[select * from carrera_compl_view where $P{IdUniversidad}]]>
+		<![CDATA[select * from carrera_compl_view where $Fiduniver]]>
 	</queryString>
 	<field name="idcarrera" class="java.lang.Object"/>
 	<field name="nombreC" class="java.lang.Object"/>
 	<field name="nombreF" class="java.lang.Object"/>
 	<field name="nombreU" class="java.lang.Object"/>
+	<variable name="iduniver" class="java.lang.Integer"/>
 	<group name="nombreU">
 		<groupExpression><![CDATA[$F{nombreU}]]></groupExpression>
 		<groupHeader>
