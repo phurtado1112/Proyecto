@@ -10,6 +10,8 @@ import GUI.EstructuraEvaluacionIF;
 import GUI.EstudianteIF;
 import GUI.TipoEvaluacionIF;
 import GUI.FacultadIF;
+import GUI.RecuperacionDeDatos;
+import GUI.Respaldo;
 import GUI.TipoActividadIF;
 import GUI.UniversidadIF;
 import GUI.repAsignaturaIF;
@@ -367,10 +369,20 @@ public class Cnae extends javax.swing.JFrame {
 
         MnuRespaldoDatos.setMnemonic('r');
         MnuRespaldoDatos.setText("Respaldo de Datos");
+        MnuRespaldoDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuRespaldoDatosActionPerformed(evt);
+            }
+        });
         MnuPrUtilitarios.add(MnuRespaldoDatos);
 
         MnuRecuperacionDatos.setMnemonic('d');
         MnuRecuperacionDatos.setText("Recuperación de Datos");
+        MnuRecuperacionDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuRecuperacionDatosActionPerformed(evt);
+            }
+        });
         MnuPrUtilitarios.add(MnuRecuperacionDatos);
 
         jMenuBar1.add(MnuPrUtilitarios);
@@ -635,6 +647,30 @@ public class Cnae extends javax.swing.JFrame {
             Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_MnuCambioContrasenaActionPerformed
+
+    private void MnuRespaldoDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRespaldoDatosActionPerformed
+        Respaldo respal= new Respaldo();
+        centerJIF(respal);
+        Escritorio.add(respal);
+        respal.toFront();
+        try {
+            respal.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRespaldoDatosActionPerformed
+
+    private void MnuRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRecuperacionDatosActionPerformed
+        RecuperacionDeDatos recup= new RecuperacionDeDatos();
+        centerJIF(recup);
+        Escritorio.add(recup);
+        recup.toFront();
+        try {
+            recup.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRecuperacionDatosActionPerformed
 
     /**
      * @param args the command line arguments

@@ -375,11 +375,11 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
-            c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
-            c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
-            c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
-            c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString()));
-            c.actualizarCalendario();
+            //c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
+            //c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
+            //c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+            //c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString()));
+            //c.actualizarCalendario();
         }
         LlenarTabla();
         limpiar();
@@ -400,8 +400,8 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
-            c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString().trim()));
-            c.eliminarCalendario();
+            //c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString().trim()));
+            //c.eliminarCalendario();
         }
         limpiar();
         Deshabilitar();
@@ -420,10 +420,10 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            c.setFecha(jdcFecha.getDateEditor().getUiComponent().toString());
-            c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
-            c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
-            c.guardarCalendario();
+            //c.setFecha(jdcFecha.getDateEditor().getUiComponent().toString());
+            //c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
+            //c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+            //c.guardarCalendario();
         }
         limpiar();
         Deshabilitar();

@@ -400,10 +400,10 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             int fila = tblEstructuraEvaluacion.getSelectedRow();
             ee.setnombreE(txtNobreEvaluacion.getText().trim());
             ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
-            ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
-            ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
-            ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
-            ee.actualizarEstructuraEvaluacion();
+            //ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
+            //ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
+            //ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
+            //ee.actualizarEstructuraEvaluacion();
         }
         LlenarTabla();
         llenarCBTE();
@@ -418,8 +418,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
-            ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
-            ee.eliminarEstructuraEvaluacion();
+            //ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
+            //ee.eliminarEstructuraEvaluacion();
         }
         limpiar();
         Deshabilitar();
@@ -435,9 +435,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             ee.setnombreE(txtNobreEvaluacion.getText().trim());
             ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
-            ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
-            ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
-            ee.guardarEstructuraEvaluacion();
+          // ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
+           // ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
+            // ee.guardarEstructuraEvaluacion();
         }
         LlenarTabla();
         llenarCBTE();

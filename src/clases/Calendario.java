@@ -1,9 +1,7 @@
 package clases;
-import java.awt.HeadlessException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
+import java.util.Date;
 import util.Conecta;
 
 /**
@@ -13,105 +11,77 @@ import util.Conecta;
  */
 public class Calendario {
 
-    private String fecha;
-    private int idcalendario;
-    private int idtipoactividad;
-    private int idasignatura;
-    Conecta cnx = new Conecta();
-    Statement stm;
-    ResultSet rs;
-    
+        private int idfecha;
+	private Date fecha;
+        Conecta cnx = new Conecta();
+        Statement stm;
+        ResultSet rs;
+	
 
-    public Calendario(){
+	public Calendario(){
 
-    }
+	}
 
-    public Calendario(String fecha, int idcalendario, int idtipoactividad, int idasignatura) {
-        this.fecha = fecha;
-        this.idcalendario = idcalendario;
-        this.idtipoactividad = idtipoactividad;
-        this.idasignatura = idasignatura;
-    }
+        public Calendario(int IDfecha, Date fecha) {
+            this.idfecha = IDfecha;
+            this.fecha = fecha;            
+        }
 
-    public String getFecha() {
-            return fecha;
-    }
-    
-    public void setFecha(String fecha){
-        this.fecha = fecha;
-    }
+        public int getIdfecha() {
+           return idfecha;
+      }
 
-    public int getIdcalendario() {
-        return idcalendario;
-    }
+        public void setIdfecha(int idfecha) {
+           this.idfecha = idfecha;
+         }
+        
+	public Date getfecha(){
+		return fecha;
+	}
 
-    public void setIdcalendario(int idcalendario) {
-        this.idcalendario = idcalendario;
-    }
+	public void setfecha(Date fech){
+		fecha = fech;
+	}
 
-    public int getIdtipoactividad() {
-        return idtipoactividad;
-    }
-
-    public void setIdtipoactividad(int idtipoactividad) {
-        this.idtipoactividad = idtipoactividad;
-    }
-
-    public int getIdasignatura() {
-        return idasignatura;
-    }
-
-    public void setIdasignatura(int idasignatura) {
-        this.idasignatura = idasignatura;
-    }
-
-    public void actualizarCalendario(){
-        cnx.Conecta();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        public int ObtenerIDCalendario(String fecha){
+        
+            cnx.Conecta();
+            int fe=0;
+            
             try{
-                String SQL ="update calendario set fecha=?,idtipoactividad=?, idasignatura=?"
-                + "where idcalendario=?";
                 stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
-            } finally {
-                cnx.Desconecta();
+                rs = stm.executeQuery("select idcalendario from Calendario where fecha='"+ fecha +"' ");
+                
+                rs.next();
+                
+                fe = rs.getInt("idcalendario");
+                
+                rs.close();
+                stm.close();
+                cnx.conn.close();
+                        
+            
+            }catch(Exception e){javax.swing.JOptionPane.showMessageDialog(null, "Error obtenerIDCalendario: "+ e.getMessage());}
+                
+            
+            return fe;
             }
-    }
-    
-    public void eliminarCalendario(){
-        cnx.Conecta();
-            try {
-                String SQL = "delete from calendario where idcalendario= " + getIdcalendario();
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
-                if(n>0){
-                    JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
-            } finally {                
-                cnx.Desconecta();
-            }
-    }
-    
-    public void guardarCalendario(){
-        cnx.Conecta();
-            try {
-                String SQL = "insert into calendario(fecha,idtipoactividad,idasignatura)"
-                + "values('"+getFecha()+"','"+getIdtipoactividad()+"','"+getIdasignatura()+"')";
-                stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                    
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar: " + e.getMessage());
-            } finally {                
-                cnx.Desconecta();
-            }
-    }
-}
+            
+          
+        
+        
+        
+        
+        
+        }
+        
+        

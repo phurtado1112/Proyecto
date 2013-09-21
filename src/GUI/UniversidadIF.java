@@ -12,6 +12,16 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 import clases.Universidad;
+import java.awt.Image;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageInputStream;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -28,6 +38,9 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     Universidad u = new Universidad();
     Statement stm;
     ResultSet rs;
+    private FileInputStream fis;
+    private int LongitudBit;
+    PreparedStatement ps;
 //    Universidad univer = new Universidad();
 
     /**
@@ -94,8 +107,9 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             String SQL = "Select * from universidad";            
             
             model = new DefaultTableModel(null, titulos);
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);
+            //stm = cnx.conn.createStatement();
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();
             String [] fila = new String[3];
             while(rs.next()){
                 fila[0] = rs.getString("iduniversidad");
@@ -167,9 +181,10 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         txtUniversidad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtSiglas = new javax.swing.JTextField();
-        pLogo = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BtnBuscarLogo = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        LblLogo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUniversidad = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
@@ -179,6 +194,10 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Catálogo de Universidad");
         try {
             setSelected(true);
@@ -193,27 +212,33 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Siglas");
 
-        pLogo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout pLogoLayout = new javax.swing.GroupLayout(pLogo);
-        pLogo.setLayout(pLogoLayout);
-        pLogoLayout.setHorizontalGroup(
-            pLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        pLogoLayout.setVerticalGroup(
-            pLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         jLabel3.setText("Escoger Logotipo:");
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnBuscarLogo.setText("Buscar");
+        BtnBuscarLogo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnBuscarLogoActionPerformed(evt);
             }
         });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(0, 0, 0)));
+
+        LblLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LblLogoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(LblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(LblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,7 +249,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -238,10 +263,10 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(104, 104, 104)
-                                .addComponent(jButton1)))))
+                                .addComponent(BtnBuscarLogo)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,20 +275,18 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtSiglas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jButton1))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 18, Short.MAX_VALUE)
-                        .addComponent(pLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(BtnBuscarLogo)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tblUniversidad.setModel(new javax.swing.table.DefaultTableModel(
@@ -346,28 +369,31 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnNuevo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnActualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGuardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 1, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -377,7 +403,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addContainerGap())
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -427,10 +453,17 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){              
-            u.setnombreU(txtUniversidad.getText());
-            u.setSiglas(txtSiglas.getText());
-                //u.setLogo(pLogo.get...);
-            u.guardarUniversidad();
+            try {
+//                            u.setnombreU(txtUniversidad.getText());
+//                            u.setSiglas(txtSiglas.getText());
+//                //            u.setLogo(null);
+//                            u.guardarUniversidad();
+
+                           // u.guardarUniversidad(txtUniversidad.getText(), txtSiglas.getText(),LblLogo.get);
+            } catch (Exception ex) {
+                Logger.getLogger(UniversidadIF.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+//      
         }
         LlenarTabla();
         limpiar();
@@ -462,7 +495,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 Habilitar();                               
                 String SQL = "Select * from universidad where iduniversidad = " + tblUniversidad.getValueAt(fila, 0);
                 stm = cnx.conn.createStatement();
-                ResultSet rs = stm.executeQuery(SQL);
+                rs = stm.executeQuery(SQL);
                 
                 rs.next();
                 txtUniversidad.setText(rs.getString("nombreU"));
@@ -476,24 +509,75 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblUniversidadMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LblLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblLogoMouseClicked
+    JFileChooser buscar = new JFileChooser();
+        buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = buscar.showOpenDialog(null);
+        if (estado == JFileChooser.APPROVE_OPTION){
+            
+            try{
+                fis = new FileInputStream(buscar.getSelectedFile());
+                this.LongitudBit = (int)buscar.getSelectedFile().length();
+                
+                Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
+                              LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
+                LblLogo.setIcon(new ImageIcon(icono));
+                LblLogo.updateUI();
+                        
+                
+            }catch(FileNotFoundException ex){
+                
+                ex.printStackTrace();
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+        
+    }//GEN-LAST:event_LblLogoMouseClicked
+
+    private void BtnBuscarLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarLogoActionPerformed
         JFileChooser buscar = new JFileChooser();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = buscar.showOpenDialog(null);
+        if (estado == JFileChooser.APPROVE_OPTION){
+            
+            try{
+                fis = new FileInputStream(buscar.getSelectedFile());
+                LongitudBit = (int)buscar.getSelectedFile().length();
+                
+                Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
+                              LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
+                LblLogo.setIcon(new ImageIcon(icono));
+                LblLogo.updateUI();
+                        
+                
+            }catch(FileNotFoundException ex){
+                
+                ex.printStackTrace();
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_BtnBuscarLogoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnBuscarLogo;
+    private javax.swing.JLabel LblLogo;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel pLogo;
     private javax.swing.JTable tblUniversidad;
     private javax.swing.JTextField txtSiglas;
     private javax.swing.JTextField txtUniversidad;

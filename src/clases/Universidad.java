@@ -2,9 +2,10 @@ package clases;
 
 import java.awt.HeadlessException;
 import java.sql.Blob;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -21,7 +22,9 @@ public class Universidad {
     private String siglas;
     private Blob logo;
     Conecta cnx = new Conecta();
-    Statement stm;
+   // Statement stm;
+    PreparedStatement ps;
+    ResultSet rs;
 
     public Universidad(){
 
@@ -69,14 +72,22 @@ public class Universidad {
     public void actualizarUniversidad(){
         cnx.Conecta();
         try{
-            String SQL ="update universidad set nombreU='"+getnombreU()+"', siglas='"+getSiglas()+"',"
-                    + "'"+getLogo()+"' where iduniversidad='"+getIduniversidad()+"'";
-            stm = cnx.conn.createStatement();
+            String SQL ="update universidad set nombreU=?, siglas=?,"
+                    + "logo=? where iduniversidad=?";
+            //stm = cnx.conn.createStatement();
+            ps = cnx.conn.prepareStatement(SQL);
+            
+            ps.setString(1, getnombreU());
+            ps.setString(2, getSiglas());
+            ps.setBlob(3, getLogo());
+            ps.setInt(4, getIduniversidad());
+            //ps.executeUpdate();
 
-            int n = stm.executeUpdate(SQL);
+            int n = ps.executeUpdate();
             if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");               
                 }
+            ps.close();
             }catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {                
@@ -87,12 +98,17 @@ public class Universidad {
     public void eliminarUniversidad(){
         cnx.Conecta();
             try {
-                String SQL = "delete from universidad where iduniversidad= " + getIduniversidad();
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
+                String SQL = "delete from universidad where iduniversidad= ?";
+                //stm = cnx.conn.createStatement();            
+                ps = cnx.conn.prepareStatement(SQL);
+                
+                ps.setInt(1, getIduniversidad());
+                
+                int n = ps.executeUpdate();
                 if(n>0){                
                     JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
                 }
+                ps.close();
             } catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
             } finally {                
@@ -104,10 +120,15 @@ public class Universidad {
         cnx.Conecta();
         try{
             String SQL = "insert into universidad(nombreU,siglas,logo) "
-                    + "values('"+getnombreU()+"','"+getSiglas()+"','"+getLogo()+"')";
-            stm = cnx.conn.createStatement();            
+                    + "values(?,?,?)";
+            //stm = cnx.conn.createStatement();
+            ps = cnx.conn.prepareStatement(SQL);
+            
+            ps.setString(1, getnombreU());
+            ps.setString(2, getSiglas());
+            ps.setBlob(3, getLogo());
            
-            int n = stm.executeUpdate(SQL);
+            int n = ps.executeUpdate();
             if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
             }
@@ -123,11 +144,14 @@ public class Universidad {
         cnx.Conecta();
         try{
             String SQL = "Select iduniversidad from universidad where nombreU = "+"\""+Univer+"\"";
-            stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);            
+            //stm = cnx.conn.createStatement();
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setString(1, Univer);
+            rs = ps.executeQuery();            
             while(rs.next()){
                 id = rs.getInt("iduniversidad");
             }
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta ID Universidad: " + e.getMessage());
         }
@@ -139,9 +163,11 @@ public class Universidad {
         String fila= "";
         cnx.Conecta();
         try{
-            String SQL = "Select nombreU from universidad where iduniversidad="+id;
-            stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);
+            String SQL = "Select nombreU from universidad where iduniversidad=?";
+            //stm = cnx.conn.createStatement();
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
             while(rs.next()){
                 fila = rs.getString("nombreU");
             }
@@ -157,8 +183,9 @@ public class Universidad {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select nombreU from universidad";
-            stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);            
+            //stm = cnx.conn.createStatement();
+            ps = cnx.conn.prepareStatement(SQL);            
+            rs = ps.executeQuery();            
             while(rs.next()){
                 ls.add(rs.getString("nombreU"));
             }
