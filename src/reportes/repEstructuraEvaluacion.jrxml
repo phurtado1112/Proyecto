@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repEstructuraEvaluacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="68f0b528-0dfa-4815-962f-575f55c5aad8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idAsig" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ESTRUCTURAEVALUACION_VIEW.idestructuraevaluacion AS ESTRUCTURAEVALUACION_VIEW_idestructuraevaluacion,
+     ESTRUCTURAEVALUACION_VIEW.nombreE AS ESTRUCTURAEVALUACION_VIEW_nombreE,
+     ESTRUCTURAEVALUACION_VIEW.valor AS ESTRUCTURAEVALUACION_VIEW_valor,
+     ESTRUCTURAEVALUACION_VIEW.evaluacion AS ESTRUCTURAEVALUACION_VIEW_evaluacion,
+     ESTRUCTURAEVALUACION_VIEW.nombreA AS ESTRUCTURAEVALUACION_VIEW_nombreA,
+     ESTRUCTURAEVALUACION_VIEW.idasignatura AS ESTRUCTURAEVALUACION_VIEW_idasignatura
+FROM
+     ESTRUCTURAEVALUACION_VIEW ESTRUCTURAEVALUACION_VIEW WHERE ESTRUCTURAEVALUACION_VIEW.idasignatura =  $P{idAsig}]]>
+	</queryString>
+	<field name="ESTRUCTURAEVALUACION_VIEW_idestructuraevaluacion" class="java.lang.Object"/>
+	<field name="ESTRUCTURAEVALUACION_VIEW_nombreE" class="java.lang.Object"/>
+	<field name="ESTRUCTURAEVALUACION_VIEW_valor" class="java.lang.Object"/>
+	<field name="ESTRUCTURAEVALUACION_VIEW_evaluacion" class="java.lang.Object"/>
+	<field name="ESTRUCTURAEVALUACION_VIEW_nombreA" class="java.lang.Object"/>
+	<field name="ESTRUCTURAEVALUACION_VIEW_idasignatura" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4c5a8080-a2b8-4aa7-855e-94dbc1862d7e" x="134" y="19" width="275" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Catálogo de Estructura Evaluación]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="451dff53-adad-4597-8693-ac7860793d2d" x="454" y="5" width="119" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3bbd40ec-8ba5-4a71-9eb6-7c1705bc899f" x="321" y="5" width="133" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Generación:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7af3c599-4fa5-4f17-a31c-975a42e8fb10" x="0" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b4d04cf-856a-46b5-9ac4-95e1bb15550c" x="111" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="35fa14d0-c021-42c4-bab1-9716e8f6bbc1" x="211" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07bdde3d-d7c2-4a38-867d-9679e3eb5b80" x="322" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evaluación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7e3e3710-2bad-421b-94e4-296924f68574" x="433" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignatura]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement uuid="dd9b3c28-f2e6-4e85-983e-662ac2cb1298" x="0" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{ESTRUCTURAEVALUACION_VIEW_idestructuraevaluacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="46419719-2176-45ad-853d-ac6b3ebe57bd" x="111" y="0" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{ESTRUCTURAEVALUACION_VIEW_nombreE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="947b32cd-1715-4479-9c52-773d32919b44" x="211" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{ESTRUCTURAEVALUACION_VIEW_valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="796174b3-8a48-4b26-b302-bdc2544bf435" x="322" y="0" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{ESTRUCTURAEVALUACION_VIEW_evaluacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6f05e278-9656-4986-ac9b-8838bdf4816e" x="433" y="0" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{ESTRUCTURAEVALUACION_VIEW_nombreA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="89443cbd-f22f-444d-b0a8-b7975d65cba1" x="436" y="5" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="5cbea80a-9dc5-401b-a669-393684fde0a3" x="516" y="5" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

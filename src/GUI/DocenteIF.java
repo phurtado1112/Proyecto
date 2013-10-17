@@ -362,7 +362,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             d.setNombre(txtNombre.getText().trim());
             d.setApellido(txtApellido.getText().trim());
             d.setUsuario(txtUsuario.getText().trim());
-            d.setPassword(pswContrasena.getSelectedText().trim());
+            d.setPassword(pswContrasena.getPassword().toString());
             d.setIdDocente(Integer.parseInt(tblDocente.getValueAt(fila, 0).toString()));
             d.actualizarDocente();
         }
@@ -381,7 +381,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             d.setNombre(txtNombre.getText().trim());
             d.setApellido(txtApellido.getText().trim());
             d.setUsuario(txtUsuario.getText().trim());
-            d.setPassword(pswContrasena.getSelectedText().trim());
+            d.setPassword(pswContrasena.getPassword().toString());
             d.guardarDocente();
         }
         LlenarTabla();

@@ -8,11 +8,11 @@ import GUI.CarreraIF;
 import GUI.DocenteIF;
 import GUI.EstructuraEvaluacionIF;
 import GUI.EstudianteIF;
-import GUI.TipoEvaluacionIF;
+import GUI.EvaluacionDetIF;
 import GUI.FacultadIF;
 import GUI.RecuperacionDeDatos;
 import GUI.Respaldo;
-import GUI.TipoActividadIF;
+import GUI.EvaluacionIF;
 import GUI.UniversidadIF;
 import GUI.repAsignaturaIF;
 import GUI.repCarreraIF;
@@ -150,10 +150,10 @@ public class Cnae extends javax.swing.JFrame {
         jMenuBar1.add(MnuPrArchivo);
 
         MnuPrOperaciones.setMnemonic('o');
-        MnuPrOperaciones.setText("Operaciones");
+        MnuPrOperaciones.setText("Registro");
 
         MnuRegistroAsistencia.setMnemonic('r');
-        MnuRegistroAsistencia.setText("Registro de Asistencia");
+        MnuRegistroAsistencia.setText("Asistencia");
         MnuRegistroAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuRegistroAsistenciaActionPerformed(evt);
@@ -173,7 +173,7 @@ public class Cnae extends javax.swing.JFrame {
         jMenuBar1.add(MnuPrOperaciones);
 
         MnuPrCatalogo.setMnemonic('c');
-        MnuPrCatalogo.setText("Catálogo");
+        MnuPrCatalogo.setText("Estructura");
 
         MnuEstudiantes.setMnemonic('e');
         MnuEstudiantes.setText("Estudiantes");
@@ -194,7 +194,7 @@ public class Cnae extends javax.swing.JFrame {
         MnuPrCatalogo.add(MnuCalendario);
 
         MnuTipoEvaluacion.setMnemonic('t');
-        MnuTipoEvaluacion.setText("Tipo de Evaluación");
+        MnuTipoEvaluacion.setText("Detalle de Evaluación");
         MnuTipoEvaluacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuTipoEvaluacionActionPerformed(evt);
@@ -203,7 +203,7 @@ public class Cnae extends javax.swing.JFrame {
         MnuPrCatalogo.add(MnuTipoEvaluacion);
 
         MnuTipoActividad.setMnemonic('p');
-        MnuTipoActividad.setText("Tipo de Actividad");
+        MnuTipoActividad.setText("Evaluación");
         MnuTipoActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuTipoActividadActionPerformed(evt);
@@ -417,7 +417,7 @@ public class Cnae extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MnuEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEvaluacionActionPerformed
-        TipoEvaluacionIF evaluacionVent = new TipoEvaluacionIF();
+        EvaluacionDetIF evaluacionVent = new EvaluacionDetIF();
         centerJIF(evaluacionVent);
         Escritorio.add(evaluacionVent);
         evaluacionVent.toFront();
@@ -441,12 +441,12 @@ public class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuCalendarioActionPerformed
 
     private void MnuTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoActividadActionPerformed
-        TipoActividadIF tipoActividadVent = new TipoActividadIF();
-        centerJIF(tipoActividadVent);
-        Escritorio.add(tipoActividadVent);
-        tipoActividadVent.toFront();
+        EvaluacionIF evaluacionVent = new EvaluacionIF();
+        centerJIF(evaluacionVent);
+        Escritorio.add(evaluacionVent);
+        evaluacionVent.toFront();
         try {
-            tipoActividadVent.setSelected(true);
+            evaluacionVent.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -521,12 +521,12 @@ public class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuEstudiantesActionPerformed
 
     private void MnuTipoEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoEvaluacionActionPerformed
-        TipoEvaluacionIF tipoevaluacionVent = new TipoEvaluacionIF();
-        centerJIF(tipoevaluacionVent);
-        Escritorio.add(tipoevaluacionVent);
-        tipoevaluacionVent.toFront();
+        EvaluacionDetIF evaluacionDetVent = new EvaluacionDetIF();
+        centerJIF(evaluacionDetVent);
+        Escritorio.add(evaluacionDetVent);
+        evaluacionDetVent.toFront();
         try {
-            tipoevaluacionVent.setSelected(true);
+            evaluacionDetVent.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
         }

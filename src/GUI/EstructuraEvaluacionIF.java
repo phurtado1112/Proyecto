@@ -6,7 +6,7 @@ package GUI;
 
 import clases.Asignatura;
 import clases.EstructuraEvaluacion;
-import clases.TipoEvaluacion;
+import clases.EvaluacionDet;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,7 +29,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     Valida va = new Valida();
     ResultSet rs;
     Statement stm;
-    TipoEvaluacion ev = new TipoEvaluacion();
+    EvaluacionDet ev = new EvaluacionDet();
     Asignatura a = new Asignatura();
     EstructuraEvaluacion ee = new EstructuraEvaluacion();
     //int id = 1;    

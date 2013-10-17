@@ -1,9 +1,9 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -17,8 +17,8 @@ public class Evaluaciones {
     
     private String evaluacion;
     Conecta cnx = new Conecta();
-    Statement stm;
     ResultSet rs;
+    PreparedStatement ps;
 
     public Evaluaciones(){
 
@@ -41,11 +41,14 @@ public class Evaluaciones {
     cnx.Conecta();
     try{
         String SQL = "Select idevaluacion from evaluacion where evaluacion = "+"\""+Asig+"\"";
-        stm = cnx.conn.createStatement();
-        rs = stm.executeQuery(SQL);            
+        
+        ps = cnx.conn.prepareStatement(SQL);
+        rs = ps.executeQuery();
         while(rs.next()){
             id = rs.getInt("idevaluacion");
         }
+        
+        ps.close();
     } catch(SQLException | HeadlessException e){
         JOptionPane.showMessageDialog(null, "Error consulta ID Evaluacion: " + e.getMessage());
     }
@@ -58,11 +61,14 @@ public class Evaluaciones {
         cnx.Conecta();
         try{
             String SQL = "Select evaluacion from evaluacion where idevaluacion="+id;
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);
             while(rs.next()){
                 fila = rs.getString("evaluacion");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Evaluacion: " + e.getMessage());
         }
@@ -75,11 +81,14 @@ public class Evaluaciones {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select evaluacion from evaluacion";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();            
             while(rs.next()){
                 ls.add(rs.getString("evaluacion"));
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaEvaluacion: " + e.getMessage());
         }
@@ -87,25 +96,23 @@ public class Evaluaciones {
         return ls;                                  
     }
 
-    public int ObtenerIDevaluacion(String evaluacion){
-        
+    public int ObtenerIDevaluacion(String evaluacion){        
             cnx.Conecta();
-            int fe=0;
-            
+            int fe=0;            
             try{
-                stm = cnx.conn.createStatement();
-                rs = stm.executeQuery("select idevaluacion from evaluacion where evaluacion='"+ evaluacion +"' ");
+                String SQL = "select idevaluacion from evaluacion where evaluacion='"+ evaluacion +"' ";
                 
+                ps = cnx.conn.prepareStatement(SQL);
+                rs = ps.executeQuery();
                 rs.next();
+                fe = rs.getInt("idevaluacion");                
                 
-                fe = rs.getInt("idevaluacion");
-                
-                rs.close();
-                stm.close();
-                cnx.conn.close();
-                        
-            
-            }catch(Exception e){javax.swing.JOptionPane.showMessageDialog(null, "Error obtenerIDevaluacion: "+ e.getMessage());}
+                ps.close();                               
+            }catch(Exception e){
+                javax.swing.JOptionPane.showMessageDialog(null, "Error obtenerIDevaluacion: "+ e.getMessage());
+            } finally {
+                cnx.Desconecta();
+            }
                 return fe;
             }
 }

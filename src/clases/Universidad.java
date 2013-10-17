@@ -22,7 +22,6 @@ public class Universidad {
     private String siglas;
     private Blob logo;
     Conecta cnx = new Conecta();
-   // Statement stm;
     PreparedStatement ps;
     ResultSet rs;
 
@@ -72,16 +71,18 @@ public class Universidad {
     public void actualizarUniversidad(){
         cnx.Conecta();
         try{
-            String SQL ="update universidad set nombreU=?, siglas=?,"
-                    + "logo=? where iduniversidad=?";
-            //stm = cnx.conn.createStatement();
+//            String SQL ="update universidad set nombreU=?, siglas=?,"
+//                    + "logo=? where iduniversidad=?";
+            String SQL ="update universidad set nombreU=?, siglas=?"
+                    + " where iduniversidad=?";
+            
             ps = cnx.conn.prepareStatement(SQL);
             
-            ps.setString(1, getnombreU());
-            ps.setString(2, getSiglas());
-            ps.setBlob(3, getLogo());
-            ps.setInt(4, getIduniversidad());
-            //ps.executeUpdate();
+            ps.setString(1, nombreU);
+            ps.setString(2, siglas);
+            //ps.setBlob(3, logo);
+            //ps.setInt(4, iduniversidad);
+            ps.setInt(3, iduniversidad);            
 
             int n = ps.executeUpdate();
             if(n>0){
@@ -98,12 +99,9 @@ public class Universidad {
     public void eliminarUniversidad(){
         cnx.Conecta();
             try {
-                String SQL = "delete from universidad where iduniversidad= ?";
-                //stm = cnx.conn.createStatement();            
+                String SQL = "delete from universidad where iduniversidad= ?";         
                 ps = cnx.conn.prepareStatement(SQL);
-                
-                ps.setInt(1, getIduniversidad());
-                
+                ps.setInt(1, iduniversidad);                
                 int n = ps.executeUpdate();
                 if(n>0){                
                     JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
@@ -119,19 +117,20 @@ public class Universidad {
     public void guardarUniversidad(){
         cnx.Conecta();
         try{
-            String SQL = "insert into universidad(nombreU,siglas,logo) "
-                    + "values(?,?,?)";
-            //stm = cnx.conn.createStatement();
-            ps = cnx.conn.prepareStatement(SQL);
-            
-            ps.setString(1, getnombreU());
-            ps.setString(2, getSiglas());
-            ps.setBlob(3, getLogo());
+//            String SQL = "insert into universidad(nombreU,siglas,logo) "
+//                    + "values(?,?,?)";
+            String SQL = "insert into universidad(nombreU,siglas) "
+                    + "values(?,?)";
+            ps = cnx.conn.prepareStatement(SQL);            
+            ps.setString(1, nombreU);
+            ps.setString(2, siglas);
+            //ps.setBlob(3, logo);
            
             int n = ps.executeUpdate();
             if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
             }
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         } finally {                
@@ -143,10 +142,8 @@ public class Universidad {
         int id = 0;
         cnx.Conecta();
         try{
-            String SQL = "Select iduniversidad from universidad where nombreU = "+"\""+Univer+"\"";
-            //stm = cnx.conn.createStatement();
+            String SQL = "Select iduniversidad from universidad where nombreU = "+"\""+Univer+"\"";            
             ps = cnx.conn.prepareStatement(SQL);
-            ps.setString(1, Univer);
             rs = ps.executeQuery();            
             while(rs.next()){
                 id = rs.getInt("iduniversidad");
@@ -163,14 +160,14 @@ public class Universidad {
         String fila= "";
         cnx.Conecta();
         try{
-            String SQL = "Select nombreU from universidad where iduniversidad=?";
+            String SQL = "Select nombreU from universidad where iduniversidad= " + id;
             //stm = cnx.conn.createStatement();
             ps = cnx.conn.prepareStatement(SQL);
-            ps.setInt(1, id);
             rs = ps.executeQuery();
             while(rs.next()){
                 fila = rs.getString("nombreU");
             }
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Universidad: " + e.getMessage());
         }
@@ -183,12 +180,12 @@ public class Universidad {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select nombreU from universidad";
-            //stm = cnx.conn.createStatement();
             ps = cnx.conn.prepareStatement(SQL);            
             rs = ps.executeQuery();            
             while(rs.next()){
                 ls.add(rs.getString("nombreU"));
             }
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaUniversidad: " + e.getMessage());
         }

@@ -3,6 +3,7 @@ package GUI;
 import clases.Facultad;
 import clases.Universidad;
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,6 +27,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
     Valida va = new Valida();
     Statement stm;
     ResultSet rs;
+    PreparedStatement ps;    
     Universidad u = new Universidad();
     Facultad f = new Facultad();
 
@@ -222,6 +224,12 @@ public class FacultadIF extends javax.swing.JInternalFrame {
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -306,8 +314,8 @@ public class FacultadIF extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
@@ -315,7 +323,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addGap(0, 89, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -337,7 +345,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
                 f.setnombreF(this.txtFacultad.getText().trim());
                 f.setIduniversidad(u.consultaIdU(this.cbxUniversidad.getSelectedItem().toString().trim()));
                 f.setIdfacultad(Integer.parseInt(this.tblFacultad.getValueAt(fila, 0).toString()));
-                f.GuardarFacultad();
+                f.ActualizarFacultad();
             }
             LlenarTabla();
             limpiar();
@@ -366,7 +374,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             f.setnombreF(txtFacultad.getText().trim());
-            f.setIduniversidad(u.consultaIdU(this.cbxUniversidad.getSelectedItem().toString()));
+            f.setIduniversidad(u.consultaIdU(this.cbxUniversidad.getSelectedItem().toString().trim()));            
             f.GuardarFacultad();
         }
         LlenarTabla();

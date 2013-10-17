@@ -2,7 +2,7 @@ package GUI;
 
 import clases.Asignatura;
 import clases.Calendario;
-import clases.TipoActividad;
+import clases.Evaluacion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,7 +22,7 @@ import util.Globales;
 public class CalendarioIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
-    TipoActividad ta = new TipoActividad();
+    Evaluacion ta = new Evaluacion();
     Asignatura a = new Asignatura();
     Calendario c = new Calendario();
     Conecta cnx = new Conecta();
@@ -376,7 +376,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         if(i==JOptionPane.OK_OPTION){
             int fila = tblCalendario.getSelectedRow();
             //c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
-            //c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
+            //c.setIdtipoactividad(ta.consultaIdE(cbxTipoActividad.getSelectedItem().toString().trim()));
             //c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
             //c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString()));
             //c.actualizarCalendario();
@@ -421,7 +421,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             //c.setFecha(jdcFecha.getDateEditor().getUiComponent().toString());
-            //c.setIdtipoactividad(ta.consultaIdTA(cbxTipoActividad.getSelectedItem().toString().trim()));
+            //c.setIdtipoactividad(ta.consultaIdE(cbxTipoActividad.getSelectedItem().toString().trim()));
             //c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
             //c.guardarCalendario();
         }
@@ -447,7 +447,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
                 
                 rs.next();
                 jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
-                cbxTipoActividad.setSelectedItem(ta.consultaTipoAct(rs.getInt("idtipoactividad")));                
+                cbxTipoActividad.setSelectedItem(ta.consultaEvaluacion(rs.getInt("idtipoactividad")));                
             } catch(SQLException | ParseException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {

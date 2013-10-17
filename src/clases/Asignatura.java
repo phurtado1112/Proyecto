@@ -1,9 +1,9 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -23,7 +23,7 @@ public class Asignatura {
     private int idcarrera;
     Carrera ca = new Carrera();
     Conecta cnx = new Conecta();
-    Statement stm;
+    PreparedStatement ps;
     ResultSet rs;
 
     public Asignatura(){
@@ -92,13 +92,21 @@ public class Asignatura {
             try{
                 String SQL ="update asignatura set nombreA=?,"
                         + "grupo=?,anio=?,periodo=?,"
-                        + "idcarrera=? where idasignatura=?";                
-                stm = cnx.conn.createStatement();
-
-                int n = stm.executeUpdate(SQL);
+                        + "idcarrera=? where idasignatura=?";
+                
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombreA);
+                ps.setString(2, grupo);
+                ps.setInt(3, anio);
+                ps.setString(4, periodo);
+                ps.setInt(5, idcarrera);
+                ps.setInt(6, idasignatura);
+                int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }            
+                }
+                
+                ps.close();
             }catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Actualizar Asignatura: " + e.getMessage());
             } finally {
@@ -109,12 +117,16 @@ public class Asignatura {
     public void eliminarAsignatura(){
         cnx.Conecta();
                 try {
-                    String SQL = "delete from asignatura where idasignatura= " + getIdasignatura();
-                    stm = cnx.conn.createStatement();            
-                    int n = stm.executeUpdate(SQL);
+                    String SQL = "delete from asignatura where idasignatura= ?";
+                    
+                    ps = cnx.conn.prepareStatement(SQL);
+                    ps.setInt(1, idasignatura);
+                    int n = ps.executeUpdate();
                     if(n>0){                
                         JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
                     }
+                    
+                    ps.close();
                 } catch(SQLException | HeadlessException e){
                     JOptionPane.showMessageDialog(null, "Error Eliminar Asignatura: " + e.getMessage());            
                 } finally {
@@ -127,12 +139,20 @@ public class Asignatura {
             try {
                 String SQL = "insert into asignatura(nombreA,"
                         + "grupo,periodo,anio,idcarrera) "
-                + "values('"+getnombreA()+"','"+getgrupo()+"','"+getperiodo()+"','"+getanio()+"','"+getIdcarrera()+"')";
-                stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
+                + "values(?,?,?,?,?)";
+                
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombreA);
+                ps.setString(2, grupo);
+                ps.setString(3, periodo);
+                ps.setInt(4, anio);
+                ps.setInt(5, idcarrera);
+                int n = ps.executeUpdate();
                 if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
                 }
+                
+                ps.close();
             } catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Guardar Asignatura: " + e.getMessage());
             } finally {
@@ -145,11 +165,14 @@ public class Asignatura {
         cnx.Conecta();
         try{
             String SQL = "Select idasignatura from asignatura where nombreA = "+"\""+Asig+"\"";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);            
             while(rs.next()){
                 id = rs.getInt("idasignatura");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta ID Asignatura: " + e.getMessage());
         }
@@ -162,11 +185,14 @@ public class Asignatura {
         cnx.Conecta();
         try{
             String SQL = "Select nombreA from asignatura where idasignatura="+id;
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);
             while(rs.next()){
                 fila = rs.getString("nombreA");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Asignatura: " + e.getMessage());
         }
@@ -179,11 +205,14 @@ public class Asignatura {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select nombreA from asignatura";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);            
             while(rs.next()){
                 ls.add(rs.getString("nombreA"));
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaAsignatura: " + e.getMessage());
         }

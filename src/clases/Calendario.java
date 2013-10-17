@@ -1,6 +1,7 @@
 package clases;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.Date;
 import util.Conecta;
 
@@ -14,7 +15,8 @@ public class Calendario {
         private int idfecha;
 	private Date fecha;
         Conecta cnx = new Conecta();
-        Statement stm;
+        PreparedStatement ps;
+        //Statement stm;
         ResultSet rs;
 	
 
@@ -41,47 +43,26 @@ public class Calendario {
 
 	public void setfecha(Date fech){
 		fecha = fech;
-	}
-
+	}   
         
-        
-        
-        
-        
-        
-        
-        
-        
-        public int ObtenerIDCalendario(String fecha){
-        
+        public int ObtenerIDCalendario(String fecha){        
             cnx.Conecta();
-            int fe=0;
-            
+            int fe=0;            
             try{
-                stm = cnx.conn.createStatement();
-                rs = stm.executeQuery("select idcalendario from Calendario where fecha='"+ fecha +"' ");
+                String SQL = "select idcalendario from Calendario where fecha='"+ fecha +"' ";
+                ps = cnx.conn.prepareStatement(SQL);
+                rs = ps.executeQuery();                
+                rs.next();                
+                fe = rs.getInt("idcalendario");                
                 
-                rs.next();
-                
-                fe = rs.getInt("idcalendario");
-                
-                rs.close();
-                stm.close();
-                cnx.conn.close();
-                        
-            
-            }catch(Exception e){javax.swing.JOptionPane.showMessageDialog(null, "Error obtenerIDCalendario: "+ e.getMessage());}
-                
-            
+                ps.close();                                                    
+            }catch(Exception e){
+                javax.swing.JOptionPane.showMessageDialog(null, "Error obtenerIDCalendario: "+ e.getMessage());
+            } finally{
+                cnx.Desconecta();
+            }                            
             return fe;
-            }
-            
-          
-        
-        
-        
-        
-        
-        }
+        }  
+}
         
         

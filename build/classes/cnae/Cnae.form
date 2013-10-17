@@ -48,13 +48,13 @@
         <Menu class="javax.swing.JMenu" name="MnuPrOperaciones">
           <Properties>
             <Property name="mnemonic" type="int" value="111"/>
-            <Property name="text" type="java.lang.String" value="Operaciones"/>
+            <Property name="text" type="java.lang.String" value="Registro"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="MnuRegistroAsistencia">
               <Properties>
                 <Property name="mnemonic" type="int" value="114"/>
-                <Property name="text" type="java.lang.String" value="Registro de Asistencia"/>
+                <Property name="text" type="java.lang.String" value="Asistencia"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuRegistroAsistenciaActionPerformed"/>
@@ -74,7 +74,7 @@
         <Menu class="javax.swing.JMenu" name="MnuPrCatalogo">
           <Properties>
             <Property name="mnemonic" type="int" value="99"/>
-            <Property name="text" type="java.lang.String" value="Cat&#xe1;logo"/>
+            <Property name="text" type="java.lang.String" value="Estructura"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="MnuEstudiantes">
@@ -98,7 +98,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="MnuTipoEvaluacion">
               <Properties>
                 <Property name="mnemonic" type="int" value="116"/>
-                <Property name="text" type="java.lang.String" value="Tipo de Evaluaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Detalle de Evaluaci&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuTipoEvaluacionActionPerformed"/>
@@ -107,7 +107,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="MnuTipoActividad">
               <Properties>
                 <Property name="mnemonic" type="int" value="112"/>
-                <Property name="text" type="java.lang.String" value="Tipo de Actividad"/>
+                <Property name="text" type="java.lang.String" value="Evaluaci&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuTipoActividadActionPerformed"/>

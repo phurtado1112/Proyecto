@@ -1,9 +1,9 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -18,7 +18,7 @@ public class Facultad {
     private int iduniversidad;
     private int idfacultad;
     Conecta cnx = new Conecta();
-    Statement stm;
+    PreparedStatement ps;
     ResultSet rs;
 
     public Facultad(){
@@ -59,13 +59,17 @@ public class Facultad {
     cnx.Conecta();
         try{
             String SQL ="update facultad set nombreF=?, iduniversidad=?"
-            + "where idfacultad=?";                
-            stm = cnx.conn.createStatement();
-
-            int n = stm.executeUpdate(SQL);
+            + "where idfacultad=?";
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setString(1, nombreF);
+            ps.setInt(2, iduniversidad);
+            ps.setInt(3, idfacultad);
+            int n = ps.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-            }            
+            }
+            ps.close();
         }catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         } finally {
@@ -75,34 +79,41 @@ public class Facultad {
     
     public void EliminarFacultad(){
         cnx.Conecta();
-                try {
-                    String SQL = "delete from facultad where idfacultad= " + getIdfacultad();
-                    stm = cnx.conn.createStatement();            
-                    int n = stm.executeUpdate(SQL);
-                    if(n>0){                
-                        JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                    }
-                } catch(SQLException | HeadlessException e){
-                    JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());            
-                } finally {
-                    cnx.Desconecta();
-                }
+        try {
+            String SQL = "delete from facultad where idfacultad= ?";
+
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setInt(1, idfacultad);
+            int n = ps.executeUpdate();
+            if(n>0){                
+                JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
+            }            
+            ps.close();
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());            
+        } finally {
+            cnx.Desconecta();
+        }
     }
     
     public void GuardarFacultad(){
         cnx.Conecta();
-            try {
-                String SQL = "insert into facultad(nombreF,iduniversidad) values('"+getnombreF()+"','"+getIduniversidad()+"')";
-                stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
-                if (n>0){
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
-                }
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar Carrera: " + e.getMessage());
-            } finally {
-                cnx.Desconecta();
-            }
+        try {
+            String SQL = "insert into facultad(nombreF,iduniversidad) values(?,?)";
+
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setString(1, nombreF);
+            ps.setInt(2, iduniversidad);
+            int n = ps.executeUpdate();
+            if (n>0){
+                JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
+            }            
+            ps.close();
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error Guardar Facultad: " + e.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
     }
 
     public int consultaId(String Facult){
@@ -110,11 +121,14 @@ public class Facultad {
         cnx.Conecta();
         try{
             String SQL = "Select idfacultad from facultad where nombreF = "+"\""+Facult+"\"";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();            
             while(rs.next()){
                 id = rs.getInt("idfacultad");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta ID Facultad: " + e.getMessage());
         }
@@ -127,11 +141,12 @@ public class Facultad {
         cnx.Conecta();
         try{
             String SQL = "Select nombreF from facultad where idfacultad="+id;
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();
             while(rs.next()){
                 fila = rs.getString("nombreF");
-            }
+            }            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Facultad: " + e.getMessage());
         }
@@ -144,11 +159,12 @@ public class Facultad {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select nombreF from facultad";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();            
             while(rs.next()){
                 ls.add(rs.getString("nombreF"));
-            }
+            }            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaFacultad: " + e.getMessage());
         }

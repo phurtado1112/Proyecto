@@ -1,7 +1,8 @@
 package clases;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+//import java.sql.Statement;
 import util.Conecta;
 
 /**
@@ -14,7 +15,8 @@ public class EstructuraEvaluacion {
     private String nombreE;
     private double valor;
     Conecta cnx = new Conecta();
-    Statement stm;
+    PreparedStatement ps;
+    //Statement stm;
     ResultSet rs;
 
     public EstructuraEvaluacion(){
@@ -50,16 +52,18 @@ public class EstructuraEvaluacion {
             int fe=0;
             
             try{
-                stm = cnx.conn.createStatement();
-                rs = stm.executeQuery("select idestructuraevaluacion from estructuraevaluacion "
-                        + "where nombreEs='"+ Estevaluacion +"' ");
+                String SQL="select idestructuraevaluacion from estructuraevaluacion "
+                        + "where nombreEs=? Estevaluacion=?";
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombreE);
+                rs = ps.executeQuery();
                 
                 rs.next();
                 
                 fe = rs.getInt("idestructuraevaluacion");
                 
-                rs.close();
-                stm.close();
+                
+
                 cnx.conn.close();
                         
             

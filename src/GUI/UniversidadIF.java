@@ -6,7 +6,7 @@ package GUI;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +20,7 @@ import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
+//import javax.imageio.stream.FileImageInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
@@ -36,7 +36,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     Universidad u = new Universidad();
-    Statement stm;
+    //Statement stm;
     ResultSet rs;
     private FileInputStream fis;
     private int LongitudBit;
@@ -136,23 +136,6 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             cnx.Desconecta();
         }
     }
-    
-//    private void logo(int IdUniv){
-//        cnx.Conecta();
-//         try {             
-//            String SQL = "select logo from universidad where iduniversidad = " + IdUniv;
-//            stm = cnx.conn.createStatement();            
-//            rs = stm.executeQuery(SQL);
-//            while (rs.next()) {
-//                pLogo.set(rs.getBlob("logo"));
-//            }
-//            rs.close();            
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
-//        } finally {
-//            cnx.Desconecta();
-//         }
-//    }
     
     private boolean validar(){
         boolean val;
@@ -294,6 +277,12 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -394,8 +383,8 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
@@ -403,7 +392,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -421,8 +410,8 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){                
                 int fila = tblUniversidad.getSelectedRow();
-                u.setnombreU(txtUniversidad.getText());
-                u.setSiglas(txtSiglas.getText());
+                u.setnombreU(txtUniversidad.getText().trim());
+                u.setSiglas(txtSiglas.getText().trim());
                 //u.setLogo(pLogo.get...);
                 u.setIduniversidad(Integer.parseInt(tblUniversidad.getValueAt(fila, 0).toString())); 
                 u.actualizarUniversidad();
@@ -454,12 +443,10 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){              
             try {
-//                            u.setnombreU(txtUniversidad.getText());
-//                            u.setSiglas(txtSiglas.getText());
-//                //            u.setLogo(null);
-//                            u.guardarUniversidad();
-
-                           // u.guardarUniversidad(txtUniversidad.getText(), txtSiglas.getText(),LblLogo.get);
+                u.setnombreU(txtUniversidad.getText().trim());
+                u.setSiglas(txtSiglas.getText().trim());
+                u.guardarUniversidad();
+    //            u.setLogo(null);
             } catch (Exception ex) {
                 Logger.getLogger(UniversidadIF.class.getName()).log(Level.SEVERE, null, ex);
             } 
@@ -494,12 +481,12 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             try{
                 Habilitar();                               
                 String SQL = "Select * from universidad where iduniversidad = " + tblUniversidad.getValueAt(fila, 0);
-                stm = cnx.conn.createStatement();
-                rs = stm.executeQuery(SQL);
-                
-                rs.next();
+                ps = cnx.conn.prepareStatement(SQL);
+                rs = ps.executeQuery();
+                while (rs.next()){
                 txtUniversidad.setText(rs.getString("nombreU"));
-                txtSiglas.setText(rs.getString("siglas"));                
+                txtSiglas.setText(rs.getString("siglas"));
+                }                
             } catch(Exception e){
                 JOptionPane.showMessageDialog(null, "Error Universidad Mouse Cliked: " + e.getMessage());
             } finally {

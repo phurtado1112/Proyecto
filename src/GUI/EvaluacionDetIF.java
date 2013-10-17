@@ -1,11 +1,13 @@
 package GUI;
 
 import clases.Asignatura;
-import clases.TipoEvaluacion;
+import clases.Evaluacion;
+import clases.EvaluacionDet;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -17,41 +19,46 @@ import util.Valida;
  *
  * @author Pablo
  */
-public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
+public class EvaluacionDetIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
+    DefaultComboBoxModel modeloCombo;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
-    TipoEvaluacion te = new TipoEvaluacion();
-    Asignatura a = new Asignatura();
+    EvaluacionDet te = new EvaluacionDet();
+    Evaluacion e = new Evaluacion();
     Statement stm;
+    PreparedStatement ps;
     ResultSet rs;
     int id = 1;
     
     /**
-     * Creates new form TipoEvaluacionIF
+     * Creates new form EvaluacionDetIF
      */
-    public TipoEvaluacionIF() {
+    public EvaluacionDetIF() {
         initComponents();
         limpiar();
         Deshabilitar();
         BotonesInicio();
         LlenarTabla();
-        llenarTXT();
+//        llenarTXT();
     }
     
     private void limpiar(){
-        txtAsignatura.setText("");
+        txtDetEvaluacion.setText("");
+        cbxEvaluacion.removeAllItems();
     }
     
     private void Deshabilitar() {
-        txtAsignatura.setEnabled(false);
+        txtDetEvaluacion.setEnabled(false);
+        cbxEvaluacion.setEnabled(false);
     }
     
     private void Habilitar(){
-        txtAsignatura.setEnabled(true);
-        va.SoloLetras(txtAsignatura);
-        va.SeleccionarTodo(txtAsignatura);
-        txtAsignatura.requestFocus();
+        txtDetEvaluacion.setEnabled(true);
+        va.LetrasNumeros(txtDetEvaluacion);
+        va.SeleccionarTodo(txtDetEvaluacion);
+        cbxEvaluacion.setEnabled(true);
+        txtDetEvaluacion.requestFocus();
     }
     
     private void BotonesInicio(){
@@ -78,20 +85,39 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
     }
     
+    public final void llenarCB() {
+        cnx.Conecta();
+        try {            
+            modeloCombo = new DefaultComboBoxModel();            
+            String SQL = "select actividad from evaluacion";
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloCombo.addElement(rs.getObject("actividad"));
+            }
+            rs.close();
+            cbxEvaluacion.setModel(modeloCombo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+    }
     //Llena con datos el JTable con un consulta
     private void LlenarTabla() {
-        int[] anchos = {30, 400};
+        int[] anchos = {30, 300, 100};
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Tipo Evaluación"};
-            String SQL = "Select * from evaluacion";
+            String [] titulos ={"ID","Detalle Evaluación","Evaluación"};
+            String SQL = "Select * from evaluaciondet_view";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
-            String [] fila = new String[2];
+            String [] fila = new String[3];
             while(rs.next()){
-                fila[0] = rs.getString("idevaluacion");
-                fila[1] = rs.getString("evaluacion");
+                fila[0] = rs.getString("idevaluaciondet");
+                fila[1] = rs.getString("evaluaciondet");
+                fila[2] = rs.getString("actividad");
                 model.addRow(fila);
             }
             tblTipoEvaluacion.setModel(model);
@@ -106,33 +132,16 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             tblTipoEvaluacion.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             tblTipoEvaluacion.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
         } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error Llenar Tabla TipoEvaluacion: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Llenar Tabla Detalle de Evaluación: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
     
-    private void llenarTXT() {
-        cnx.Conecta();
-         try {             
-            String SQL = "select nombreA from asignatura where idasignatura = " + id;
-            stm = cnx.conn.createStatement();            
-            rs = stm.executeQuery(SQL);
-            while (rs.next()) {
-                txtAsignatura.setText(rs.getString("nombreA"));
-            }
-            rs.close();            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
-        } finally {
-            cnx.Desconecta();
-         }
-    }
-    
     private boolean validar(){
         boolean val;
-        if(txtAsignatura.getText().trim().length()==0){ //Valida campo Nombre
-            JOptionPane.showMessageDialog(this, "El campo de texto Tipo de Evaluación está vacío,por favor llenarlo");
+        if(txtDetEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
+            JOptionPane.showMessageDialog(this, "El campo de texto Detalle de Evaluación está vacío,por favor llenarlo");
             val = false;
         } else {
             val=true;
@@ -159,11 +168,11 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtAsignatura = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtTipoEvaluacion1 = new javax.swing.JTextField();
+        txtDetEvaluacion = new javax.swing.JTextField();
+        cbxEvaluacion = new javax.swing.JComboBox();
 
-        setTitle("Catálogo de Tipo de Evaluación");
+        setTitle("Catálogo de Detalle de Evaluación");
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {
@@ -208,20 +217,36 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
 
         tblTipoEvaluacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Tipo de Evaluación"
+                "ID", "Tipo de Evaluación", "Evaluación"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblTipoEvaluacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblTipoEvaluacionJTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblTipoEvaluacion);
+        tblTipoEvaluacion.getColumnModel().getColumn(0).setResizable(false);
+        tblTipoEvaluacion.getColumnModel().getColumn(1).setResizable(false);
+        tblTipoEvaluacion.getColumnModel().getColumn(2).setResizable(false);
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -232,11 +257,11 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Evaluación"));
 
-        jLabel1.setText("Asignatura");
+        jLabel1.setText("Evaluación");
 
-        txtAsignatura.setEnabled(false);
+        jLabel2.setText("Detalle de Evaluación");
 
-        jLabel2.setText("Tipo de Evaluación");
+        cbxEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,16 +269,14 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTipoEvaluacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDetEvaluacion, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                    .addComponent(cbxEvaluacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,12 +284,12 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
                 .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtTipoEvaluacion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDetEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbxEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,8 +300,8 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
                         .addComponent(btnNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizar)
@@ -290,8 +313,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 8, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -300,7 +322,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
@@ -309,7 +331,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnSalir))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -326,6 +348,7 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         Habilitar();
         limpiar();
+        llenarCB();
         BotonesNuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -334,9 +357,9 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){            
-            te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
-            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
-            te.guardarTipoEvaluacion();
+            te.setEvaluacionDet(txtDetEvaluacion.getText().trim());
+            te.setIdEvaluacion(e.consultaIdE(this.cbxEvaluacion.getSelectedItem().toString().trim()));
+            te.guardarEvaluacionDet();
         }
         limpiar();
         Deshabilitar();
@@ -351,10 +374,10 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblTipoEvaluacion.getSelectedRow();
-            te.setEvaluacion(txtTipoEvaluacion1.getText().trim());
-            te.setIdasignatura(a.consultaIdA(txtAsignatura.getText().trim()));
-            te.setIdevaluacion(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
-            te.actualizarTipoEvaluacion();
+            te.setEvaluacionDet(txtDetEvaluacion.getText().trim());
+            te.setIdEvaluacion(e.consultaIdE(cbxEvaluacion.getSelectedItem().toString().trim()));
+            te.setIdEvaluacionDet(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
+            te.actualizarEvaluacionDet();
         }
         limpiar();
         Deshabilitar();
@@ -377,14 +400,15 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             BotonesClick();
             cnx.Conecta();
             try{                
-                String SQL = "Select * from evaluacion where idevaluacion = " + tblTipoEvaluacion.getValueAt(fila, 0);
-                PreparedStatement ps = cnx.conn.prepareStatement(SQL);
+                String SQL = "Select * from evaluaciondet where idevaluaciondet = " + tblTipoEvaluacion.getValueAt(fila, 0);
+                ps = cnx.conn.prepareStatement(SQL);
                 rs = ps.executeQuery(SQL);
 
                 rs.next();
-                txtAsignatura.setText(rs.getString("evaluacion"));
-            } catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+                txtDetEvaluacion.setText(rs.getString("evaluaciondet"));
+                cbxEvaluacion.setSelectedItem(e.consultaEvaluacion(rs.getInt("idevaluacion")));
+            } catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             } finally {
                 cnx.Desconecta();
             }
@@ -396,8 +420,8 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
         int fila = tblTipoEvaluacion.getSelectedRow();
-            te.setIdevaluacion(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
-            te.eliminarTipoEvaluacion();
+            te.setIdEvaluacionDet(Integer.parseInt(tblTipoEvaluacion.getValueAt(fila, 0).toString()));
+            te.eliminarEvaluacionDet();
         }
         limpiar();
         Deshabilitar();
@@ -412,12 +436,12 @@ public class TipoEvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox cbxEvaluacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTipoEvaluacion;
-    private javax.swing.JTextField txtAsignatura;
-    private javax.swing.JTextField txtTipoEvaluacion1;
+    private javax.swing.JTextField txtDetEvaluacion;
     // End of variables declaration//GEN-END:variables
 }

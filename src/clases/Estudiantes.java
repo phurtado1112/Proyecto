@@ -1,9 +1,9 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -23,11 +23,12 @@ public class Estudiantes {
     private String nombre;
     private int idasignatura;
     Conecta cnx = new Conecta();
-    Statement stm;
+    PreparedStatement ps;
+    ResultSet rs;
 
-	public Estudiantes(){
+    public Estudiantes(){
 
-	}
+    }
 
     public Estudiantes(String apellidos, String carne, String celular, String email, String nombre, int idestudiante, int idasignatura) {
         this.apellidos = apellidos;
@@ -103,15 +104,24 @@ public class Estudiantes {
     public void actualizarEstudiante(){
         cnx.Conecta();
             try{
-                String SQL ="update estudiante set nombreE='"+getNombre()+"',apellidoE='"+getApellidos()+"',"
-                        + "carnet='"+getCarnet()+"',celular='"+getCelular()+"', email='"+getEmail()+"',"
-                        + " idasignatura='"+getIdAsignatura()+"' where idestudiante='"+getIdEstudiante()+"'";
+                String SQL ="update estudiante set nombreE=?,apellidoE=?,"
+                        + "carnet=?,celular=?, email=?,"
+                        + " idasignatura=? where idestudiante=?";
 
-                stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombre);
+                ps.setString(2, apellidos);
+                ps.setString(3, carne);
+                ps.setString(4, celular);
+                ps.setString(5, email);
+                ps.setInt(6, idasignatura);
+                ps.setInt(7, idestudiante);
+                int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
                 }
+                
+                ps.close();
             }catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Actualizar: " + e.getMessage());
             } finally {                
@@ -122,12 +132,16 @@ public class Estudiantes {
     public void eliminarEstudiante(){
         cnx.Conecta();
             try {
-                String SQL = "delete from estudiante where idestudiante= " + getIdEstudiante();
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
+                String SQL = "delete from estudiante where idestudiante= ?";
+                
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setInt(1, idestudiante);
+                int n = ps.executeUpdate();
                 if(n>0){                
                     JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
                 }
+                
+                ps.close();
             } catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());
             } finally {                
@@ -139,13 +153,21 @@ public class Estudiantes {
         cnx.Conecta();
             try {
                 String SQL = "insert into estudiante(nombreE,apellidoE,carnet,celular,email,idasignatura) "
-                + "values('"+getNombre()+"','"+getApellidos()+"','"+getCarnet()+"','"+getCelular()+"',"
-                        + "'"+getEmail()+"','"+getIdAsignatura()+"')";
-                stm = cnx.conn.createStatement();            
-                int n = stm.executeUpdate(SQL);
+                + "values(?,?,?,?,?,?)";
+                
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombre);
+                ps.setString(2, apellidos);
+                ps.setString(3, carne);
+                ps.setString(4, celular);
+                ps.setString(5, email);
+                ps.setInt(6, idasignatura);                       
+                int n = ps.executeUpdate(SQL);
                 if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
                 }
+                
+                ps.close();
             } catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Guardar: " + e.getMessage());
             } finally {
@@ -159,11 +181,14 @@ public class Estudiantes {
         try{
             String SQL = "Select idestudiante from estudiante where nombreE = "+"\""+Nombr+"\""
                     + "and apellidoE="+"\""+Apell+"\"";
-            stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();            
             while(rs.next()){
                 id = rs.getInt("idestudiante");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta ID Estudiante: " + e.getMessage());
         } finally {
@@ -177,12 +202,15 @@ public class Estudiantes {
         cnx.Conecta();
         try{
             String SQL = "Select nombreE, apellidoE from estudiante where idestudiante="+id;
-            stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();
             while(rs.next()){
                 fila[0] = rs.getString("nombreE");
                 fila[1] = rs.getString("apellidoE");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Estidiante: " + e.getMessage());
         } finally {
@@ -196,12 +224,15 @@ public class Estudiantes {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select nombreE, apellidoE from estudiante";
-            stm = cnx.conn.createStatement();
-            ResultSet rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);            
             while(rs.next()){
                 ls.add(rs.getString("nombreE"));
                 ls.add(rs.getString("apellidoE"));
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaUniversidad: " + e.getMessage());
         } finally {

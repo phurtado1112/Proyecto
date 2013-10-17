@@ -1,9 +1,9 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -19,7 +19,7 @@ public class Carrera {
     private String nombreC;
     private int idfacultad;
     Conecta cnx = new Conecta();
-    Statement stm;
+    PreparedStatement ps;    
     ResultSet rs;
 
     public Carrera(){
@@ -60,14 +60,19 @@ public class Carrera {
     public void actualizarCarrera(){
         cnx.Conecta();
             try{
-                String SQL ="update carrera set nombreC='"+getnombreC()+"', idfacultad='"+getIdfacultad()+"'"
-                + "where idcarrera='"+getIdcarrera()+"'";                
-                stm = cnx.conn.createStatement();
-
-                int n = stm.executeUpdate(SQL);
+                String SQL ="update carrera set nombreC=?, idfacultad=?"
+                + "where idcarrera=?";
+                
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombreC);
+                ps.setInt(2, idfacultad);
+                ps.setInt(3, idcarrera);
+                int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }            
+                }
+                
+                ps.close();
             }catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {
@@ -78,12 +83,16 @@ public class Carrera {
     public void eliminarCarrera(){
         cnx.Conecta();
                 try {
-                    String SQL = "delete from carrera where idcarrera= " + getIdcarrera();
-                    stm = cnx.conn.createStatement();            
-                    int n = stm.executeUpdate(SQL);
+                    String SQL = "delete from carrera where idcarrera= ?";
+                    
+                    ps = cnx.conn.prepareStatement(SQL);
+                    ps.setInt(1, idcarrera);
+                    int n = ps.executeUpdate();
                     if(n>0){                
                         JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
                     }
+                    
+                    ps.close();
                 } catch(SQLException | HeadlessException e){
                     JOptionPane.showMessageDialog(null, "Error Eliminar: " + e.getMessage());            
                 } finally {
@@ -94,13 +103,17 @@ public class Carrera {
     public void guardarCarrera(){
         cnx.Conecta();
             try {
-                String SQL = "insert into carrera(nombreC,idfacultad) values('"+getnombreC()+"',"
-                        + "'"+getIdfacultad()+"')";
-                stm = cnx.conn.createStatement();
-                int n = stm.executeUpdate(SQL);
+                String SQL = "insert into carrera(nombreC,idfacultad) values(?,?)";
+                
+                ps = cnx.conn.prepareStatement(SQL);
+                ps.setString(1, nombreC);
+                ps.setInt(2, idfacultad);
+                int n = ps.executeUpdate();
                 if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
                 }
+                
+                ps.close();
             } catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Guardar Carrera: " + e.getMessage());
             } finally {
@@ -113,11 +126,14 @@ public class Carrera {
         cnx.Conecta();
         try{
             String SQL = "Select idcarrera from carrera where nombreC = "+"\""+Carrer+"\"";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);            
             while(rs.next()){
                 id = rs.getInt("idcarrera");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta ID Carrera: " + e.getMessage());
         }
@@ -130,11 +146,14 @@ public class Carrera {
         cnx.Conecta();
         try{
             String SQL = "Select nombreC from carrera where idcarrera="+id;
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);
             while(rs.next()){
                 fila = rs.getString("nombreC");
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Carrera: " + e.getMessage());
         }
@@ -147,11 +166,14 @@ public class Carrera {
         ArrayList<String> ls = new ArrayList<>();
         try{
             String SQL = "Select nombreC from carrera";
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);            
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery(SQL);            
             while(rs.next()){
                 ls.add(rs.getString("nombreC"));
             }
+            
+            ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaCarrera: " + e.getMessage());
         }
