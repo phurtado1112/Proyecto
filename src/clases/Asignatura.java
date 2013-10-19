@@ -138,15 +138,16 @@ public class Asignatura {
         cnx.Conecta();
             try {
                 String SQL = "insert into asignatura(nombreA,"
-                        + "grupo,periodo,anio,idcarrera) "
+                        + "grupo,anio,periodo,idcarrera) "
                 + "values(?,?,?,?,?)";
                 
                 ps = cnx.conn.prepareStatement(SQL);
                 ps.setString(1, nombreA);
                 ps.setString(2, grupo);
-                ps.setString(3, periodo);
-                ps.setInt(4, anio);
+                ps.setInt(3, anio);
+                ps.setString(4, periodo);
                 ps.setInt(5, idcarrera);
+                
                 int n = ps.executeUpdate();
                 if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                

@@ -125,24 +125,22 @@ public class Evaluacion {
     }
     
     public String consultaEvaluacion(int id){
-        String fila= "";
+        String eva= "";
         cnx.Conecta();
         try{
-            String SQL = "Select actividad from evaluacion where idtipoactividad=" + id;
+            String SQL = "Select actividad from evaluacion where idtipoactividad= " + id;
             
             ps = cnx.conn.prepareStatement(SQL);
-            ps.setInt(1, id);
-            
             rs = ps.executeQuery();
             while(rs.next()){
-                fila = rs.getString("actividad");
+                eva = rs.getString("actividad");
             }            
             ps.close();
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaDescrip Evaluacion: " + e.getMessage());
         }
         cnx.Desconecta();       
-        return fila;
+        return eva;
     }
     
     public ArrayList<String> consultaEvaluacion(){

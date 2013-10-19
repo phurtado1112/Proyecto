@@ -203,7 +203,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblAsignatura.getColumnCount(); i++) {
                 tblAsignatura.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error de llenarTabla: " + e.getMessage());
         } finally {
             cnx.Desconecta();
@@ -512,6 +512,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 a.setperiodo(this.txtPeriodo.getText().trim());
                 a.setIdcarrera(c.consultaIdCa(this.cbxCarrera.getSelectedItem().toString().trim()));
                 a.setIdasignatura(Integer.parseInt(this.tblAsignatura.getValueAt(fila, 0).toString()));
+                a.actualizarAsignatura();
             }
             LlenarTabla();
             limpiar();
@@ -544,7 +545,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 a.setanio(Integer.parseInt(this.txtAnio.getText().trim()));
                 a.setperiodo(this.txtPeriodo.getText().trim());
                 a.setIdcarrera(c.consultaIdCa(this.cbxCarrera.getSelectedItem().toString().trim()));
-                c.guardarCarrera();
+                a.guardaAsignatura();
             }
             LlenarTabla();
             limpiar();
@@ -590,7 +591,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 cbxUniversidad.setSelectedItem(rs.getString("nombreU"));
                 cbxFacultad.setSelectedItem(rs.getString("nombreF"));
                 cbxCarrera.setSelectedItem(rs.getString("nombreC"));
-            } catch(Exception e){
+            } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error Mouse Cliked: " + e.getMessage());
             } finally {
                 cnx.Desconecta();

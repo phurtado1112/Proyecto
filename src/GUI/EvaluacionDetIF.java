@@ -1,6 +1,5 @@
 package GUI;
 
-import clases.Asignatura;
 import clases.Evaluacion;
 import clases.EvaluacionDet;
 import java.sql.PreparedStatement;
@@ -131,8 +130,8 @@ public class EvaluacionDetIF extends javax.swing.JInternalFrame {
             centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
             tblTipoEvaluacion.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             tblTipoEvaluacion.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error Llenar Tabla Detalle de Evaluación: " + e.getMessage());
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error Llenar Tabla Detalle de Evaluación: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
@@ -397,17 +396,18 @@ public class EvaluacionDetIF extends javax.swing.JInternalFrame {
         if (evt.getButton()==1){
             int fila = tblTipoEvaluacion.getSelectedRow();
             Habilitar();
+            llenarCB();
             BotonesClick();
             cnx.Conecta();
             try{                
                 String SQL = "Select * from evaluaciondet where idevaluaciondet = " + tblTipoEvaluacion.getValueAt(fila, 0);
                 ps = cnx.conn.prepareStatement(SQL);
-                rs = ps.executeQuery(SQL);
+                rs = ps.executeQuery();
 
                 rs.next();
                 txtDetEvaluacion.setText(rs.getString("evaluaciondet"));
                 cbxEvaluacion.setSelectedItem(e.consultaEvaluacion(rs.getInt("idevaluacion")));
-            } catch(Exception ex){
+            } catch(SQLException ex){
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             } finally {
                 cnx.Desconecta();

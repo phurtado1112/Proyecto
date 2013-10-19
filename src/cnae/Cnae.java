@@ -87,11 +87,13 @@ public class Cnae extends javax.swing.JFrame {
         MnuEvaluacion = new javax.swing.JMenuItem();
         MnuPrCatalogo = new javax.swing.JMenu();
         MnuEstudiantes = new javax.swing.JMenuItem();
+        MnuEstructuraEvaluacion = new javax.swing.JMenuItem();
         MnuCalendario = new javax.swing.JMenuItem();
+        MnuAsignatura = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         MnuTipoEvaluacion = new javax.swing.JMenuItem();
         MnuTipoActividad = new javax.swing.JMenuItem();
-        MnuEstructuraEvaluacion = new javax.swing.JMenuItem();
-        MnuAsignatura = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         MnuCarreras = new javax.swing.JMenuItem();
         MnuFacultades = new javax.swing.JMenuItem();
         MnuUniversidades = new javax.swing.JMenuItem();
@@ -184,6 +186,15 @@ public class Cnae extends javax.swing.JFrame {
         });
         MnuPrCatalogo.add(MnuEstudiantes);
 
+        MnuEstructuraEvaluacion.setMnemonic('s');
+        MnuEstructuraEvaluacion.setText("Estructura de Evaluación");
+        MnuEstructuraEvaluacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuEstructuraEvaluacionActionPerformed(evt);
+            }
+        });
+        MnuPrCatalogo.add(MnuEstructuraEvaluacion);
+
         MnuCalendario.setMnemonic('a');
         MnuCalendario.setLabel("Calendario");
         MnuCalendario.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +203,16 @@ public class Cnae extends javax.swing.JFrame {
             }
         });
         MnuPrCatalogo.add(MnuCalendario);
+
+        MnuAsignatura.setMnemonic('g');
+        MnuAsignatura.setText("Asignaturas");
+        MnuAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuAsignaturaActionPerformed(evt);
+            }
+        });
+        MnuPrCatalogo.add(MnuAsignatura);
+        MnuPrCatalogo.add(jSeparator2);
 
         MnuTipoEvaluacion.setMnemonic('t');
         MnuTipoEvaluacion.setText("Detalle de Evaluación");
@@ -210,24 +231,7 @@ public class Cnae extends javax.swing.JFrame {
             }
         });
         MnuPrCatalogo.add(MnuTipoActividad);
-
-        MnuEstructuraEvaluacion.setMnemonic('s');
-        MnuEstructuraEvaluacion.setText("Estructura de Evaluación");
-        MnuEstructuraEvaluacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnuEstructuraEvaluacionActionPerformed(evt);
-            }
-        });
-        MnuPrCatalogo.add(MnuEstructuraEvaluacion);
-
-        MnuAsignatura.setMnemonic('g');
-        MnuAsignatura.setText("Asignaturas");
-        MnuAsignatura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnuAsignaturaActionPerformed(evt);
-            }
-        });
-        MnuPrCatalogo.add(MnuAsignatura);
+        MnuPrCatalogo.add(jSeparator1);
 
         MnuCarreras.setMnemonic('r');
         MnuCarreras.setText("Carreras");
@@ -742,6 +746,8 @@ public class Cnae extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JMenuItem mnuAsignatura;
     private javax.swing.JMenuItem mnuCarrera;
     private javax.swing.JMenu mnuCatalogos;
