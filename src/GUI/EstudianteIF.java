@@ -145,7 +145,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             tblEstudiantes.getColumnModel().getColumn(4).setCellRenderer(centraCelda);
             tblEstudiantes.getColumnModel().getColumn(5).setHeaderRenderer(centraCelda);
             tblEstudiantes.getColumnModel().getColumn(5).setCellRenderer(centraCelda);
-        } catch(Exception ex){
+        } catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error de llenarTabla: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
@@ -516,7 +516,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                 txtCarnet.setText(rs.getString("carnet"));
                 txtCelular.setText(rs.getString("celular"));
                 txtEmail.setText(rs.getString("email"));
-            } catch(Exception ex){
+            } catch(SQLException ex){
                 JOptionPane.showMessageDialog(null, "Error MouseCliked: " + ex.getMessage());
             }  finally {
                 cnx.Desconecta();

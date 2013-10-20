@@ -584,13 +584,13 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 rs = stm.executeQuery(SQL);
                 
                 rs.next();
-                txtAsignatura.setText(rs.getString("nombreA"));
-                txtCodigoGrupo.setText(rs.getString("grupo"));
-                txtPeriodo.setText(rs.getString("periodo"));
-                txtAnio.setText(rs.getString("anio"));
-                cbxUniversidad.setSelectedItem(rs.getString("nombreU"));
-                cbxFacultad.setSelectedItem(rs.getString("nombreF"));
-                cbxCarrera.setSelectedItem(rs.getString("nombreC"));
+                this.txtAsignatura.setText(rs.getString("nombreA"));
+                this.txtCodigoGrupo.setText(rs.getString("grupo"));
+                this.txtPeriodo.setText(rs.getString("periodo"));
+                this.txtAnio.setText(rs.getString("anio"));
+                this.cbxUniversidad.setSelectedItem(rs.getString("nombreU"));
+                this.cbxFacultad.setSelectedItem(rs.getString("nombreF"));
+                this.cbxCarrera.setSelectedItem(rs.getString("nombreC"));
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error Mouse Cliked: " + e.getMessage());
             } finally {

@@ -162,7 +162,7 @@ public class Estudiantes {
                 ps.setString(4, celular);
                 ps.setString(5, email);
                 ps.setInt(6, idasignatura);                       
-                int n = ps.executeUpdate(SQL);
+                int n = ps.executeUpdate();
                 if (n>0){
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
                 }
@@ -226,7 +226,7 @@ public class Estudiantes {
             String SQL = "Select nombreE, apellidoE from estudiante";
             
             ps = cnx.conn.prepareStatement(SQL);
-            rs = ps.executeQuery(SQL);            
+            rs = ps.executeQuery();            
             while(rs.next()){
                 ls.add(rs.getString("nombreE"));
                 ls.add(rs.getString("apellidoE"));

@@ -151,7 +151,7 @@ public class CarreraIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblCarrera.getColumnCount(); i++) {
                 tblCarrera.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Carrera: " + e.getMessage());
         } finally {
             cnx.Desconecta();
@@ -449,9 +449,8 @@ public class CarreraIF extends javax.swing.JInternalFrame {
                 rs.next();
                 this.txtCarrera.setText(rs.getString("nombreC"));
                 this.cbxUniversidad.setSelectedItem(rs.getString("nombreU"));
-                this.cbxFacultad.setSelectedItem(rs.getString("nombreF"));
-                //stm.close();                
-            } catch(Exception e){                
+                this.cbxFacultad.setSelectedItem(rs.getString("nombreF"));      
+            } catch(SQLException e){                
                 JOptionPane.showMessageDialog(null, "Error Carrera Mouse Cliked: " + e.getMessage());
             }finally {
                 cnx.Desconecta();

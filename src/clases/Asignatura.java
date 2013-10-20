@@ -104,8 +104,7 @@ public class Asignatura {
                 int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
-                }
-                
+                }                
                 ps.close();
             }catch(SQLException | HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Error Actualizar Asignatura: " + e.getMessage());
@@ -168,7 +167,7 @@ public class Asignatura {
             String SQL = "Select idasignatura from asignatura where nombreA = "+"\""+Asig+"\"";
             
             ps = cnx.conn.prepareStatement(SQL);
-            rs = ps.executeQuery(SQL);            
+            rs = ps.executeQuery();            
             while(rs.next()){
                 id = rs.getInt("idasignatura");
             }
@@ -188,7 +187,7 @@ public class Asignatura {
             String SQL = "Select nombreA from asignatura where idasignatura="+id;
             
             ps = cnx.conn.prepareStatement(SQL);
-            rs = ps.executeQuery(SQL);
+            rs = ps.executeQuery();
             while(rs.next()){
                 fila = rs.getString("nombreA");
             }
@@ -208,7 +207,7 @@ public class Asignatura {
             String SQL = "Select nombreA from asignatura";
             
             ps = cnx.conn.prepareStatement(SQL);
-            rs = ps.executeQuery(SQL);            
+            rs = ps.executeQuery();            
             while(rs.next()){
                 ls.add(rs.getString("nombreA"));
             }
