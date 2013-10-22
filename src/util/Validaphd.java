@@ -1,6 +1,5 @@
 package util;
 
-
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
@@ -12,7 +11,7 @@ import javax.swing.JTextField;
  *
  * @author PabloAntonio
  */
-public class Valida {
+public class Validaphd {
     public void SoloLetras(JTextField jt){
         try{
             jt.addKeyListener(new KeyAdapter() {
@@ -21,11 +20,33 @@ public class Valida {
                 char c = e.getKeyChar();
                 if(
                    ((int)c==32) || //32 es para la barra espaciadora      
-                    (Character.isLetter(c))                  
+                    (c>='A' && c<='Z') ||
+                    (c=='Ñ')           ||
+                    (c=='Á') ||
+                    (c=='Ä') ||
+                    (c=='É') ||
+                    (c=='Ë') ||
+                    (c=='Í') ||
+                    (c=='Ï') ||
+                    (c=='Ó') ||
+                    (c=='Ö') ||
+                    (c=='Ú') ||
+                    (c=='Ü') ||
+                    (c>='a' && c<='z') ||
+                    (c=='ñ')||
+                    (c=='á') ||
+                    (c=='ä') ||
+                    (c=='é') ||
+                    (c=='ë') ||
+                    (c=='í') ||
+                    (c=='ï') ||
+                    (c=='ó') ||
+                    (c=='ö') ||
+                    (c=='ú') ||
+                    (c=='ü')                  
                   )                                    
                 {}
-                else 
-                {
+                else {
                     e.consume();
                 }
             }
@@ -47,12 +68,12 @@ public class Valida {
                     (c>='a' && c<='z') ||
                     (c=='ñ') ||
                     (c=='-')
-                   )
-                {
-                      e.setKeyChar(Character.toUpperCase(c));
+                   ){
+                    e.consume();
+                    String mayuscula=String.valueOf(c).toUpperCase();                                                           
+                    jt.setText(jt.getText().concat(mayuscula));                    
                 } 
-                else 
-                {
+                else {
                         e.consume();
                 }                
             }
@@ -61,22 +82,24 @@ public class Valida {
             JOptionPane.showMessageDialog(null, "Error en la validación " + e);
         }               
     }
-      
+    
     public void LetrasNumeros(final JTextField jt){
         try{
             jt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();          
-                if (
+                if (((int)c==32)|| // es par la barra espaciadora
                     ((int)c=='-')|| 
-                    (Character.isDigit(c)) || //Valores de 0-9
+                    (c>='0' && c<='9') ||
                     (c>='A' && c<='Z') ||
                     (c=='Ñ')           ||
                     (c>='a' && c<='z') ||
                     (c=='ñ')
-                   ){                                                   
-                    e.setKeyChar(Character.toUpperCase(c));
+                   ){
+                    e.consume();
+                    String mayuscula=String.valueOf(c).toUpperCase();                                                           
+                    jt.setText(jt.getText().concat(mayuscula));                    
                 }
                 else {
                     e.consume();
@@ -88,44 +111,16 @@ public class Valida {
         }               
     }
     
-    public void SoloNumerosNota(final JTextField jt){
+    public void SoloNumeros(JTextField jt){
         try{
             jt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if (
-                     (Character.isDigit(c))||
+                if ((c>='0' && c<='9') ||
                      c=='.'
-                    )
-                {
-                    if (c=='.' && jt.getText().indexOf('.')!=-1)
-                    {
-                        e.consume();
-                    }
-                    else {}                    
-                } 
-                else
-                {
-                    e.consume();
-                }
-            }
-        });
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
-        }
-    }
-    
-        public void SoloNumerosCelular(final JTextField jt){
-        try{
-            jt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e){
-                char c = e.getKeyChar();
-                if (Character.isDigit(c))
-                {} 
-                else
-                {
+                    ){} 
+                else{
                     e.consume();
                 }
             }

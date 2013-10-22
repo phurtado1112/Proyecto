@@ -16,10 +16,12 @@ import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 //import javax.imageio.stream.FileImageInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -58,11 +60,13 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     public void limpiar(){
         txtUniversidad.setText("");
         txtSiglas.setText("");
+        LblLogo.setIcon(null);
     }
     
     private void Deshabilitar() {
         txtUniversidad.setEnabled(false);
         txtSiglas.setEnabled(false);
+        BtnBuscarLogo.setEnabled(false);
     }
     
     public void Habilitar(){
@@ -73,6 +77,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         va.SoloLetras(txtSiglas);
         va.SeleccionarTodo(txtSiglas);
         txtUniversidad.requestFocus();
+        BtnBuscarLogo.setEnabled(true);
     }
     
     private void BotonesInicio(){
@@ -289,9 +294,16 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -303,12 +315,14 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblUniversidad);
-        tblUniversidad.getColumnModel().getColumn(0).setResizable(false);
-        tblUniversidad.getColumnModel().getColumn(0).setPreferredWidth(15);
-        tblUniversidad.getColumnModel().getColumn(1).setResizable(false);
-        tblUniversidad.getColumnModel().getColumn(1).setPreferredWidth(320);
-        tblUniversidad.getColumnModel().getColumn(2).setResizable(false);
-        tblUniversidad.getColumnModel().getColumn(2).setPreferredWidth(30);
+        if (tblUniversidad.getColumnModel().getColumnCount() > 0) {
+            tblUniversidad.getColumnModel().getColumn(0).setResizable(false);
+            tblUniversidad.getColumnModel().getColumn(0).setPreferredWidth(15);
+            tblUniversidad.getColumnModel().getColumn(1).setResizable(false);
+            tblUniversidad.getColumnModel().getColumn(1).setPreferredWidth(320);
+            tblUniversidad.getColumnModel().getColumn(2).setResizable(false);
+            tblUniversidad.getColumnModel().getColumn(2).setPreferredWidth(30);
+        }
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -443,10 +457,11 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){              
             try {
-                u.setnombreU(txtUniversidad.getText().trim());
-                u.setSiglas(txtSiglas.getText().trim());
-                u.guardarUniversidad();
-    //            u.setLogo(null);
+//                u.setnombreU(txtUniversidad.getText().trim());
+//                u.setSiglas(txtSiglas.getText().trim());
+////                u.setLogo((Blob)(FileInputStream)LblLogo.getIcon());
+//                u.setLongitudBit(LongitudBit);
+                u.guardarUniversidad(txtUniversidad.getText().trim(),txtSiglas.getText().trim(),this.fis,this.LongitudBit);
             } catch (Exception ex) {
                 Logger.getLogger(UniversidadIF.class.getName()).log(Level.SEVERE, null, ex);
             } 
@@ -487,7 +502,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 txtUniversidad.setText(rs.getString("nombreU"));
                 txtSiglas.setText(rs.getString("siglas"));
                 }                
-            } catch(Exception e){
+            } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error Universidad Mouse Cliked: " + e.getMessage());
             } finally {
                 BotonesClick();
@@ -528,22 +543,17 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         JFileChooser buscar = new JFileChooser();
         buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int estado = buscar.showOpenDialog(null);
-        if (estado == JFileChooser.APPROVE_OPTION){
-            
+        if (estado == JFileChooser.APPROVE_OPTION){            
             try{
                 fis = new FileInputStream(buscar.getSelectedFile());
-                LongitudBit = (int)buscar.getSelectedFile().length();
+                this.LongitudBit = (int)buscar.getSelectedFile().length();
                 
                 Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
                               LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
                 LblLogo.setIcon(new ImageIcon(icono));
-                LblLogo.updateUI();
-                        
-                
-            }catch(FileNotFoundException ex){
-                
-                ex.printStackTrace();
-                
+                LblLogo.updateUI();                                        
+            }catch(FileNotFoundException ex){                
+                ex.printStackTrace();                
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

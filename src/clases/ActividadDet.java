@@ -14,7 +14,7 @@ import util.Conecta;
  * @version 1.0
  * @created 27-mar-2013 10:45:02 PM
  */
-public class EvaluacionDet {
+public class ActividadDet {
     
     private int idevaluaciondet;
     private String evaluaciondet;
@@ -24,11 +24,11 @@ public class EvaluacionDet {
     Conecta cnx = new Conecta();
     //Statement stm;
 
-    public EvaluacionDet(){
+    public ActividadDet(){
 
     }
 
-    public EvaluacionDet(int idevaluacion,String evaluacion, int idasignatura) {
+    public ActividadDet(int idevaluacion,String evaluacion, int idasignatura) {
         this.idevaluaciondet = idevaluacion;
         this.evaluaciondet = evaluacion;
         this.idevaluacion = idasignatura;
@@ -58,10 +58,10 @@ public class EvaluacionDet {
         this.idevaluacion = idasignatura;
     }
     
-    public void actualizarEvaluacionDet(){
+    public void actualizarActividadDet(){
         cnx.Conecta();
             try{
-                String SQL ="update evaluaciondet set evaluaciondet=?, idevaluacion=?"
+                String SQL ="update actividaddet set evaluaciondet=?, idevaluacion=?"
                 + "where idevaluaciondet=?";
                 ps = cnx.conn.prepareStatement(SQL);
                 
@@ -75,16 +75,16 @@ public class EvaluacionDet {
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
                 }
             }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Detalle de Evaluación: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error Detalle de Actividad: " + e.getMessage());
             } finally {                
                 cnx.Desconecta();
             }
     }
     
-    public void eliminarEvaluacionDet(){
+    public void eliminarActividadDet(){
         cnx.Conecta();
             try {
-                String SQL = "delete from evaluaciondet where idevaluaciondet = ?";
+                String SQL = "delete from actividaddet where idevaluaciondet = ?";
                 ps = cnx.conn.prepareStatement(SQL);
                 
                 ps.setInt(1, idevaluaciondet);
@@ -94,7 +94,7 @@ public class EvaluacionDet {
                     JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
                 }
             } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error eliminando Detalle de Evaluación: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error eliminando Detalle de Actividad: " + e.getMessage());
             } finally {                
                 cnx.Desconecta();        
             }
@@ -103,7 +103,7 @@ public class EvaluacionDet {
     public void guardarEvaluacionDet(){
         cnx.Conecta();
             try {
-                String SQL = "insert into evaluaciondet(evaluaciondet,idevaluacion) "
+                String SQL = "insert into actividaddet(evaluaciondet,idevaluacion) "
                 + "values(?,?)";
                 ps = cnx.conn.prepareStatement(SQL);
                 
@@ -115,7 +115,7 @@ public class EvaluacionDet {
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
                 }
             } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar Detalle Evaluación: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error Guardar Detalle Actividad: " + e.getMessage());
             } finally {                
                 cnx.Desconecta();
             }
@@ -125,7 +125,7 @@ public class EvaluacionDet {
     int id = 0;
     cnx.Conecta();
     try{
-        String SQL = "Select idevaluaciondet from evaluaciondet where evaluaciondet = "+"\""+Evalua+"\"";
+        String SQL = "Select idevaluaciondet from actividaddet where evaluaciondet = "+"\""+Evalua+"\"";
         ps = cnx.conn.prepareStatement(SQL);
         
         rs = ps.executeQuery(SQL);            
@@ -133,34 +133,34 @@ public class EvaluacionDet {
             id = rs.getInt("idevaluaciondet");
         }
     } catch(SQLException | HeadlessException e){
-        JOptionPane.showMessageDialog(null, "Error consulta ID Evaluacion: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error consulta ID Actividad: " + e.getMessage());
     }
     cnx.Desconecta();       
     return id;
     }
     
-    public String consultaEvaluacion(int id){
+    public String consultaActividad(int id){
         String fila= "";
         cnx.Conecta();
         try{
-            String SQL = "Select evaluaciondet from evaluaciondet where idevaluaciondet="+id;
+            String SQL = "Select evaluaciondet from actividaddet where idevaluaciondet="+id;
             ps = cnx.conn.prepareStatement(SQL);
             rs = ps.executeQuery(SQL);
             while(rs.next()){
                 fila = rs.getString("evaluaciondet");
             }
         } catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error consulta Nombre Detalle de Evaluacion: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error consulta Nombre Detalle de Actividad: " + e.getMessage());
         }
         cnx.Desconecta();       
         return fila;
     }
     
-    public ArrayList<String> consultaEvaluacion(){
+    public ArrayList<String> consultaActividad(){
         cnx.Conecta();
         ArrayList<String> ls = new ArrayList<>();
         try{
-            String SQL = "Select evaluaciondet from evaluaciondet";
+            String SQL = "Select evaluaciondet from actividaddet";
             ps = cnx.conn.prepareStatement(SQL);
             
             rs = ps.executeQuery(SQL);            
@@ -168,7 +168,7 @@ public class EvaluacionDet {
                 ls.add(rs.getString("evaluaciondet"));
             }
         } catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error consultaEvaluacion Detalle: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error consultaActividad Detalle: " + e.getMessage());
         }
         cnx.Desconecta();
         return ls;                                  

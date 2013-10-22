@@ -1,8 +1,9 @@
 package GUI;
 
-import clases.Evaluacion;
+import clases.Actividad;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -16,19 +17,19 @@ import util.Valida;
  *
  * @author PabloAntonio
  */
-public class EvaluacionIF extends javax.swing.JInternalFrame {
+public class ActividadIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
-    Evaluacion ta = new Evaluacion();
+    Actividad a = new Actividad();
     Statement stm;
     PreparedStatement ps;
     ResultSet rs;
 
     /**
-     * Creates new form EvaluacionIF
+     * Creates new form ActividadIF
      */
-    public EvaluacionIF() {
+    public ActividadIF() {
         initComponents();
         cnx.Conecta();
         Deshabilitar();
@@ -38,18 +39,18 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
     }
     
     public void limpiar(){
-        txtEvaluacion.setText("");
+        txtActividad.setText("");
     }
     
     private void Deshabilitar() {
-        txtEvaluacion.setEnabled(false);
+        txtActividad.setEnabled(false);
     }
     
     public void Habilitar(){
-        txtEvaluacion.setEnabled(true);
-        va.SoloLetras(txtEvaluacion);
-        va.SeleccionarTodo(txtEvaluacion);
-        txtEvaluacion.requestFocus();
+        txtActividad.setEnabled(true);
+        va.SoloLetras(txtActividad);
+        va.SeleccionarTodo(txtActividad);
+        txtActividad.requestFocus();
     }
     
     private void BotonesInicio(){
@@ -80,8 +81,8 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
          int[] anchos = {20, 300};
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Evaluación"};
-            String SQL = "Select * from evaluacion";
+            String [] titulos ={"ID","Actividad"};
+            String SQL = "Select * from actividad";
             model = new DefaultTableModel(null, titulos);
             ps = cnx.conn.prepareStatement(SQL);
             rs = ps.executeQuery();
@@ -91,17 +92,17 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
                 fila[1] = rs.getString("actividad");
                 model.addRow(fila);
             }
-            tblEvaluacion.setModel(model);
-            for(int i = 0; i < tblEvaluacion.getColumnCount(); i++) {
-                tblEvaluacion.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            tblActividad.setModel(model);
+            for(int i = 0; i < tblActividad.getColumnCount(); i++) {
+                tblActividad.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
             
             DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
             centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            tblEvaluacion.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblEvaluacion.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error LlenarTabla Evaluación: " + e.getMessage());
+            tblActividad.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
+            tblActividad.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error LlenarTabla Actividad: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
@@ -109,7 +110,7 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
      
      private boolean validar(){
         boolean val;
-        if(txtEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
+        if(txtActividad.getText().trim().length()==0){ //Valida campo Nombre
             JOptionPane.showMessageDialog(this, "El campo de texto Tipo Actividad está vacío,por favor llenarlo");
             val = false;
         } else {
@@ -135,11 +136,11 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtEvaluacion = new javax.swing.JTextField();
+        txtActividad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblEvaluacion = new javax.swing.JTable();
+        tblActividad = new javax.swing.JTable();
 
-        setTitle("Catálogo de Evaluaciones");
+        setTitle("Catálogo de Actividades");
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {
@@ -189,9 +190,9 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Evaluación"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Actividades"));
 
-        jLabel1.setText("Evaluación");
+        jLabel1.setText("Actividad");
         jLabel1.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -202,8 +203,8 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addComponent(txtActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,11 +212,11 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        tblEvaluacion.setModel(new javax.swing.table.DefaultTableModel(
+        tblActividad.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -240,16 +241,16 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblEvaluacion.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblActividad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblEvaluacionMouseClicked(evt);
+                tblActividadMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblEvaluacion);
-        tblEvaluacion.getColumnModel().getColumn(0).setResizable(false);
-        tblEvaluacion.getColumnModel().getColumn(0).setPreferredWidth(20);
-        tblEvaluacion.getColumnModel().getColumn(1).setResizable(false);
-        tblEvaluacion.getColumnModel().getColumn(1).setPreferredWidth(350);
+        jScrollPane1.setViewportView(tblActividad);
+        tblActividad.getColumnModel().getColumn(0).setResizable(false);
+        tblActividad.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tblActividad.getColumnModel().getColumn(1).setResizable(false);
+        tblActividad.getColumnModel().getColumn(1).setPreferredWidth(350);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -277,7 +278,7 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
@@ -303,10 +304,10 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
             if(i==JOptionPane.OK_OPTION){
-                int fila = tblEvaluacion.getSelectedRow();
-                ta.setActividad(this.txtEvaluacion.getText().trim());
-                ta.setIdtipoactividad(Integer.parseInt(this.tblEvaluacion.getValueAt(fila, 0).toString()));
-                ta.ActualizarEvaluacion();
+                int fila = tblActividad.getSelectedRow();
+                a.setActividad(this.txtActividad.getText().trim());
+                a.setIdtipoactividad(Integer.parseInt(this.tblActividad.getValueAt(fila, 0).toString()));
+                a.ActualizarActividad();
             }
         LlenarTabla();
         limpiar();
@@ -319,9 +320,9 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Eliminar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            int fila = tblEvaluacion.getSelectedRow();
-            ta.setIdtipoactividad(Integer.parseInt(tblEvaluacion.getValueAt(fila, 0).toString()));
-            ta.EliminarEvaluacion();           
+            int fila = tblActividad.getSelectedRow();
+            a.setIdtipoactividad(Integer.parseInt(tblActividad.getValueAt(fila, 0).toString()));
+            a.EliminarActividad();           
         }
         limpiar();
         Deshabilitar();
@@ -334,8 +335,8 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
             if(i==JOptionPane.OK_OPTION){
-                ta.setActividad(txtEvaluacion.getText().trim());            
-                ta.GuardarEvaluacion();
+                a.setActividad(txtActividad.getText().trim());            
+                a.GuardarActividad();
             }
             LlenarTabla();
             limpiar();
@@ -359,26 +360,26 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void tblEvaluacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaluacionMouseClicked
+    private void tblActividadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblActividadMouseClicked
         if (evt.getButton()==1){
-            int fila = tblEvaluacion.getSelectedRow();
+            int fila = tblActividad.getSelectedRow();
             cnx.Conecta();
             try{
                 Habilitar();                               
-                String SQL = "Select * from evaluacion where idtipoactividad = " + tblEvaluacion.getValueAt(fila, 0);
+                String SQL = "Select * from actividad where idtipoactividad = " + tblActividad.getValueAt(fila, 0);
                 stm = cnx.conn.createStatement();
                 rs = stm.executeQuery(SQL);
                 
                 rs.next();
-                txtEvaluacion.setText(rs.getString("actividad"));                
-            } catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error Evaluación Mouse Cliked: " + e.getMessage());
+                txtActividad.setText(rs.getString("actividad"));                
+            } catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "Error Actividad Mouse Cliked: " + e.getMessage());
             } finally {
                 BotonesClick();
                 cnx.Desconecta();
             }
         }
-    }//GEN-LAST:event_tblEvaluacionMouseClicked
+    }//GEN-LAST:event_tblActividadMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -390,7 +391,7 @@ public class EvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEvaluacion;
-    private javax.swing.JTextField txtEvaluacion;
+    private javax.swing.JTable tblActividad;
+    private javax.swing.JTextField txtActividad;
     // End of variables declaration//GEN-END:variables
 }

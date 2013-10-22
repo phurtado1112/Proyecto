@@ -6,7 +6,7 @@ package GUI;
 
 import clases.Asignatura;
 import clases.EstructuraEvaluacion;
-import clases.EvaluacionDet;
+import clases.ActividadDet;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,7 +29,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     Valida va = new Valida();
     ResultSet rs;
     Statement stm;
-    EvaluacionDet ev = new EvaluacionDet();
+    EActividadDetev = new EvActividadDet;
     Asignatura a = new Asignatura();
     EstructuraEvaluacion ee = new EstructuraEvaluacion();
     //int id = 1;    
@@ -49,26 +49,24 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     }
     
     private void limpiar(){        
-        txtNobreEvaluacion.setText("");
+        cbxDetEvaluacion.removeAllItems();
+        cbxEvaluacion.removeAllItems();        
         txtValor.setText("");
-        cbxTipoEvaluacion.removeAllItems();
     }
     
     private void Deshabilitar() {
-        txtNobreEvaluacion.setEnabled(false);        
-        txtValor.setEnabled(false);
-        cbxTipoEvaluacion.setEnabled(false);
+        cbxDetEvaluacion.setEnabled(false);
+        cbxEvaluacion.setEnabled(false);        
+        txtValor.setEnabled(false);        
     }
     
     private void Habilitar(){
-        txtNobreEvaluacion.setEnabled(true);
-        va.SoloLetras(txtNobreEvaluacion);
-        va.SeleccionarTodo(txtNobreEvaluacion);
+        cbxEvaluacion.setEnabled(true);        
         txtValor.setEnabled(true);
         va.SoloNumeros(txtValor);
         va.SeleccionarTodo(txtValor);
-        cbxTipoEvaluacion.setEnabled(true);
-        txtNobreEvaluacion.requestFocus();
+        cbxDetEvaluacion.setEnabled(true);
+        cbxEvaluacion.requestFocus();
     }
     
     private void BotonesInicio(){
@@ -112,7 +110,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 model.addRow(fila);
             }
             tblEstructuraEvaluacion.setModel(model);
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Estructura Evaluación: " + e.getMessage());
         } finally {
             cnx.Desconecta();
@@ -130,7 +128,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 modeloCombo.addElement(rs.getObject("evaluacion"));
             }
             rs.close();
-            cbxTipoEvaluacion.setModel(modeloCombo);
+            cbxDetEvaluacion.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCBTE: " + ex.getMessage());
         } finally {
@@ -168,7 +166,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 }
             }            
         }
-        if(txtNobreEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
+        if(txtDetEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
             JOptionPane.showMessageDialog(this, "El campo de texto Evaluación está vacío,por favor llenarlo");
             val = false;
         } else if(valor.length()==0){ //Valida la nota
@@ -199,13 +197,13 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtNobreEvaluacion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cbxTipoEvaluacion = new javax.swing.JComboBox();
+        cbxDetEvaluacion = new javax.swing.JComboBox();
+        cbxEvaluacion = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
         txtAsignatura = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEstructuraEvaluacion = new javax.swing.JTable();
@@ -225,15 +223,17 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Estructura de Evaluación"));
 
-        jLabel1.setText("Nombre Evaluación");
-
         jLabel2.setText("Valor");
 
-        jLabel3.setText("Tipo Evaluación");
+        jLabel3.setText("Actividad");
 
-        jLabel4.setText("Asignatura");
+        jLabel4.setText("Detalle Actividad");
 
-        cbxTipoEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxDetEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbxEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("Asignatura");
 
         txtAsignatura.setEnabled(false);
 
@@ -242,40 +242,47 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNobreEvaluacion, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxTipoEvaluacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtAsignatura))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbxDetEvaluacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbxEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(166, 166, 166)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNobreEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel3)
+                    .addComponent(cbxDetEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(cbxEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(cbxTipoEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tblEstructuraEvaluacion.setModel(new javax.swing.table.DefaultTableModel(
@@ -361,16 +368,16 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 24, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
@@ -378,7 +385,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addContainerGap())
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -478,7 +485,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 rs.next();
                 txtNobreEvaluacion.setText(rs.getString("nombreE"));
                 txtValor.setText(rs.getString("valor"));
-                cbxTipoEvaluacion.setSelectedItem(rs.getString("evaluacion"));
+                cbxDetEvaluacion.setSelectedItem(rs.getString("evaluacion"));
 //                cbxAsignatura.setSelectedItem(rs.getString("nombreA"));
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -495,7 +502,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxTipoEvaluacion;
+    private javax.swing.JComboBox cbxDetEvaluacion;
+    private javax.swing.JComboBox cbxEvaluacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -504,7 +512,6 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEstructuraEvaluacion;
     private javax.swing.JTextField txtAsignatura;
-    private javax.swing.JTextField txtNobreEvaluacion;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

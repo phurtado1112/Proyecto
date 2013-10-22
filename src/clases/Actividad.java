@@ -13,18 +13,18 @@ import util.Conecta;
  * @version 1.0
  * @created 27-mar-2013 10:45:07 PM
  */
-public class Evaluacion {
+public class Actividad {
     private String actividad;
     private int idtipoactividad;
     Conecta cnx = new Conecta();
     PreparedStatement ps;
     ResultSet rs;    
 
-    public Evaluacion(){
+    public Actividad(){
 
     }
 
-    public Evaluacion(String Activida, int idtipoactividad) {
+    public Actividad(String Activida, int idtipoactividad) {
         this.actividad = Activida;
         this.idtipoactividad = idtipoactividad;            
     }
@@ -45,10 +45,10 @@ public class Evaluacion {
         this.idtipoactividad = idtipoactividad;
     }        
     
-    public void ActualizarEvaluacion(){
+    public void ActualizarActividad(){
         cnx.Conecta();
             try{
-                String SQL ="update evaluacion set actividad=?"
+                String SQL ="update actividad set actividad=?"
                 + "where idtipoactividad=?";
                 
                 ps = cnx.conn.prepareStatement(SQL);               
@@ -60,16 +60,16 @@ public class Evaluacion {
                 }
                 ps.close();
             }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Actualizar Evaluación: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error Actualizar Actividad: " + e.getMessage());
             } finally {
                 cnx.Desconecta();
             }
     }
     
-    public void EliminarEvaluacion(){
+    public void EliminarActividad(){
         cnx.Conecta();
                 try {
-                    String SQL = "delete from evaluacion where idtipoactividad=?";
+                    String SQL = "delete from actividad where idtipoactividad=?";
                     
                     ps = cnx.conn.prepareStatement(SQL);     
                     ps.setInt(1, idtipoactividad);                    
@@ -79,16 +79,16 @@ public class Evaluacion {
                     }
                     ps.close();
                 } catch(SQLException | HeadlessException e){
-                    JOptionPane.showMessageDialog(null, "Error Eliminar evaluacion: " + e.getMessage());            
+                    JOptionPane.showMessageDialog(null, "Error Eliminar actividad: " + e.getMessage());            
                 } finally {
                     cnx.Desconecta();
                 }
     }
     
-    public void GuardarEvaluacion(){
+    public void GuardarActividad(){
         cnx.Conecta();
             try {
-                String SQL = "insert into evaluacion(actividad) values(?)";
+                String SQL = "insert into actividad(actividad) values(?)";
                 
                 ps = cnx.conn.prepareStatement(SQL);
                 ps.setString(1, actividad);                
@@ -98,37 +98,36 @@ public class Evaluacion {
                 }
                 ps.close();
             } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar evaluacion: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error Guardar actividad: " + e.getMessage());
             } finally {
                 cnx.Desconecta();
             }
     }
     
-    public int consultaIdE(String Evalua){
+    public int consultaIdAct(String Evalua){
     int id = 0;
     cnx.Conecta();
         try{
-            String SQL = "Select idtipoactividad from evaluacion where actividad = "+"\""+Evalua+"\"";
+            String SQL = "Select idtipoactividad from actividad where actividad = "+"\""+Evalua+"\"";
             
             ps = cnx.conn.prepareStatement(SQL);
-//            ps.setString(1, actividad);
             rs = ps.executeQuery();            
             while(rs.next()){
                 id = rs.getInt("idtipoactividad");
             }            
             ps.close();
         } catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error consulta Id evaluacion: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error consulta Id actividad: " + e.getMessage());
         }
     cnx.Desconecta();       
     return id;
     }
     
-    public String consultaEvaluacion(int id){
+    public String consultaActividad(int id){
         String eva= "";
         cnx.Conecta();
         try{
-            String SQL = "Select actividad from evaluacion where idtipoactividad= " + id;
+            String SQL = "Select actividad from actividad where idtipoactividad= " + id;
             
             ps = cnx.conn.prepareStatement(SQL);
             rs = ps.executeQuery();
@@ -137,17 +136,17 @@ public class Evaluacion {
             }            
             ps.close();
         } catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error consultaDescrip Evaluacion: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error consultaDescrip actividad: " + e.getMessage());
         }
         cnx.Desconecta();       
         return eva;
     }
     
-    public ArrayList<String> consultaEvaluacion(){
+    public ArrayList<String> consultaActividad(){
         cnx.Conecta();
         ArrayList<String> ls = new ArrayList<>();
         try{
-            String SQL = "Select actividad from evaluacion";
+            String SQL = "Select actividad from actividad";
             
             ps = cnx.conn.prepareStatement(SQL);            
             rs = ps.executeQuery();
@@ -156,7 +155,7 @@ public class Evaluacion {
             }            
             ps.close();
         } catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error consultaEvaluacion: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error consultaActividad: " + e.getMessage());
         }
         cnx.Desconecta();
         return ls;                                  

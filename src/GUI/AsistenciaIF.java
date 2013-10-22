@@ -1,7 +1,7 @@
 package GUI;
 
 import clases.Asignatura;
-import clases.Evaluacion;
+import clases.Actividad;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,7 +31,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
-    Evaluacion ta = new Evaluacion();
+    Actividad ta = new Actividad();
     Asignatura a = new Asignatura();
     Calendario Ca = new Calendario();
     Asistencia asis = new Asistencia();

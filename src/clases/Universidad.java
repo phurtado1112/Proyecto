@@ -1,6 +1,7 @@
 package clases;
 
 import java.awt.HeadlessException;
+import java.io.FileInputStream;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ public class Universidad {
     private String nombreU;
     private String siglas;
     private Blob logo;
+    private int LongitudBit;
     Conecta cnx = new Conecta();
     PreparedStatement ps;
     ResultSet rs;
@@ -67,7 +69,15 @@ public class Universidad {
     public void setLogo(Blob logo) {
         this.logo = logo;
     }
-    
+
+    public int getLongitudBit() {
+        return LongitudBit;
+    }
+
+    public void setLongitudBit(int LongitudBit) {
+        this.LongitudBit = LongitudBit;
+    }
+        
     public void actualizarUniversidad(){
         cnx.Conecta();
         try{
@@ -114,17 +124,17 @@ public class Universidad {
             }
     }
     
-    public void guardarUniversidad(){
+    public void guardarUniversidad(String nombreU, String siglas, FileInputStream logo, int longitud){
         cnx.Conecta();
         try{
 //            String SQL = "insert into universidad(nombreU,siglas,logo) "
 //                    + "values(?,?,?)";
-            String SQL = "insert into universidad(nombreU,siglas) "
-                    + "values(?,?)";
+            String SQL = "insert into universidad(nombreU,siglas,logo) "
+                    + "values(?,?,?)";
             ps = cnx.conn.prepareStatement(SQL);            
             ps.setString(1, nombreU);
             ps.setString(2, siglas);
-            //ps.setBlob(3, logo);
+            ps.setBlob(3, logo, longitud);
            
             int n = ps.executeUpdate();
             if (n>0){

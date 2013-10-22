@@ -8,11 +8,11 @@ import GUI.CarreraIF;
 import GUI.DocenteIF;
 import GUI.EstructuraEvaluacionIF;
 import GUI.EstudianteIF;
-import GUI.EvaluacionDetIF;
+import GUI.ActividadDetIF;
 import GUI.FacultadIF;
 import GUI.RecuperacionDeDatos;
 import GUI.Respaldo;
-import GUI.EvaluacionIF;
+import GUI.ActividadIF;
 import GUI.UniversidadIF;
 import GUI.repAsignaturaIF;
 import GUI.repCarreraIF;
@@ -97,6 +97,7 @@ public class Cnae extends javax.swing.JFrame {
         MnuCarreras = new javax.swing.JMenuItem();
         MnuFacultades = new javax.swing.JMenuItem();
         MnuUniversidades = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         MnuPrReportes = new javax.swing.JMenu();
         MnuRepAsistencia = new javax.swing.JMenuItem();
@@ -215,7 +216,7 @@ public class Cnae extends javax.swing.JFrame {
         MnuPrCatalogo.add(jSeparator2);
 
         MnuTipoEvaluacion.setMnemonic('t');
-        MnuTipoEvaluacion.setText("Detalle de Evaluación");
+        MnuTipoEvaluacion.setText("Detalle de Actividad");
         MnuTipoEvaluacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuTipoEvaluacionActionPerformed(evt);
@@ -224,7 +225,7 @@ public class Cnae extends javax.swing.JFrame {
         MnuPrCatalogo.add(MnuTipoEvaluacion);
 
         MnuTipoActividad.setMnemonic('p');
-        MnuTipoActividad.setText("Evaluación");
+        MnuTipoActividad.setText("Actividades");
         MnuTipoActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuTipoActividadActionPerformed(evt);
@@ -259,6 +260,7 @@ public class Cnae extends javax.swing.JFrame {
             }
         });
         MnuPrCatalogo.add(MnuUniversidades);
+        MnuPrCatalogo.add(jSeparator3);
 
         jMenuItem1.setMnemonic('d');
         jMenuItem1.setText("Docente");
@@ -421,7 +423,7 @@ public class Cnae extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MnuEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEvaluacionActionPerformed
-        EvaluacionDetIF evaluacionVent = new EvaluacionDetIF();
+        ActividadDetIF evaluacionVent = new ActividadDetIF();
         centerJIF(evaluacionVent);
         Escritorio.add(evaluacionVent);
         evaluacionVent.toFront();
@@ -445,12 +447,12 @@ public class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuCalendarioActionPerformed
 
     private void MnuTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoActividadActionPerformed
-        EvaluacionIF evaluacionVent = new EvaluacionIF();
-        centerJIF(evaluacionVent);
-        Escritorio.add(evaluacionVent);
-        evaluacionVent.toFront();
+        ActividadIF actividadVent = new ActividadIF();
+        centerJIF(actividadVent);
+        Escritorio.add(actividadVent);
+        actividadVent.toFront();
         try {
-            evaluacionVent.setSelected(true);
+            actividadVent.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -525,12 +527,12 @@ public class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuEstudiantesActionPerformed
 
     private void MnuTipoEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuTipoEvaluacionActionPerformed
-        EvaluacionDetIF evaluacionDetVent = new EvaluacionDetIF();
-        centerJIF(evaluacionDetVent);
-        Escritorio.add(evaluacionDetVent);
-        evaluacionDetVent.toFront();
+        ActividadDetIF actividadDetVent = new ActividadDetIF();
+        centerJIF(actividadDetVent);
+        Escritorio.add(actividadDetVent);
+        actividadDetVent.toFront();
         try {
-            evaluacionDetVent.setSelected(true);
+            actividadDetVent.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -748,6 +750,7 @@ public class Cnae extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JMenuItem mnuAsignatura;
     private javax.swing.JMenuItem mnuCarrera;
     private javax.swing.JMenu mnuCatalogos;

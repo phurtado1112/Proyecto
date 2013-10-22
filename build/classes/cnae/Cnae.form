@@ -118,7 +118,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="MnuTipoEvaluacion">
               <Properties>
                 <Property name="mnemonic" type="int" value="116"/>
-                <Property name="text" type="java.lang.String" value="Detalle de Evaluaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Detalle de Actividad"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuTipoEvaluacionActionPerformed"/>
@@ -127,7 +127,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="MnuTipoActividad">
               <Properties>
                 <Property name="mnemonic" type="int" value="112"/>
-                <Property name="text" type="java.lang.String" value="Evaluaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Actividades"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuTipoActividadActionPerformed"/>
@@ -161,6 +161,8 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuUniversidadesActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
@@ -372,9 +374,7 @@
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="Escritorio">
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>
     </Container>
   </SubComponents>
 </Form>
