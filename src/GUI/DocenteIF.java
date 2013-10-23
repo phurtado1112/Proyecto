@@ -56,7 +56,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
         va.SoloLetras(txtApellido);
         va.SeleccionarTodo(txtApellido);
         txtUsuario.setEnabled(true);
-        va.LetrasNumeros(txtUsuario);
+        va.LetrasNumerosUsuario(txtUsuario);
         va.SeleccionarTodo(txtUsuario);
         pswContrasena.setEnabled(true);
         va.SeleccionarTodo(pswContrasena);

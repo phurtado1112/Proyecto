@@ -20,33 +20,11 @@ public class Valida {
                 char c = e.getKeyChar();
                 if(
                    ((int)c==32) || //32 es para la barra espaciadora      
-                    (c>='A' && c<='Z') ||
-                    (c=='Ñ')           ||
-                    (c=='Á') ||
-                    (c=='Ä') ||
-                    (c=='É') ||
-                    (c=='Ë') ||
-                    (c=='Í') ||
-                    (c=='Ï') ||
-                    (c=='Ó') ||
-                    (c=='Ö') ||
-                    (c=='Ú') ||
-                    (c=='Ü') ||
-                    (c>='a' && c<='z') ||
-                    (c=='ñ')||
-                    (c=='á') ||
-                    (c=='ä') ||
-                    (c=='é') ||
-                    (c=='ë') ||
-                    (c=='í') ||
-                    (c=='ï') ||
-                    (c=='ó') ||
-                    (c=='ö') ||
-                    (c=='ú') ||
-                    (c=='ü')                  
+                    (Character.isLetter(c))                  
                   )                                    
                 {}
-                else {
+                else 
+                {
                     e.consume();
                 }
             }
@@ -68,12 +46,12 @@ public class Valida {
                     (c>='a' && c<='z') ||
                     (c=='ñ') ||
                     (c=='-')
-                   ){
-                    e.consume();
-                    String mayuscula=String.valueOf(c).toUpperCase();                                                           
-                    jt.setText(jt.getText().concat(mayuscula));                    
+                   )
+                {
+                      e.setKeyChar(Character.toUpperCase(c));
                 } 
-                else {
+                else 
+                {
                         e.consume();
                 }                
             }
@@ -89,17 +67,15 @@ public class Valida {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();          
-                if (((int)c==32)|| // es par la barra espaciadora
+                if (
                     ((int)c=='-')|| 
-                    (c>='0' && c<='9') ||
+                    (Character.isDigit(c)) || //Valores de 0-9
                     (c>='A' && c<='Z') ||
                     (c=='Ñ')           ||
                     (c>='a' && c<='z') ||
                     (c=='ñ')
-                   ){
-                    e.consume();
-                    String mayuscula=String.valueOf(c).toUpperCase();                                                           
-                    jt.setText(jt.getText().concat(mayuscula));                    
+                   ){                                                   
+                    e.setKeyChar(Character.toUpperCase(c));
                 }
                 else {
                     e.consume();
@@ -111,16 +87,50 @@ public class Valida {
         }               
     }
     
-    public void SoloNumeros(JTextField jt){
+    public void LetrasNumerosUsuario(final JTextField jt){
+        try{
+            jt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();          
+                if (
+                    ((int)c=='-')|| 
+                    (Character.isDigit(c)) || //Valores de 0-9
+                    (c>='A' && c<='Z') ||
+                    (c=='Ñ')           ||
+                    (c>='a' && c<='z') ||
+                    (c=='ñ')
+                   ){                                                                       
+                }
+                else {
+                    e.consume();
+                }
+            }
+        });
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+        }               
+    }
+    
+    public void SoloNumerosNota(final JTextField jt){
         try{
             jt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
-                if ((c>='0' && c<='9') ||
+                if (
+                     (Character.isDigit(c))||
                      c=='.'
-                    ){} 
-                else{
+                    )
+                {
+                    if (c=='.' && jt.getText().indexOf('.')!=-1)
+                    {
+                        e.consume();
+                    }
+                    else {}                    
+                } 
+                else
+                {
                     e.consume();
                 }
             }
@@ -129,19 +139,40 @@ public class Valida {
             JOptionPane.showMessageDialog(null, "Error en la validación " + e);
         }
     }
-                    
-public void SeleccionarTodo(final JTextField jt){  
-        try{
-            jt.addFocusListener(new FocusAdapter() {                        
-            @Override
-            public void focusGained(FocusEvent e){
-                jt.selectAll();
-            }                
-        });
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
-        }               
+    
+    
+    
+public void SoloNumerosCelular(final JTextField jt){
+    try{
+        jt.addKeyListener(new KeyAdapter() {
+        @Override
+        public void keyTyped(KeyEvent e){
+            char c = e.getKeyChar();
+            if (Character.isDigit(c))
+            {} 
+            else
+            {
+                e.consume();
+            }
+        }
+    });
+    } catch (Exception e){
+        JOptionPane.showMessageDialog(null, "Error en la validación " + e);
     }
+}
+
+public void SeleccionarTodo(final JTextField jt){  
+    try{
+        jt.addFocusListener(new FocusAdapter() {                        
+        @Override
+        public void focusGained(FocusEvent e){
+            jt.selectAll();
+        }                
+    });
+    } catch (Exception e){
+        JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+    }               
+}
     
 //    public void email(JTextField jt){
 //        try{

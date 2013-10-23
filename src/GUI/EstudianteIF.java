@@ -62,7 +62,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
         txtEmail.setEnabled(true);
         va.SeleccionarTodo(txtEmail);
         txtCelular.setEnabled(true);        
-        va.SoloNumeros(txtCelular);
+        va.SoloNumerosCelular(txtCelular);
         va.SeleccionarTodo(txtCelular);
         txtNombres.requestFocus();
     }
@@ -178,10 +178,7 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "El campo de texto Apellidos está vacío,por favor llenarlo");
                 val = false;
             } else if(txtCelular.getText().trim().length()!=0){ //Valida campo Apellido                                
-                if(txtCelular.getText().trim().indexOf(".")!=-1){
-                JOptionPane.showMessageDialog(this, "El campo de texto Celular no debe incluir puntos");    
-                val=false;
-                } else if (txtCelular.getText().trim().length()!=8) {
+                if (txtCelular.getText().trim().length()!=8) {
                     JOptionPane.showMessageDialog(this, "El campo de texto Celular debe contener 8 dígitos");                
                 val = false;}
                 else {

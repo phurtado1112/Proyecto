@@ -74,7 +74,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         va.SoloLetras(txtUniversidad); 
         va.SeleccionarTodo(txtUniversidad);
         txtSiglas.setEnabled(true);
-        va.SoloLetras(txtSiglas);
+        va.LetrasSinEspacios(txtSiglas);
         va.SeleccionarTodo(txtSiglas);
         txtUniversidad.requestFocus();
         BtnBuscarLogo.setEnabled(true);

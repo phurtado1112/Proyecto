@@ -87,13 +87,13 @@ public class Cnae extends javax.swing.JFrame {
         MnuEvaluacion = new javax.swing.JMenuItem();
         MnuPrCatalogo = new javax.swing.JMenu();
         MnuEstudiantes = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         MnuEstructuraEvaluacion = new javax.swing.JMenuItem();
         MnuCalendario = new javax.swing.JMenuItem();
-        MnuAsignatura = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         MnuTipoEvaluacion = new javax.swing.JMenuItem();
         MnuTipoActividad = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        MnuAsignatura = new javax.swing.JMenuItem();
         MnuCarreras = new javax.swing.JMenuItem();
         MnuFacultades = new javax.swing.JMenuItem();
         MnuUniversidades = new javax.swing.JMenuItem();
@@ -186,6 +186,7 @@ public class Cnae extends javax.swing.JFrame {
             }
         });
         MnuPrCatalogo.add(MnuEstudiantes);
+        MnuPrCatalogo.add(jSeparator2);
 
         MnuEstructuraEvaluacion.setMnemonic('s');
         MnuEstructuraEvaluacion.setText("Estructura de Evaluación");
@@ -205,16 +206,6 @@ public class Cnae extends javax.swing.JFrame {
         });
         MnuPrCatalogo.add(MnuCalendario);
 
-        MnuAsignatura.setMnemonic('g');
-        MnuAsignatura.setText("Asignaturas");
-        MnuAsignatura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnuAsignaturaActionPerformed(evt);
-            }
-        });
-        MnuPrCatalogo.add(MnuAsignatura);
-        MnuPrCatalogo.add(jSeparator2);
-
         MnuTipoEvaluacion.setMnemonic('t');
         MnuTipoEvaluacion.setText("Detalle de Actividad");
         MnuTipoEvaluacion.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +224,15 @@ public class Cnae extends javax.swing.JFrame {
         });
         MnuPrCatalogo.add(MnuTipoActividad);
         MnuPrCatalogo.add(jSeparator1);
+
+        MnuAsignatura.setMnemonic('g');
+        MnuAsignatura.setText("Asignaturas");
+        MnuAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuAsignaturaActionPerformed(evt);
+            }
+        });
+        MnuPrCatalogo.add(MnuAsignatura);
 
         MnuCarreras.setMnemonic('r');
         MnuCarreras.setText("Carreras");
