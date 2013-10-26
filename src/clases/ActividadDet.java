@@ -16,60 +16,57 @@ import util.Conecta;
  */
 public class ActividadDet {
     
-    private int idevaluaciondet;
-    private String evaluaciondet;
-    private int idevaluacion;
+    private int idactividaddet;
+    private String actividaddet;
+    private int idactividad;
     ResultSet rs;
     PreparedStatement ps;
-    Conecta cnx = new Conecta();
-    //Statement stm;
+    Conecta cnx = new Conecta();    
 
     public ActividadDet(){
 
     }
 
     public ActividadDet(int idevaluacion,String evaluacion, int idasignatura) {
-        this.idevaluaciondet = idevaluacion;
-        this.evaluaciondet = evaluacion;
-        this.idevaluacion = idasignatura;
+        this.idactividaddet = idevaluacion;
+        this.actividaddet = evaluacion;
+        this.idactividad = idasignatura;
     }
 
-    public String getEvaluacionDet(){
-            return evaluaciondet;
+    public String getActividadDet(){
+            return actividaddet;
     }
 
-    public void setEvaluacionDet(String evalua){
-            evaluaciondet = evalua;
+    public void setActividadDet(String actividaddet){
+            this.actividaddet = actividaddet;
     }
 
-    public int getIdEvaluacionDet() {
-        return idevaluaciondet;
+    public int getIdActividadDet() {
+        return idactividaddet;
     }
 
-    public void setIdEvaluacionDet(int idevaluacion) {
-        this.idevaluaciondet = idevaluacion;
+    public void setIdActividadDet(int idactividaddet) {
+        this.idactividaddet = idactividaddet;
     }
 
-    public int getIdEvaluacion() {
-        return idevaluacion;
+    public int getIdActividad() {
+        return idactividad;
     }
 
-    public void setIdEvaluacion(int idasignatura) {
-        this.idevaluacion = idasignatura;
+    public void setIdActividad(int idactividad) {
+        this.idactividad = idactividad;
     }
     
     public void actualizarActividadDet(){
         cnx.Conecta();
             try{
-                String SQL ="update actividaddet set evaluaciondet=?, idevaluacion=?"
-                + "where idevaluaciondet=?";
+                String SQL ="update actividaddet set actividaddet=?, idactividad=?"
+                + "where idactividaddet=?";
                 ps = cnx.conn.prepareStatement(SQL);
                 
-                ps.setString(1, evaluaciondet);
-                ps.setInt(2, idevaluacion);
-                ps.setInt(3, idevaluaciondet);
-                       
-
+                ps.setString(1, actividaddet);
+                ps.setInt(2, idactividad);
+                ps.setInt(3, idactividaddet);                       
                 int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
@@ -84,10 +81,10 @@ public class ActividadDet {
     public void eliminarActividadDet(){
         cnx.Conecta();
             try {
-                String SQL = "delete from actividaddet where idevaluaciondet = ?";
+                String SQL = "delete from actividaddet where idactividaddet = ?";
                 ps = cnx.conn.prepareStatement(SQL);
                 
-                ps.setInt(1, idevaluaciondet);
+                ps.setInt(1, idactividaddet);
 
                 int n = ps.executeUpdate();                
                 if(n>0){                
@@ -103,12 +100,12 @@ public class ActividadDet {
     public void guardarEvaluacionDet(){
         cnx.Conecta();
             try {
-                String SQL = "insert into actividaddet(evaluaciondet,idevaluacion) "
+                String SQL = "insert into actividaddet(actividaddet,idactividad) "
                 + "values(?,?)";
                 ps = cnx.conn.prepareStatement(SQL);
                 
-                ps.setString(1, evaluaciondet);
-                ps.setInt(2, idevaluacion);
+                ps.setString(1, actividaddet);
+                ps.setInt(2, idactividad);
 
                 int n = ps.executeUpdate();
                 if (n>0){
@@ -121,19 +118,19 @@ public class ActividadDet {
             }
     }
     
-    public int consultaId(String Evalua){
+    public int consultaId(String ActivDet){
     int id = 0;
     cnx.Conecta();
     try{
-        String SQL = "Select idevaluaciondet from actividaddet where evaluaciondet = "+"\""+Evalua+"\"";
+        String SQL = "Select idactividaddet from actividaddet where actividaddet = "+"\""+ActivDet+"\"";
         ps = cnx.conn.prepareStatement(SQL);
         
-        rs = ps.executeQuery(SQL);            
+        rs = ps.executeQuery();            
         while(rs.next()){
-            id = rs.getInt("idevaluaciondet");
+            id = rs.getInt("idactividaddet");
         }
     } catch(SQLException | HeadlessException e){
-        JOptionPane.showMessageDialog(null, "Error consulta ID Actividad: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error consulta ID Detalle Actividad: " + e.getMessage());
     }
     cnx.Desconecta();       
     return id;
@@ -143,11 +140,11 @@ public class ActividadDet {
         String fila= "";
         cnx.Conecta();
         try{
-            String SQL = "Select evaluaciondet from actividaddet where idevaluaciondet="+id;
+            String SQL = "Select actividaddet from actividaddet where idactividaddet="+id;
             ps = cnx.conn.prepareStatement(SQL);
-            rs = ps.executeQuery(SQL);
+            rs = ps.executeQuery();
             while(rs.next()){
-                fila = rs.getString("evaluaciondet");
+                fila = rs.getString("actividaddet");
             }
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consulta Nombre Detalle de Actividad: " + e.getMessage());
@@ -160,12 +157,12 @@ public class ActividadDet {
         cnx.Conecta();
         ArrayList<String> ls = new ArrayList<>();
         try{
-            String SQL = "Select evaluaciondet from actividaddet";
+            String SQL = "Select actividaddet from actividaddet";
             ps = cnx.conn.prepareStatement(SQL);
             
-            rs = ps.executeQuery(SQL);            
+            rs = ps.executeQuery();            
             while(rs.next()){
-                ls.add(rs.getString("evaluaciondet"));
+                ls.add(rs.getString("actividaddet"));
             }
         } catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error consultaActividad Detalle: " + e.getMessage());

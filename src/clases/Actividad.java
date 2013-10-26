@@ -15,7 +15,7 @@ import util.Conecta;
  */
 public class Actividad {
     private String actividad;
-    private int idtipoactividad;
+    private int idactividad;
     Conecta cnx = new Conecta();
     PreparedStatement ps;
     ResultSet rs;    
@@ -26,7 +26,7 @@ public class Actividad {
 
     public Actividad(String Activida, int idtipoactividad) {
         this.actividad = Activida;
-        this.idtipoactividad = idtipoactividad;            
+        this.idactividad = idtipoactividad;            
     }
 
     public String getActividad(){
@@ -37,23 +37,23 @@ public class Actividad {
             actividad = activid;
     }
 
-    public int getIdtipoactividad() {
-        return idtipoactividad;
+    public int getIdactividad() {
+        return idactividad;
     }
 
-    public void setIdtipoactividad(int idtipoactividad) {
-        this.idtipoactividad = idtipoactividad;
+    public void setIdactividad(int idtipoactividad) {
+        this.idactividad = idtipoactividad;
     }        
     
     public void ActualizarActividad(){
         cnx.Conecta();
             try{
                 String SQL ="update actividad set actividad=?"
-                + "where idtipoactividad=?";
+                + "where idactividad=?";
                 
                 ps = cnx.conn.prepareStatement(SQL);               
                 ps.setString(1, actividad);
-                ps.setInt(2, idtipoactividad);
+                ps.setInt(2, idactividad);
                 int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                
@@ -69,10 +69,10 @@ public class Actividad {
     public void EliminarActividad(){
         cnx.Conecta();
                 try {
-                    String SQL = "delete from actividad where idtipoactividad=?";
+                    String SQL = "delete from actividad where idactividad=?";
                     
                     ps = cnx.conn.prepareStatement(SQL);     
-                    ps.setInt(1, idtipoactividad);                    
+                    ps.setInt(1, idactividad);                    
                     int n = ps.executeUpdate();
                     if(n>0){                
                         JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
@@ -104,16 +104,16 @@ public class Actividad {
             }
     }
     
-    public int consultaIdAct(String Evalua){
+    public int consultaIdAct(String Activ){
     int id = 0;
     cnx.Conecta();
         try{
-            String SQL = "Select idtipoactividad from actividad where actividad = "+"\""+Evalua+"\"";
+            String SQL = "Select idactividad from actividad where actividad = "+"\""+Activ+"\"";
             
             ps = cnx.conn.prepareStatement(SQL);
             rs = ps.executeQuery();            
             while(rs.next()){
-                id = rs.getInt("idtipoactividad");
+                id = rs.getInt("idactividad");
             }            
             ps.close();
         } catch(SQLException | HeadlessException e){
@@ -127,7 +127,7 @@ public class Actividad {
         String eva= "";
         cnx.Conecta();
         try{
-            String SQL = "Select actividad from actividad where idtipoactividad= " + id;
+            String SQL = "Select actividad from actividad where idactividad= " + id;
             
             ps = cnx.conn.prepareStatement(SQL);
             rs = ps.executeQuery();

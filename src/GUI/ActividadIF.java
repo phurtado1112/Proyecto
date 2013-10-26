@@ -88,7 +88,7 @@ public class ActividadIF extends javax.swing.JInternalFrame {
             rs = ps.executeQuery();
             String [] fila = new String[2];
             while(rs.next()){
-                fila[0] = rs.getString("idtipoactividad");
+                fila[0] = rs.getString("idactividad");
                 fila[1] = rs.getString("actividad");
                 model.addRow(fila);
             }
@@ -306,7 +306,7 @@ public class ActividadIF extends javax.swing.JInternalFrame {
             if(i==JOptionPane.OK_OPTION){
                 int fila = tblActividad.getSelectedRow();
                 a.setActividad(this.txtActividad.getText().trim());
-                a.setIdtipoactividad(Integer.parseInt(this.tblActividad.getValueAt(fila, 0).toString()));
+                a.setIdactividad(Integer.parseInt(this.tblActividad.getValueAt(fila, 0).toString()));
                 a.ActualizarActividad();
             }
         LlenarTabla();
@@ -321,7 +321,7 @@ public class ActividadIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblActividad.getSelectedRow();
-            a.setIdtipoactividad(Integer.parseInt(tblActividad.getValueAt(fila, 0).toString()));
+            a.setIdactividad(Integer.parseInt(tblActividad.getValueAt(fila, 0).toString()));
             a.EliminarActividad();           
         }
         limpiar();
@@ -366,7 +366,7 @@ public class ActividadIF extends javax.swing.JInternalFrame {
             cnx.Conecta();
             try{
                 Habilitar();                               
-                String SQL = "Select * from actividad where idtipoactividad = " + tblActividad.getValueAt(fila, 0);
+                String SQL = "Select * from actividad where idactividad = " + tblActividad.getValueAt(fila, 0);
                 stm = cnx.conn.createStatement();
                 rs = stm.executeQuery(SQL);
                 

@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 import clases.Notas;
+import java.awt.HeadlessException;
 import java.awt.event.ItemEvent;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -120,7 +121,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
             TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
 
-    } catch(Exception e){
+    } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + e.getMessage());
         } finally {
             cnx.Desconecta();
@@ -165,7 +166,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
             TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);   
              
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + e.getMessage());
         } finally {
             cnx.Desconecta();
@@ -487,15 +488,15 @@ public class NotasIF extends javax.swing.JInternalFrame {
         {
             for (int f = 0; f < filas; f++) {
                 
-            N.GuardarNotas(modelo.getValueAt(f, 2).toString(),
-                    Estev.ObtenerIDEstruvturaevaluacion(CbxEstrucEvaluacion.getSelectedItem().toString()) ,
-                    modelo.getValueAt(f, 0).toString(), C.ObtenerIDCalendario(CbxFecha.getSelectedItem().toString()));
+ //           N.GuardarNotas(modelo.getValueAt(f, 2).toString(),
+//                    Estev.ObtenerIDEstruvturaevaluacion(CbxEstrucEvaluacion.getSelectedItem().toString()) ,
+ //                   modelo.getValueAt(f, 0).toString(), C.ConsultarIDCal(CbxFecha.getSelectedItem().toString()));
                     
             }
           JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
         }
             
-        catch(Exception e)
+        catch(HeadlessException e)
         {
             JOptionPane.showMessageDialog(null, "Error guardar Asistencia: " + e.getMessage());
         }

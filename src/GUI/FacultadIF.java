@@ -133,7 +133,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
             centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
             tblFacultad.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             tblFacultad.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Facultad: " + e.getMessage());
         } finally {
             cnx.Desconecta();

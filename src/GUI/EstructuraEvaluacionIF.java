@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import clases.Actividad;
 import clases.Asignatura;
 import clases.EstructuraEvaluacion;
 import clases.ActividadDet;
@@ -24,15 +25,16 @@ import util.Valida;
  */
 public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
-    DefaultComboBoxModel modeloCombo,modeloCombo1;    
+    DefaultComboBoxModel modeloComboAc;
+    DefaultComboBoxModel modeloComboAcDet; 
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     ResultSet rs;
     Statement stm;
-    EActividadDetev = new EvActividadDet;
+    Actividad ac = new Actividad();
+    ActividadDet ad = new ActividadDet();
     Asignatura a = new Asignatura();
-    EstructuraEvaluacion ee = new EstructuraEvaluacion();
-    //int id = 1;    
+    EstructuraEvaluacion ee = new EstructuraEvaluacion();   
     
     /**
      * Creates new form EstructuraEvaluacionIF
@@ -44,29 +46,29 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         BotonesInicio();
         LlenarTabla();
         llenarTXT();
-        llenarCBTE();
+        llenarCBAc();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
     
     private void limpiar(){        
-        cbxDetEvaluacion.removeAllItems();
-        cbxEvaluacion.removeAllItems();        
+        cbxActividadDet.removeAllItems();
+        cbxActividad.removeAllItems();        
         txtValor.setText("");
     }
     
     private void Deshabilitar() {
-        cbxDetEvaluacion.setEnabled(false);
-        cbxEvaluacion.setEnabled(false);        
+        cbxActividadDet.setEnabled(false);
+        cbxActividad.setEnabled(false);        
         txtValor.setEnabled(false);        
     }
     
     private void Habilitar(){
-        cbxEvaluacion.setEnabled(true);        
+        cbxActividad.setEnabled(true);        
         txtValor.setEnabled(true);
         va.SoloNumerosNota(txtValor);
         va.SeleccionarTodo(txtValor);
-        cbxDetEvaluacion.setEnabled(true);
-        cbxEvaluacion.requestFocus();
+        cbxActividadDet.setEnabled(true);
+        cbxActividad.requestFocus();
     }
     
     private void BotonesInicio(){
@@ -96,7 +98,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private void LlenarTabla() {
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Evaluación","Valor","Tipo Evaluación"};
+            String [] titulos ={"ID","Actividad","Detalle Actividad","Valor"};
             String SQL = "Select * from estructuraevaluacion_view";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
@@ -104,9 +106,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             String [] fila = new String[4];
             while(rs.next()){
                 fila[0] = rs.getString("idestructuraevaluacion");
-                fila[1] = rs.getString("nombreE");
-                fila[2] = rs.getString("valor");
-                fila[3] = rs.getString("evaluacion");
+                fila[1] = rs.getString("idactividad");
+                fila[2] = rs.getString("idactividaddet");
+                fila[3] = rs.getString("valor");
                 model.addRow(fila);
             }
             tblEstructuraEvaluacion.setModel(model);
@@ -117,23 +119,42 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         }
     }
     
-    private void llenarCBTE() {
+    private DefaultComboBoxModel llenarCBAc() {
         cnx.Conecta();
         try {            
-            modeloCombo = new DefaultComboBoxModel();            
-            String SQL = "select evaluacion from evaluacion";
+            modeloComboAc = new DefaultComboBoxModel();            
+            String SQL = "select actividad from actividad";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("evaluacion"));
-            }
-            rs.close();
-            cbxDetEvaluacion.setModel(modeloCombo);
+                modeloComboAc.addElement(rs.getObject("evaluacion"));
+            }            
+            cbxActividad.setModel(modeloComboAc);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error LlenarCBTE: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error LlenarCBAc: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
+        return modeloComboAc;
+    }
+    
+    private DefaultComboBoxModel llenarCBAcDet() {
+        cnx.Conecta();
+        try {            
+            modeloComboAcDet = new DefaultComboBoxModel();            
+            String SQL = "select actividaddet from actividaddet";
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloComboAcDet.addElement(rs.getObject("actividaddet"));
+            }
+            cbxActividadDet.setModel(modeloComboAcDet);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarCBAc: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+        return modeloComboAc;
     }
     
     private void llenarTXT() {
@@ -154,7 +175,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     }
     
     private boolean validar(){
-	boolean val;
+	boolean val=false;
         int contador=0;   //Para que cuente cuantos puntos decimales escribio el usuario
         String valor=txtValor.getText().trim(); //Hace referencia al txtValor
         if(valor.length()>0)
@@ -166,10 +187,10 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 }
             }            
         }
-        if(txtDetEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
-            JOptionPane.showMessageDialog(this, "El campo de texto Evaluación está vacío,por favor llenarlo");
-            val = false;
-        } else if(valor.length()==0){ //Valida la nota
+//        if(txtDetEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
+//            JOptionPane.showMessageDialog(this, "El campo de texto Evaluación está vacío,por favor llenarlo");
+//            val = false;}
+         else if(valor.length()==0){ //Valida la nota
             JOptionPane.showMessageDialog(this, "El campo de texto Valor está vacío,por favor llenarlo");
             val = false;
         } else if(valor.startsWith(".")&& valor.endsWith(".")){  //Valida si solamente se puso 1 punto
@@ -201,8 +222,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         txtValor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cbxDetEvaluacion = new javax.swing.JComboBox();
-        cbxEvaluacion = new javax.swing.JComboBox();
+        cbxActividadDet = new javax.swing.JComboBox();
+        cbxActividad = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         txtAsignatura = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -229,9 +250,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Detalle Actividad");
 
-        cbxDetEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividadDet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cbxEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setText("Asignatura");
 
@@ -243,25 +264,22 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbxDetEvaluacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbxEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(166, 166, 166)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxActividadDet, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,14 +289,14 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cbxDetEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cbxEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cbxActividadDet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -385,7 +403,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -395,8 +413,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         Habilitar();
         limpiar();
         BotonesNuevo();
-//        llenarCBA();
-        llenarCBTE();
+        llenarCBAcDet();
+        llenarCBAc();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -405,15 +423,14 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
-            ee.setnombreE(txtNobreEvaluacion.getText().trim());
-            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
+//            ee.setnombreE(txtNobreEvaluacion.getText().trim());
+//            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
             //ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
             //ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
             //ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
             //ee.actualizarEstructuraEvaluacion();
         }
         LlenarTabla();
-        llenarCBTE();
         limpiar();
         Deshabilitar();        
         BotonesInicio();
@@ -431,7 +448,6 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         limpiar();
         Deshabilitar();
         LlenarTabla();
-        llenarCBTE();
         BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -440,14 +456,13 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            ee.setnombreE(txtNobreEvaluacion.getText().trim());
-            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
+//            ee.setnombreE(txtNobreEvaluacion.getText().trim());
+//            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
           // ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
            // ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
             // ee.guardarEstructuraEvaluacion();
         }
         LlenarTabla();
-        llenarCBTE();
         limpiar();
         Deshabilitar();
         BotonesInicio();
@@ -473,8 +488,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         if (evt.getButton()==1){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
             Habilitar();
-//            llenarCBA();
-            llenarCBTE();
+            llenarCBAcDet();
+            llenarCBAc();
             BotonesClick();
             cnx.Conecta();            
             try{                                               
@@ -483,9 +498,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 rs = stm.executeQuery(SQL);
                 
                 rs.next();
-                txtNobreEvaluacion.setText(rs.getString("nombreE"));
+//                txtNobreEvaluacion.setText(rs.getString("nombreE"));
                 txtValor.setText(rs.getString("valor"));
-                cbxDetEvaluacion.setSelectedItem(rs.getString("evaluacion"));
+                cbxActividadDet.setSelectedItem(rs.getString("evaluacion"));
 //                cbxAsignatura.setSelectedItem(rs.getString("nombreA"));
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -502,8 +517,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxDetEvaluacion;
-    private javax.swing.JComboBox cbxEvaluacion;
+    private javax.swing.JComboBox cbxActividad;
+    private javax.swing.JComboBox cbxActividadDet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

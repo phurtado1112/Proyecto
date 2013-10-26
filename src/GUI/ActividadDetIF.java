@@ -54,7 +54,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     
     private void Habilitar(){
         txtDetActividad.setEnabled(true);
-        va.LetrasNumeros(txtDetActividad);
+        va.LetrasNumerosEspacio(txtDetActividad);
         va.SeleccionarTodo(txtDetActividad);
         cbxActividad.setEnabled(true);
         txtDetActividad.requestFocus();
@@ -107,15 +107,15 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
         int[] anchos = {30, 300, 100};
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Detalle Evaluación","Evaluación"};
-            String SQL = "Select * from evaluaciondet_view";
+            String [] titulos ={"ID","Detalle Actividad","Actividad"};
+            String SQL = "Select * from actividaddet_view";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             String [] fila = new String[3];
             while(rs.next()){
-                fila[0] = rs.getString("idevaluaciondet");
-                fila[1] = rs.getString("evaluaciondet");
+                fila[0] = rs.getString("idactividaddet");
+                fila[1] = rs.getString("actividaddet");
                 fila[2] = rs.getString("actividad");
                 model.addRow(fila);
             }
@@ -356,8 +356,8 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){            
-            te.setEvaluacionDet(txtDetActividad.getText().trim());
-            te.setIdEvaluacion(e.consultaIdAct(this.cbxActividad.getSelectedItem().toString().trim()));
+            te.setActividadDet(txtDetActividad.getText().trim());
+            te.setIdActividad(e.consultaIdAct(this.cbxActividad.getSelectedItem().toString().trim()));
             te.guardarEvaluacionDet();
         }
         limpiar();
@@ -373,9 +373,9 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblActividadDet.getSelectedRow();
-            te.setEvaluacionDet(txtDetActividad.getText().trim());
-            te.setIdEvaluacion(e.consultaIdAct(cbxActividad.getSelectedItem().toString().trim()));
-            te.setIdEvaluacionDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
+            te.setActividadDet(txtDetActividad.getText().trim());
+            te.setIdActividad(e.consultaIdAct(cbxActividad.getSelectedItem().toString().trim()));
+            te.setIdActividadDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
             te.actualizarActividadDet();
         }
         limpiar();
@@ -400,13 +400,13 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             BotonesClick();
             cnx.Conecta();
             try{                
-                String SQL = "Select * from actividaddet where idevaluaciondet = " + tblActividadDet.getValueAt(fila, 0);
+                String SQL = "Select * from actividaddet where idactividaddet = " + tblActividadDet.getValueAt(fila, 0);
                 ps = cnx.conn.prepareStatement(SQL);
                 rs = ps.executeQuery();
 
                 rs.next();
-                txtDetActividad.setText(rs.getString("evaluaciondet"));
-                cbxActividad.setSelectedItem(e.consultaActividad(rs.getInt("idevaluacion")));
+                txtDetActividad.setText(rs.getString("actividaddet"));
+                cbxActividad.setSelectedItem(e.consultaActividad(rs.getInt("idactividad")));
             } catch(SQLException ex){
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             } finally {
@@ -420,7 +420,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
         int fila = tblActividadDet.getSelectedRow();
-            te.setIdEvaluacionDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
+            te.setIdActividadDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
             te.eliminarActividadDet();
         }
         limpiar();

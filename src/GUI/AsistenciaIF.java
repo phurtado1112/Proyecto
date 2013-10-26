@@ -451,7 +451,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         {
             for (int i = 0; i < filas; i++) {
                    asis.GuardarAsistencia(modelo.getValueAt(i, 2).toString(), 
-                           Ca.ObtenerIDCalendario(CbxFecha.getSelectedItem().toString()),
+                           Ca.ConsultarIDCal(CbxFecha.getSelectedItem().toString()),
                            modelo.getValueAt(i, 0).toString());
             }
           JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");

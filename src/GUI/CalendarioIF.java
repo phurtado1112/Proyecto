@@ -4,6 +4,7 @@ import clases.Asignatura;
 import clases.Calendario;
 import clases.Actividad;
 import clases.ActividadDet;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,16 +23,16 @@ import util.Globales;
  */
 public class CalendarioIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
-    DefaultComboBoxModel modeloCombo;
-    //EActividad ta = new EvActividad();
+    DefaultComboBoxModel modeloComboAD;
+    DefaultComboBoxModel modeloComboA;
     Actividad ac = new Actividad();
     ActividadDet ad = new ActividadDet();
     Asignatura a = new Asignatura();
     Calendario c = new Calendario();
     Conecta cnx = new Conecta();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
     ResultSet rs;
     Statement stm;
-    //int id = 1;
     String Asignatura;
 
     /**
@@ -44,22 +45,26 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         BotonesInicio();
         LlenarTabla();
         llenarTXT();
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);        
     }
     
     private void limpiar(){
-        jdcFecha.cleanup();
+        jdcFecha.setCalendar(null);
         cbxActividadDet.removeAllItems();
+        cbxActividad.removeAllItems();        
     }
     
     private void Deshabilitar() {
         jdcFecha.setEnabled(false);        
         cbxActividadDet.setEnabled(false);
+        cbxActividad.setEnabled(false);        
     }
     
     private void Habilitar(){
         jdcFecha.setEnabled(true);
+        ((JTextFieldDateEditor)jdcFecha.getDateEditor()).setEnabled(false);
         cbxActividadDet.setEnabled(true);
+        cbxActividad.setEnabled(true);
         jdcFecha.requestFocus();
     }
     
@@ -90,43 +95,63 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     private void LlenarTabla() {
         cnx.Conecta();
         try{
-            String [] titulos ={"ID","Fecha","Actividad"};
+            String [] titulos ={"ID","Actividad","Detalle Actividad","Fecha"};
             String SQL = "Select * from calendario_view where idasignatura = " + Globales.id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
-            String [] fila = new String[3];
+            String [] fila = new String[4];
             while(rs.next()){
                 fila[0] = rs.getString("idcalendario");
-                fila[1] = rs.getString("fecha");
-                fila[2] = rs.getString("actividad");
+                fila[1] = rs.getString("actividad");
+                fila[2] = rs.getString("actividaddet");
+                fila[3] = rs.getString("fecha");
                 model.addRow(fila);
             }
             tblCalendario.setModel(model);
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Calendario: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
     
-    private void llenarCB() {
+    private DefaultComboBoxModel llenarCBAct() {
         cnx.Conecta();
         try {            
-            modeloCombo = new DefaultComboBoxModel();            
-            String SQL = "select actividad from tipoactividad";
+            modeloComboA = new DefaultComboBoxModel();            
+            String SQL = "select actividad from actividad";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("actividad"));
+                modeloComboA.addElement(rs.getObject("actividad"));
             }
-            rs.close();
-            cbxActividadDet.setModel(modeloCombo);
+            cbxActividad.setModel(modeloComboA);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error LlenarCB Actividad: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
+        return modeloComboA;
+    }
+    
+    private DefaultComboBoxModel llenarCBActDet() {
+        cnx.Conecta();
+        try {            
+            modeloComboAD = new DefaultComboBoxModel();            
+            String SQL = "select actividaddet from actividaddet where idactividad = " + ac.consultaIdAct((String)cbxActividad.getSelectedItem());
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloComboAD.addElement(rs.getObject("actividaddet"));
+            }
+            cbxActividadDet.setModel(modeloComboAD);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarCB Actividad Detalle: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+        return modeloComboAD;
     }
     
     private void llenarTXT() {
@@ -138,12 +163,24 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 txtAsignatura.setText(rs.getString("nombreA"));
             }
-            rs.close();            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
          }
+    }
+    
+     private boolean validar(){
+	boolean val;
+        if(jdcFecha.getCalendar()==null){ //Valida campo Fecha
+            JOptionPane.showMessageDialog(this, "El campo de texto Fecha está vacío,por favor llenarlo");
+            val = false;
+            } 
+        else 
+        {
+            val=true;
+        }       
+        return val;
     }
 
     /**
@@ -204,6 +241,11 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         jLabel4.setText("Actividad");
 
         cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxActividadItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -256,18 +298,25 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
 
         tblCalendario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Detalle Actividad", "Fecha"
+                "ID", "Actividad", "Detalle Actividad", "Fecha"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -279,9 +328,12 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblCalendario);
-        tblCalendario.getColumnModel().getColumn(0).setResizable(false);
-        tblCalendario.getColumnModel().getColumn(1).setResizable(false);
-        tblCalendario.getColumnModel().getColumn(2).setResizable(false);
+        if (tblCalendario.getColumnModel().getColumnCount() > 0) {
+            tblCalendario.getColumnModel().getColumn(0).setResizable(false);
+            tblCalendario.getColumnModel().getColumn(1).setResizable(false);
+            tblCalendario.getColumnModel().getColumn(2).setResizable(false);
+            tblCalendario.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -377,42 +429,47 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-            int fila = tblCalendario.getSelectedRow();
-            //c.setFecha((String)jdcFecha.getDateEditor().getUiComponent().toString().trim());
-            //c.setIdtipoactividad(ta.consultaIdE(cbxTipoActividad.getSelectedItem().toString().trim()));
-            //c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
-            //c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString()));
-            //c.actualizarCalendario();
-        }
-        LlenarTabla();
-        limpiar();
-        Deshabilitar();
-        BotonesInicio();
+       if (validar()==true){            
+            int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?","Confirmar",
+                JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
+                if(i==JOptionPane.OK_OPTION){
+                int fila = tblCalendario.getSelectedRow();
+                c.setfecha((String)sdf.format(jdcFecha.getDate()).trim());
+                c.setIdactividadDet(ad.consultaId(cbxActividadDet.getSelectedItem().toString().trim()));
+                c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+                c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString()));
+                c.actualizarCalendario();
+            }
+            LlenarTabla();
+            limpiar();
+            Deshabilitar();
+            BotonesInicio();
+       }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         Habilitar();
         limpiar();
-        llenarCB();
+        llenarCBAct();
+        llenarCBActDet();
         llenarTXT();
         BotonesNuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea eliminar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-            int fila = tblCalendario.getSelectedRow();
-            //c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString().trim()));
-            //c.eliminarCalendario();
+            if (validar()==true){
+            int i = JOptionPane.showConfirmDialog(null, "Desea eliminar?","Confirmar",
+                JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
+            if(i==JOptionPane.OK_OPTION){
+                int fila = tblCalendario.getSelectedRow();
+                c.setIdcalendario(Integer.parseInt(tblCalendario.getValueAt(fila, 0).toString().trim()));
+                c.eliminarCalendario();
+            }
+            limpiar();
+            Deshabilitar();
+            LlenarTabla();
+            BotonesInicio();
         }
-        limpiar();
-        Deshabilitar();
-        LlenarTabla();
-        BotonesInicio();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -423,25 +480,28 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-            //c.setFecha(jdcFecha.getDateEditor().getUiComponent().toString());
-            //c.setIdtipoactividad(ta.consultaIdE(cbxTipoActividad.getSelectedItem().toString().trim()));
-            //c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
-            //c.guardarCalendario();
+        if (validar()==true){
+            int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
+                JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
+            if(i==JOptionPane.OK_OPTION){
+                c.setfecha((String)sdf.format(jdcFecha.getDate()).trim());
+                c.setIdactividadDet(ad.consultaId(cbxActividadDet.getSelectedItem().toString().trim()));
+                c.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+                c.guardarCalendario();
+            }
+            limpiar();
+            Deshabilitar();
+            LlenarTabla();
+            BotonesInicio();
         }
-        limpiar();
-        Deshabilitar();
-        LlenarTabla();
-        BotonesInicio();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblCalendarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCalendarioMouseClicked
         if (evt.getButton()==1){
             int fila = tblCalendario.getSelectedRow();
             Habilitar();
-            llenarCB();
+            llenarCBAct();
+            llenarCBActDet();
             llenarTXT();
             BotonesClick();
             cnx.Conecta();
@@ -452,6 +512,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
                 rs = stm.executeQuery(SQL);
                 
                 rs.next();
+                //jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
                 jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
                 cbxActividadDet.setSelectedItem(ad.consultaActividad(rs.getInt("idtipoactividad")));                
             } catch(SQLException | ParseException e){
@@ -461,6 +522,10 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblCalendarioMouseClicked
+
+    private void cbxActividadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadItemStateChanged
+        this.cbxActividadDet.setModel(llenarCBActDet());
+    }//GEN-LAST:event_cbxActividadItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

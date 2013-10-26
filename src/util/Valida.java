@@ -112,6 +112,33 @@ public class Valida {
         }               
     }
     
+    public void LetrasNumerosEspacio(final JTextField jt){
+        try{
+            jt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();          
+                if ((int)c==32 ||
+                    ((int)c=='-')||
+                    ((int)c=='/')||
+                    ((int)c=='_')||
+                    (Character.isDigit(c)) || //Valores de 0-9
+                    (c>='A' && c<='Z') ||
+                    (c=='Ñ')           ||
+                    (c>='a' && c<='z') ||
+                    (c=='ñ')
+                   ){                                                                       
+                }
+                else {
+                    e.consume();
+                }
+            }
+        });
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error en la validación " + e);
+        }               
+    }
+    
     public void SoloNumerosNota(final JTextField jt){
         try{
             jt.addKeyListener(new KeyAdapter() {
