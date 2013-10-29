@@ -22,7 +22,6 @@ public class CarreraIF extends javax.swing.JInternalFrame {
     DefaultComboBoxModel modeloComboF;
     DefaultComboBoxModel modeloComboU;
     Conecta cnx = new Conecta();
-//    Valida va = new Valida();
     Valida va = new Valida();
     Statement stm;
     ResultSet rs;

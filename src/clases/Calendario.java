@@ -70,11 +70,11 @@ public class Calendario {
             try{
                 String SQL ="update calendario set fecha=?,idactividaddet=?,"
                         + "idasignatura=? where idcalendario=?";
-                ps = cnx.conn.prepareStatement(SQL);
-                ps.setInt(1, idcalendario);
-                ps.setString(2, fecha);
-                ps.setInt(3, idactividaddet);
-                ps.setInt(4, idasignatura);
+                ps = cnx.conn.prepareStatement(SQL);                
+                ps.setString(1, fecha);
+                ps.setInt(2, idactividaddet);
+                ps.setInt(3, idasignatura);
+                ps.setInt(4, idcalendario);
                 int n = ps.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");                

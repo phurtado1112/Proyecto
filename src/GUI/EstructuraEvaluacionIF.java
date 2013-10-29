@@ -47,6 +47,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         LlenarTabla();
         llenarTXT();
         llenarCBAc();
+        llenarCBAcDet();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
     
@@ -106,8 +107,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             String [] fila = new String[4];
             while(rs.next()){
                 fila[0] = rs.getString("idestructuraevaluacion");
-                fila[1] = rs.getString("idactividad");
-                fila[2] = rs.getString("idactividaddet");
+                fila[1] = rs.getString("actividad");
+                fila[2] = rs.getString("actividaddet");
                 fila[3] = rs.getString("valor");
                 model.addRow(fila);
             }
@@ -127,7 +128,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboAc.addElement(rs.getObject("evaluacion"));
+                modeloComboAc.addElement(rs.getObject("actividad"));
             }            
             cbxActividad.setModel(modeloComboAc);
         } catch (SQLException ex) {
@@ -141,8 +142,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private DefaultComboBoxModel llenarCBAcDet() {
         cnx.Conecta();
         try {            
-            modeloComboAcDet = new DefaultComboBoxModel();            
-            String SQL = "select actividaddet from actividaddet";
+            modeloComboAcDet = new DefaultComboBoxModel();
+            String SQL = "select actividaddet from actividaddet where idactividad = " + ac.consultaIdAct((String)cbxActividad.getSelectedItem());
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
@@ -154,7 +155,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         } finally {
             cnx.Desconecta();
         }
-        return modeloComboAc;
+        return modeloComboAcDet;
     }
     
     private void llenarTXT() {
@@ -175,36 +176,33 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     }
     
     private boolean validar(){
-	boolean val=false;
-        int contador=0;   //Para que cuente cuantos puntos decimales escribio el usuario
-        String valor=txtValor.getText().trim(); //Hace referencia al txtValor
-        if(valor.length()>0)
-        {            
-            for(int i=0; i<=valor.length()-1; i++)
-            {
-                if(valor.charAt(i)=='.'){
-                    contador+=1;                    
-                }
-            }            
-        }
-//        if(txtDetEvaluacion.getText().trim().length()==0){ //Valida campo Nombre
-//            JOptionPane.showMessageDialog(this, "El campo de texto Evaluación está vacío,por favor llenarlo");
-//            val = false;}
-         else if(valor.length()==0){ //Valida la nota
-            JOptionPane.showMessageDialog(this, "El campo de texto Valor está vacío,por favor llenarlo");
-            val = false;
-        } else if(valor.startsWith(".")&& valor.endsWith(".")){  //Valida si solamente se puso 1 punto
-            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
-            val = false;
-        } else if(contador>1){ //Valida que no haya mas de 1 punto decimal
-            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
-            val = false;
-        }  else if(Integer.parseInt(valor)>100){ //Valida que la nota no sea mayor que 100
-            JOptionPane.showMessageDialog(this, "El valor máximo para el campo de texto Valor es 100");
-            val = false;
-        } else {
-            val=true;
-        }       
+        boolean val = true;
+//	boolean val = false;
+//        int contador=0;   //Para que cuente cuantos puntos decimales escribio el usuario
+//        String valor=txtValor.getText().trim(); //Hace referencia al txtValor
+//        if(valor.length()>0)
+//        {            
+//            for(int i=0; i<=valor.length()-1; i++)
+//            {
+//                if(valor.charAt(i)=='.'){
+//                    contador+=1;                    
+//                }
+//            }            
+//        } else if(valor.length()==0){ //Valida la nota
+//            JOptionPane.showMessageDialog(this, "El campo de texto Valor está vacío,por favor llenarlo");
+//            val = false;
+//        } else if(valor.startsWith(".")&& valor.endsWith(".")){  //Valida si solamente se puso 1 punto
+//            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
+//            val = false;
+//        } else if(contador>1){ //Valida que no haya mas de 1 punto decimal
+//            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
+//            val = false;
+//        }  else if(Integer.parseInt(valor)>100){ //Valida que la nota no sea mayor que 100
+//            JOptionPane.showMessageDialog(this, "El valor máximo para el campo de texto Valor es 100");
+//            val = false;
+//        } else {
+//            val=true;
+//        }       
         return val;
     }
     
@@ -253,6 +251,11 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         cbxActividadDet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxActividadItemStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Asignatura");
 
@@ -413,8 +416,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         Habilitar();
         limpiar();
         BotonesNuevo();
-        llenarCBAcDet();
         llenarCBAc();
+        llenarCBAcDet();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -423,12 +426,12 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
-//            ee.setnombreE(txtNobreEvaluacion.getText().trim());
-//            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
-            //ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
-            //ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
-            //ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
-            //ee.actualizarEstructuraEvaluacion();
+            ee.setIdactividad(ac.consultaIdAct(cbxActividad.getSelectedItem().toString()));
+            ee.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
+            ee.setValor(Double.parseDouble(txtValor.getText().trim()));          
+            ee.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+            ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
+            ee.actualizarEstructuraEvaluacion();
         }
         LlenarTabla();
         limpiar();
@@ -442,8 +445,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
-            //ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
-            //ee.eliminarEstructuraEvaluacion();
+            ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
+            ee.eliminarEstructuraEvaluacion();
         }
         limpiar();
         Deshabilitar();
@@ -456,11 +459,11 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-//            ee.setnombreE(txtNobreEvaluacion.getText().trim());
-//            ee.setvalor(Double.parseDouble(txtValor.getText().trim()));
-          // ee.setIdevaluacion(Integer.parseInt(cbxTipoEvaluacion.getSelectedItem().toString()));
-           // ee.setIdasignatura(Integer.parseInt(txtAsignatura.getText().trim()));
-            // ee.guardarEstructuraEvaluacion();
+            ee.setIdactividad(ac.consultaIdAct(cbxActividad.getSelectedItem().toString()));
+            ee.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
+            ee.setValor(Double.parseDouble(txtValor.getText().trim()));          
+            ee.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+            ee.guardarEstructuraEvaluacion();
         }
         LlenarTabla();
         limpiar();
@@ -498,9 +501,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 rs = stm.executeQuery(SQL);
                 
                 rs.next();
-//                txtNobreEvaluacion.setText(rs.getString("nombreE"));
                 txtValor.setText(rs.getString("valor"));
-                cbxActividadDet.setSelectedItem(rs.getString("evaluacion"));
+                cbxActividadDet.setSelectedItem(rs.getString("actividaddet"));
+                cbxActividad.setSelectedItem(rs.getString("actividad"));
 //                cbxAsignatura.setSelectedItem(rs.getString("nombreA"));
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -509,6 +512,10 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblEstructuraEvaluacionMouseClicked
+
+    private void cbxActividadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadItemStateChanged
+        this.cbxActividadDet.setModel(llenarCBAcDet()); 
+    }//GEN-LAST:event_cbxActividadItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

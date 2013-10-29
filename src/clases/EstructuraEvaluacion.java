@@ -73,6 +73,7 @@ public class EstructuraEvaluacion {
     }
 
     public void setValor(double valor) {
+        //this.valor = Math.rint(valor*100)/100;
         this.valor = valor;
     }
     
@@ -80,7 +81,7 @@ public class EstructuraEvaluacion {
         cnx.Conecta();
             try{
                 String SQL ="update estructuraevaluacion set idactividad=?, idactividaddet=?,"
-                + "valor=?, idasignatura=? where idactividaddet=?";
+                + "valor=?, idasignatura=? where idestructuraevaluacion=?";
                 ps = cnx.conn.prepareStatement(SQL);
                 
                 ps.setInt(1, idactividad);

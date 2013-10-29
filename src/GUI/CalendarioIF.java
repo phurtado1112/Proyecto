@@ -505,7 +505,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             llenarTXT();
             BotonesClick();
             cnx.Conecta();
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MMM/yyyy");
             try{                                               
                 String SQL = "Select * from calendario where idcalendario = " + tblCalendario.getValueAt(fila, 0);
                 stm = cnx.conn.createStatement();
@@ -514,7 +514,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
                 rs.next();
                 //jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
                 jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
-                cbxActividadDet.setSelectedItem(ad.consultaActividad(rs.getInt("idtipoactividad")));                
+                cbxActividadDet.setSelectedItem(ad.consultaActividad(rs.getInt("idactividaddet")));                
             } catch(SQLException | ParseException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {
