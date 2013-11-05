@@ -73,8 +73,8 @@ public class EstructuraEvaluacion {
     }
 
     public void setValor(double valor) {
-        //this.valor = Math.rint(valor*100)/100;
-        this.valor = valor;
+        this.valor = Math.rint(valor*100)/100;
+//        this.valor = valor;
     }
     
     public void actualizarEstructuraEvaluacion(){

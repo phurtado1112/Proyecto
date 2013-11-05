@@ -13,6 +13,7 @@ import GUI.FacultadIF;
 import GUI.RecuperacionDeDatos;
 import GUI.Respaldo;
 import GUI.ActividadIF;
+import GUI.NotasIF;
 import GUI.UniversidadIF;
 import GUI.repAsignaturaIF;
 import GUI.repCarreraIF;
@@ -423,7 +424,7 @@ public class Cnae extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MnuEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEvaluacionActionPerformed
-        ActividadDetIF evaluacionVent = new ActividadDetIF();
+        NotasIF evaluacionVent = new NotasIF();
         centerJIF(evaluacionVent);
         Escritorio.add(evaluacionVent);
         evaluacionVent.toFront();

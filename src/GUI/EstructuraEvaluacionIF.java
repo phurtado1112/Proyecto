@@ -491,8 +491,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         if (evt.getButton()==1){
             int fila = tblEstructuraEvaluacion.getSelectedRow();
             Habilitar();
-            llenarCBAcDet();
-            llenarCBAc();
+//            llenarCBAcDet();
+//            llenarCBAc();
             BotonesClick();
             cnx.Conecta();            
             try{                                               
@@ -501,10 +501,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
                 rs = stm.executeQuery(SQL);
                 
                 rs.next();
-                txtValor.setText(rs.getString("valor"));
+                txtValor.setText(rs.getString("valor"));                
                 cbxActividadDet.setSelectedItem(rs.getString("actividaddet"));
                 cbxActividad.setSelectedItem(rs.getString("actividad"));
-//                cbxAsignatura.setSelectedItem(rs.getString("nombreA"));
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {

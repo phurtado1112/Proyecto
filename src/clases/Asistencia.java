@@ -4,9 +4,6 @@ import java.awt.HeadlessException;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import util.Conecta;
-import clases.Calendario;
-import clases.Estudiantes;
-import javax.swing.JInternalFrame;
 
 
 /**
@@ -16,21 +13,26 @@ import javax.swing.JInternalFrame;
  */
 public class Asistencia {
 
-	private String asistencia;
-	private int idasistencia;
-        Conecta cnx = new Conecta();
-        Calendario Ca = new Calendario();
-        Estudiantes Es = new Estudiantes();
-        PreparedStatement ps;
-        Connection conn;
+    private int idasistencia;	
+    private String asistencia;	
+    private int idcalendario;
+    private int idestudiante;
+    private int idasignatura;
+    Conecta cnx = new Conecta();
+    Calendario Ca = new Calendario();
+    Estudiantes Es = new Estudiantes();
+    PreparedStatement ps;
+        
+    public Asistencia(){
 
-	public Asistencia(){
+    }
 
-	}
-
-    public Asistencia(String asistencia, int idasistencia) {
-        this.asistencia = asistencia;
+    public Asistencia(int idasistencia, String asistencia, int idcalendario, int idestudiante, int idasignatura) {
         this.idasistencia = idasistencia;
+        this.asistencia = asistencia;
+        this.idcalendario = idcalendario;
+        this.idestudiante = idestudiante;
+        this.idasignatura = idasignatura;        
     }
 
     public String getAsistencia() {
@@ -48,32 +50,48 @@ public class Asistencia {
     public void setIdasistencia(int idasistencia) {
         this.idasistencia = idasistencia;
     }
-        
-        
 
-       
-        
-        public void GuardarAsistencia(String s1, int idCal, String idEst) throws Exception
-        {
+    public int getIdcalendario() {
+        return idcalendario;
+    }
+
+    public void setIdcalendario(int idcalendario) {
+        this.idcalendario = idcalendario;
+    }
+
+    public int getIdestudiante() {
+        return idestudiante;
+    }
+
+    public void setIdestudiante(int idestudiante) {
+        this.idestudiante = idestudiante;
+    }
+
+    public int getIdasignatura() {
+        return idasignatura;
+    }
+
+    public void setIdasignatura(int idasignatura) {
+        this.idasignatura = idasignatura;
+    }
             
-            try {
-                Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
-               conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
-
-               String query = "Insert Into Asistencia(asistencia, idcalendario, idestudiante) Values(?,?,?)";
-                ps = conn.prepareStatement(query);
-                ps.setString(1, s1);
-                ps.setInt(2, idCal);
-                ps.setString(3,idEst );
-                ps.executeUpdate();
-               
-               
-            } catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Error Guardar Asistencia Clase: " + e.getMessage());
-            } finally {
-                ps.close();
-                conn.close();
-            }
+    public void GuardarAsistencia(){
+        cnx.Conecta();
+        try {
+            String SQL = "insert into asistencia(asistencia, idcalendario, idestudiante, idasignatura) Values(?,?,?,?)";
+            
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setString(1, asistencia);
+            ps.setInt(2, idcalendario);
+            ps.setInt(3, idestudiante);
+            ps.setInt(4, idasignatura);
+            ps.executeUpdate();        
+            ps.close();
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error Guardar Asistencia a Clase: " + e.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
     }
 
         

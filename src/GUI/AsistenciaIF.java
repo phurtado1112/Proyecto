@@ -1,7 +1,6 @@
 package GUI;
 
 import clases.Asignatura;
-import clases.Actividad;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,9 +19,11 @@ import java.awt.event.ItemEvent;
 import clases.Calendario;
 import clases.Asistencia;
 import clases.Estudiantes;
+import java.awt.HeadlessException;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import util.Globales;
 /**
  *
  * @author Pablo
@@ -31,7 +32,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
-    Actividad ta = new Actividad();
     Asignatura a = new Asignatura();
     Calendario Ca = new Calendario();
     Asistencia asis = new Asistencia();
@@ -53,8 +53,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         BotonesInicio();
         LlenarTabla();
         setJTexFieldChanged(TxtBuscar);
-        CbxFecha.setModel(llenarCB());
-       
+       //CbxFecha.setModel(llenarCB());
+        llenarCB();
+        llenarTXT();
        
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
@@ -66,11 +67,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         columna.setCellEditor(new DefaultCellEditor(Combo));
  
     }
-    
-  
-    
-    
-    
+
     private void limpiar(){
         CbxFecha.setSelectedItem(-1);
     }
@@ -89,25 +86,22 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         btnCancelar.setEnabled(true);
     }
     
-    private void BotonesModificar(){
-        btnGuardar.setEnabled(false);
-        btnIntroducir.setEnabled(false);      
-        btnCancelar.setEnabled(true);
-    }
-    
-    private void BotonesClick(){
-        btnGuardar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-    }
+//    private void BotonesModificar(){
+//        btnGuardar.setEnabled(false);
+//        btnIntroducir.setEnabled(false);      
+//        btnCancelar.setEnabled(true);
+//    }
+//    
+//    private void BotonesClick(){
+//        btnGuardar.setEnabled(false);
+//        btnCancelar.setEnabled(true);
+//    }
 
-    
-    
     private void LlenarTabla() {
        int[] anchos = {30, 100, 100};
        
        cnx.Conecta();
-        try{
-           
+        try{           
             String [] titulos ={"ID","Nombre","Asistencia"};
             
             String SQL = "Select * from estudiantea_view";
@@ -117,9 +111,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             String [] fila = new String[2];
             while(rs.next()){
                 fila[0] = rs.getString("idestudiante");
-                fila[1] = rs.getString("nombre");
-             
-
+                fila[1] = rs.getString("nombre");             
                 model.addRow(fila);
             }
             TblAsistencia.setModel(model);
@@ -137,25 +129,24 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             TblAsistencia.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
              Asistencia(TblAsistencia, TblAsistencia.getColumnModel().getColumn(2));   
              
-
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
-    
-    
+        
     private void LlenarTablaSegunTxt() {
        int[] anchos = {30, 100, 100};
        
        cnx.Conecta();
         try{
-           
+           String fecha=CbxFecha.getSelectedItem().toString();
+           JOptionPane.showMessageDialog(null, "la fecha es " + fecha);
             String [] titulos ={"ID","Nombre","Asistencia"};
             
             String SQL = "Select * from asistencia_view where nombre like '%" + TxtBuscar.getText() +
-                    "%' and fecha = '" + CbxFecha.getSelectedItem() + "'";
+                    "%' and fecha = '" + CbxFecha.getSelectedItem().toString() + "'";
             
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
@@ -184,40 +175,33 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             TblAsistencia.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
              Asistencia(TblAsistencia, TblAsistencia.getColumnModel().getColumn(2));   
              
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia: " + e.getMessage());
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia para edición: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
-    
-    
-    private DefaultComboBoxModel llenarCB() {
         
-        DefaultComboBoxModel  modeloCombo = new DefaultComboBoxModel();
+    private DefaultComboBoxModel llenarCB() {        
         cnx.Conecta();
         try {            
-                       
+            modeloCombo = new DefaultComboBoxModel();
             String SQL = "select fecha from calendario";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 modeloCombo.addElement(rs.getString("fecha"));
             }
-            rs.close();
-            
-                cnx.Desconecta();
-                
+            CbxFecha.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
         }
-        LlenarTabla();
-    
-        
+        //LlenarTabla();            
         return modeloCombo;
     }
-   
-    
+       
     private void setJTexFieldChanged(JTextField txt)
     {
         DocumentListener documentListener = new DocumentListener() {
@@ -264,6 +248,23 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         LlenarTablaSegunTxt();
     }
     
+    private void llenarTXT() {
+        cnx.Conecta();
+         try {             
+            String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                txtAsignatura.setText(rs.getString("nombreA"));
+            }
+            rs.close();            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+         }
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -279,6 +280,8 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         CbxFecha = new javax.swing.JComboBox();
         TxtBuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtAsignatura = new javax.swing.JTextField();
         btnIntroducir = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -286,10 +289,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TblAsistencia = new javax.swing.JTable();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Lista de Asistencia");
         try {
             setSelected(true);
@@ -311,6 +310,11 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Buscar");
 
+        jLabel3.setText("Asignatura");
+
+        txtAsignatura.setEditable(false);
+        txtAsignatura.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -318,26 +322,32 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         btnIntroducir.setText("Introducir");
@@ -392,8 +402,10 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         TblAsistencia.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TblAsistencia);
         TblAsistencia.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        TblAsistencia.getColumnModel().getColumn(0).setResizable(false);
-        TblAsistencia.getColumnModel().getColumn(1).setResizable(false);
+        if (TblAsistencia.getColumnModel().getColumnCount() > 0) {
+            TblAsistencia.getColumnModel().getColumn(0).setResizable(false);
+            TblAsistencia.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -450,18 +462,20 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         try
         {
             for (int i = 0; i < filas; i++) {
-                   asis.GuardarAsistencia(modelo.getValueAt(i, 2).toString(), 
-                           Ca.ConsultarIDCal(CbxFecha.getSelectedItem().toString()),
-                           modelo.getValueAt(i, 0).toString());
+                   int ax = a.consultaIdA(txtAsignatura.getText());
+              asis.setAsistencia(modelo.getValueAt(i, 2).toString()); 
+               asis.setIdcalendario(Ca.ConsultarIDCal(CbxFecha.getSelectedItem().toString()));
+               asis.setIdestudiante(Integer.parseInt(modelo.getValueAt(i, 0).toString()));
+               asis.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
+               JOptionPane.showMessageDialog(null, "Id Asignatur tiene el valor de " + ax );
+               asis.GuardarAsistencia();                           
             }
           JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
-        }
-            
-        catch(Exception e)
+        }            
+        catch(HeadlessException | NumberFormatException e)
         {
             JOptionPane.showMessageDialog(null, "Error guardar Asistencia: " + e.getMessage());
-        }
-        
+        }        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -498,7 +512,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtAsignatura;
     // End of variables declaration//GEN-END:variables
 }
