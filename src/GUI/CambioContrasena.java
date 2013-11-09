@@ -50,7 +50,7 @@ public class CambioContrasena extends javax.swing.JInternalFrame {
             val = false;
           
          //Compara si las contraseñas nueva con la de confirmacion son iguales
-        }else if(pswContraNueva.getPassword().toString().equals(pswConfirmar.getPassword().toString())){
+        }else if(pswContraNueva.getText().equals(pswConfirmar.getPassword().toString())){
         JOptionPane.showMessageDialog(this, "Las contraseñas nuevas no coinciden");
             val = false;
         }else{
@@ -76,7 +76,7 @@ public class CambioContrasena extends javax.swing.JInternalFrame {
                 model.addRow(fila);
              tblCambio.setModel(model);
             }   
-        }catch(Exception e){
+        }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Error Llenar Tabla Cambio Contraseña" + e.getMessage());
         }
         cnx.Desconecta();
@@ -243,7 +243,7 @@ public class CambioContrasena extends javax.swing.JInternalFrame {
           int fila= tblCambio.getSelectedRow();
           String dato=(String) tblCambio.getValueAt(fila,0);
           PreparedStatement ps=cnx.conn.prepareStatement(SQL);
-          ps.setString(1,pswContraNueva.getPassword().toString());
+          ps.setString(1,pswContraNueva.getText());
           ps.setString(2,dato);
 
           int n=ps.executeUpdate();
@@ -276,7 +276,7 @@ public class CambioContrasena extends javax.swing.JInternalFrame {
                 rs.next();
                 txtNombre.setText(rs.getString("usuario"));
                 //pswContrasena.setText(rs.getString("contrasena"));
-            }catch(Exception e){
+            }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,"Error Docente Mouse Cliked " +e.getMessage());
             }
             cnx.Desconecta();

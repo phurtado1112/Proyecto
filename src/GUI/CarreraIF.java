@@ -377,7 +377,7 @@ public class CarreraIF extends javax.swing.JInternalFrame {
             if(i==JOptionPane.OK_OPTION){
                 int fila = tblCarrera.getSelectedRow();
                 c.setnombreC(this.txtCarrera.getText().trim());
-                c.setIdfacultad(f.consultaId(this.cbxFacultad.getSelectedItem().toString().trim()));
+                c.setIdfacultad(f.consultaId(this.cbxFacultad.getSelectedItem().toString()));
                 c.setIdcarrera(Integer.parseInt(this.tblCarrera.getValueAt(fila, 0).toString()));
                 c.actualizarCarrera();
             }

@@ -47,6 +47,12 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
         Deshabilitar();
         BotonesInicio();
         LlenarTabla();
+        cbxUniversidad.setModel(llenarCBUni());
+        cbxUniversidad.setSelectedIndex(-1);
+        cbxFacultad.setModel(llenarCBFac());
+        cbxFacultad.setSelectedIndex(-1);
+        cbxCarrera.setModel(llenarCBCar());
+        cbxCarrera.setSelectedIndex(-1);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);        
     }
 
@@ -85,7 +91,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
         va.LetrasNumeros(txtCodigoGrupo);
         va.SeleccionarTodo(txtCodigoGrupo);
         txtPeriodo.setEnabled(true);
-        va.LetrasNumeros(txtPeriodo);
+        va.SoloLetras(txtPeriodo);
         va.SeleccionarTodo(txtPeriodo);
         txtAnio.setEnabled(true);
         va.SoloNumerosCelular(txtAnio);
@@ -221,10 +227,6 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
             } else if(txtAnio.getText().trim().length()==0){ //Valida campo Apellido
             JOptionPane.showMessageDialog(this, "El campo de texto Año está vacío,por favor llenarlo");
             val = false;
-            //Para que no permita puntos decimales en el campo del Año
-//            } else if(txtAnio.getText().trim().indexOf(".")!=-1){
-//            JOptionPane.showMessageDialog(this, "El campo de texto Año no debe incluir puntos");    
-//            val=false;
             } else if(txtAnio.getText().trim().length()!=4){ //Valida campo Apellido
             JOptionPane.showMessageDialog(this, "El campo de texto Año debe tener 4 Digitos");
             val = false;
@@ -588,9 +590,9 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                 this.txtCodigoGrupo.setText(rs.getString("grupo"));
                 this.txtPeriodo.setText(rs.getString("periodo"));
                 this.txtAnio.setText(rs.getString("anio"));
-                this.cbxUniversidad.setSelectedItem(rs.getString("nombreU"));
+                this.cbxCarrera.setSelectedItem(rs.getString("nombreC"));               
                 this.cbxFacultad.setSelectedItem(rs.getString("nombreF"));
-                this.cbxCarrera.setSelectedItem(rs.getString("nombreC"));
+                this.cbxUniversidad.setSelectedItem(rs.getString("nombreU"));                
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error Mouse Cliked: " + e.getMessage());
             } finally {

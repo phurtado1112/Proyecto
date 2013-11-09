@@ -39,7 +39,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
-    int id = 1;
+//    int id = 1;
     
   
     //private Boolean[] editables= {false,false,true};

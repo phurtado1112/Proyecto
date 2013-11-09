@@ -2,6 +2,7 @@ package GUI;
 
 import clases.Docente;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -118,7 +119,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             
             tblDocente.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             tblDocente.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-        } catch(Exception e){
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Docente: " + e.getMessage());
         } finally {
             cnx.Desconecta();
@@ -362,7 +363,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             d.setNombre(txtNombre.getText().trim());
             d.setApellido(txtApellido.getText().trim());
             d.setUsuario(txtUsuario.getText().trim());
-            d.setPassword(pswContrasena.getPassword().toString());
+            d.setPassword(pswContrasena.getText());
             d.setIdDocente(Integer.parseInt(tblDocente.getValueAt(fila, 0).toString()));
             d.actualizarDocente();
         }
@@ -381,7 +382,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             d.setNombre(txtNombre.getText().trim());
             d.setApellido(txtApellido.getText().trim());
             d.setUsuario(txtUsuario.getText().trim());
-            d.setPassword(pswContrasena.getPassword().toString());
+            d.setPassword(pswContrasena.getText());
             d.guardarDocente();
         }
         LlenarTabla();
@@ -407,7 +408,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
                 txtApellido.setText(rs.getString("apellido"));
                 txtUsuario.setText(rs.getString("usuario"));
                 pswContrasena.setText("contrasena");
-            } catch(Exception e){
+            } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error Docente Mouse Cliked: " + e.getMessage());
             } finally {
                 cnx.Desconecta();
