@@ -8,6 +8,8 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,45 +20,49 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import util.Globales;
-
 /**
  *
  * @author PabloAntonio
  */
-public class repTipoActividad extends javax.swing.JInternalFrame {
+public class RepCalendarioIF extends javax.swing.JInternalFrame {
 
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;
     /**
-     * Creates new form repTipoActividad
+     * Creates new form repCalendario
      */
-    public repTipoActividad() {
+    public RepCalendarioIF() {
         initComponents();
     }
 
-    public void reporteT_Actividad() {       
+    public void reporteCalendario() {       
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repTipoActividad.jasper");            
+            File f1 = new File("src/reportes/repCalendario.jasper");            
             String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template);                                    
+            reporte = (JasperReport) JRLoader. loadObject(template); 
             
-            jasperprint = JasperFillManager.fillReport(reporte, null, conn);
+            Map parametros = new HashMap<>();
+            parametros.put("idAsig", Globales.id);
+            
+            JOptionPane.showMessageDialog(null, "El valor de idasig: " + parametros);
+            
+            jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
             JasperViewer visor=new JasperViewer(jasperprint,false);
-            visor.setTitle("Tipo Actividad- CNAE");
+            visor.setTitle("Calendario - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en Reporte TipoActividad: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en Reporte Calendario: " + e.getMessage());
         } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepCalendarioIF.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        }       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,22 +73,22 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnEjecutar1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnEjecutar1 = new javax.swing.JButton();
 
-        setTitle("Reporte de Catálogo de Tipo Actividad"); // NOI18N
-
-        btnEjecutar1.setText("Ejecutar");
-        btnEjecutar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEjecutar1ActionPerformed(evt);
-            }
-        });
+        setTitle("Reporte de Catálogo Calendario");
 
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnEjecutar1.setText("Ejecutar");
+        btnEjecutar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutar1ActionPerformed(evt);
             }
         });
 
@@ -101,33 +107,32 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
+            .addGap(0, 163, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(65, 65, 65)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnEjecutar1)
                         .addComponent(jButton1))
-                    .addContainerGap(70, Short.MAX_VALUE)))
+                    .addContainerGap(75, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEjecutar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutar1ActionPerformed
-        
-         this.reporteT_Actividad();
-    }//GEN-LAST:event_btnEjecutar1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
-       int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
+        
+        int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             this.doDefaultCloseAction();
         }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnEjecutar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutar1ActionPerformed
         
-}//GEN-LAST:event_jButton1ActionPerformed
+        this.reporteCalendario();
+}//GEN-LAST:event_btnEjecutar1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEjecutar1;

@@ -1,7 +1,7 @@
 package clases;
 
 import java.awt.HeadlessException;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,8 +21,8 @@ public class Universidad {
     private int iduniversidad;
     private String nombreU;
     private String siglas;
-    private Blob logo;
-    private int LongitudBit;
+//    private Blob logo;
+//    private int LongitudBit;
     Conecta cnx = new Conecta();
     PreparedStatement ps;
     ResultSet rs;
@@ -31,12 +31,18 @@ public class Universidad {
 
     }
 
-    public Universidad(int iduniversidad, String nombreU, String siglas, Blob logo) {
+    public Universidad(int iduniversidad, String nombreU, String siglas) {
         this.iduniversidad = iduniversidad;
         this.nombreU = nombreU;
         this.siglas = siglas;
-        this.logo = logo;
     }
+    
+//    public Universidad(int iduniversidad, String nombreU, String siglas, Blob logo) {
+//        this.iduniversidad = iduniversidad;
+//        this.nombreU = nombreU;
+//        this.siglas = siglas;
+//        this.logo = logo;
+//    }
 
     public String getnombreU(){
             return nombreU;
@@ -62,27 +68,25 @@ public class Universidad {
         this.siglas = siglas;
     }
 
-    public Blob getLogo() {
-        return logo;
-    }
-
-    public void setLogo(Blob logo) {
-        this.logo = logo;
-    }
-
-    public int getLongitudBit() {
-        return LongitudBit;
-    }
-
-    public void setLongitudBit(int LongitudBit) {
-        this.LongitudBit = LongitudBit;
-    }
+//    public Blob getLogo() {
+//        return logo;
+//    }
+//
+//    public void setLogo(Blob logo) {
+//        this.logo = logo;
+//    }
+//
+//    public int getLongitudBit() {
+//        return LongitudBit;
+//    }
+//
+//    public void setLongitudBit(int LongitudBit) {
+//        this.LongitudBit = LongitudBit;
+//    }
         
     public void actualizarUniversidad(){
         cnx.Conecta();
         try{
-//            String SQL ="update universidad set nombreU=?, siglas=?,"
-//                    + "logo=? where iduniversidad=?";
             String SQL ="update universidad set nombreU=?, siglas=?"
                     + " where iduniversidad=?";
             
@@ -124,17 +128,14 @@ public class Universidad {
             }
     }
     
-    public void guardarUniversidad(String nombreU, String siglas, FileInputStream logo, int longitud){
+    public void guardarUniversidad(){
         cnx.Conecta();
         try{
-//            String SQL = "insert into universidad(nombreU,siglas,logo) "
-//                    + "values(?,?,?)";
-            String SQL = "insert into universidad(nombreU,siglas,logo) "
-                    + "values(?,?,?)";
+            String SQL = "insert into universidad(nombreU,siglas) "
+                    + "values(?,?)";
             ps = cnx.conn.prepareStatement(SQL);            
             ps.setString(1, nombreU);
-            ps.setString(2, siglas);
-            ps.setBlob(3, logo, longitud);
+            ps.setString(2, siglas);            
            
             int n = ps.executeUpdate();
             if (n>0){
@@ -147,6 +148,28 @@ public class Universidad {
             cnx.Desconecta();
         }
     }
+    
+//    public void guardarUniversidad(String nombreU, String siglas, FileInputStream logo, int longitud){
+//        cnx.Conecta();
+//        try{
+//            String SQL = "insert into universidad(nombreU,siglas,logo) "
+//                    + "values(?,?,?)";
+//            ps = cnx.conn.prepareStatement(SQL);            
+//            ps.setString(1, nombreU);
+//            ps.setString(2, siglas);
+//            ps.setBlob(3, logo, longitud);
+//           
+//            int n = ps.executeUpdate();
+//            if (n>0){
+//                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");                
+//            }
+//            ps.close();
+//        } catch(SQLException | HeadlessException e){
+//            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+//        } finally {                
+//            cnx.Desconecta();
+//        }
+//    }
         
     public int consultaIdU(String Univer){
         int id = 0;

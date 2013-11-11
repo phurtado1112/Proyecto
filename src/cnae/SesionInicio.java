@@ -130,7 +130,7 @@ public class SesionInicio extends JFrame {
         jButtonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Inicio de Sesión");
+        setTitle("CNAE");
         setName("Inicio de Sesión"); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Inicio de Sesión"));
@@ -224,7 +224,8 @@ public class SesionInicio extends JFrame {
     }//GEN-LAST:event_btnInicioSesionActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        this.setVisible(false);
+        //this.setVisible(false);
+        this.dispose();
         new IngresoInicialDocente().setVisible(true);
     }//GEN-LAST:event_btnRegistroActionPerformed
 

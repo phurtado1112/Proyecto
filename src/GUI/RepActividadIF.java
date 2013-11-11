@@ -8,12 +8,12 @@ package GUI;
  *
  * @author PabloAntonio
  */
-public class repEvaluacion extends javax.swing.JInternalFrame {
+public class RepActividadIF extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form repEvaluacion
      */
-    public repEvaluacion() {
+    public RepActividadIF() {
         initComponents();
     }
 

@@ -8,12 +8,12 @@ package GUI;
  *
  * @author PabloAntonio
  */
-public class repCalendario extends javax.swing.JInternalFrame {
+public class RepActividadDetalleIF extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form repCalendario
+     * Creates new form repTipoActividad
      */
-    public repCalendario() {
+    public RepActividadDetalleIF() {
         initComponents();
     }
 

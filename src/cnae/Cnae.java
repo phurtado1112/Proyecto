@@ -14,14 +14,17 @@ import GUI.RecuperacionDeDatos;
 import GUI.Respaldo;
 import GUI.ActividadIF;
 import GUI.NotasIF;
+import GUI.RepActividadDetalleIF;
+import GUI.RepActividadIF;
 import GUI.UniversidadIF;
-import GUI.repAsignaturaIF;
-import GUI.repCarreraIF;
-import GUI.repDocenteIF;
-import GUI.repFacultadIF;
+import GUI.RepAsignaturaIF;
+import GUI.RepDocenteIF;
+import GUI.RepEstructuraEvaluacionIF;
+import GUI.RepCalendarioIF;
+import GUI.RepEstudianteIF;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import GUI.repUniversidadIF;
+import GUI.RepUniversidadIF;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -70,6 +73,7 @@ public final class Cnae extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JSeparator();
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         MnuPrArchivo = new javax.swing.JMenu();
@@ -96,15 +100,18 @@ public final class Cnae extends javax.swing.JFrame {
         MnuRepAsistencia = new javax.swing.JMenuItem();
         MnuNotas = new javax.swing.JMenuItem();
         mnuCatalogos = new javax.swing.JMenu();
-        mnuUniversidad = new javax.swing.JMenuItem();
-        mnuFacultad = new javax.swing.JMenuItem();
-        mnuCarrera = new javax.swing.JMenuItem();
-        mnuAsignatura = new javax.swing.JMenuItem();
         MnuRepEstudiantes = new javax.swing.JMenuItem();
-        MnuRepTipoEvaluacion = new javax.swing.JMenuItem();
-        MnuRepCalendario = new javax.swing.JMenuItem();
-        MnuRepTipoActividad = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         MnuRepEstructuraEvaluacion = new javax.swing.JMenuItem();
+        MnuRepCalendario = new javax.swing.JMenuItem();
+        MnuRepDetalleActividad = new javax.swing.JMenuItem();
+        MnuRepActividad = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        mnuAsignatura = new javax.swing.JMenuItem();
+        mnuCarrera = new javax.swing.JMenuItem();
+        mnuFacultad = new javax.swing.JMenuItem();
+        mnuUniversidad = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         MnuRepDocente = new javax.swing.JMenuItem();
         MnuPrUtilitarios = new javax.swing.JMenu();
         MnuCambioContrasena = new javax.swing.JMenuItem();
@@ -285,32 +292,52 @@ public final class Cnae extends javax.swing.JFrame {
             }
         });
 
-        mnuUniversidad.setMnemonic('u');
-        mnuUniversidad.setText("Universidades");
-        mnuUniversidad.addActionListener(new java.awt.event.ActionListener() {
+        MnuRepEstudiantes.setMnemonic('e');
+        MnuRepEstudiantes.setText("Estudiantes");
+        MnuRepEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuUniversidadActionPerformed(evt);
+                MnuRepEstudiantesActionPerformed(evt);
             }
         });
-        mnuCatalogos.add(mnuUniversidad);
+        mnuCatalogos.add(MnuRepEstudiantes);
+        mnuCatalogos.add(jSeparator5);
 
-        mnuFacultad.setMnemonic('f');
-        mnuFacultad.setText("Facultades");
-        mnuFacultad.addActionListener(new java.awt.event.ActionListener() {
+        MnuRepEstructuraEvaluacion.setMnemonic('v');
+        MnuRepEstructuraEvaluacion.setText("Estructura de Evaluación");
+        MnuRepEstructuraEvaluacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuFacultadActionPerformed(evt);
+                MnuRepEstructuraEvaluacionActionPerformed(evt);
             }
         });
-        mnuCatalogos.add(mnuFacultad);
+        mnuCatalogos.add(MnuRepEstructuraEvaluacion);
 
-        mnuCarrera.setMnemonic('r');
-        mnuCarrera.setText("Carreras");
-        mnuCarrera.addActionListener(new java.awt.event.ActionListener() {
+        MnuRepCalendario.setMnemonic('l');
+        MnuRepCalendario.setText("Calendario");
+        MnuRepCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCarreraActionPerformed(evt);
+                MnuRepCalendarioActionPerformed(evt);
             }
         });
-        mnuCatalogos.add(mnuCarrera);
+        mnuCatalogos.add(MnuRepCalendario);
+
+        MnuRepDetalleActividad.setMnemonic('t');
+        MnuRepDetalleActividad.setText("Detalle Actividad");
+        MnuRepDetalleActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuRepDetalleActividadActionPerformed(evt);
+            }
+        });
+        mnuCatalogos.add(MnuRepDetalleActividad);
+
+        MnuRepActividad.setMnemonic('i');
+        MnuRepActividad.setText("Actividad");
+        MnuRepActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuRepActividadActionPerformed(evt);
+            }
+        });
+        mnuCatalogos.add(MnuRepActividad);
+        mnuCatalogos.add(jSeparator6);
 
         mnuAsignatura.setMnemonic('g');
         mnuAsignatura.setText("Asignaturas");
@@ -321,25 +348,33 @@ public final class Cnae extends javax.swing.JFrame {
         });
         mnuCatalogos.add(mnuAsignatura);
 
-        MnuRepEstudiantes.setMnemonic('e');
-        MnuRepEstudiantes.setText("Estudiantes");
-        mnuCatalogos.add(MnuRepEstudiantes);
+        mnuCarrera.setMnemonic('r');
+        mnuCarrera.setText("Carreras");
+        mnuCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCarreraActionPerformed(evt);
+            }
+        });
+        mnuCatalogos.add(mnuCarrera);
 
-        MnuRepTipoEvaluacion.setMnemonic('t');
-        MnuRepTipoEvaluacion.setText("Tipo de Evaluación");
-        mnuCatalogos.add(MnuRepTipoEvaluacion);
+        mnuFacultad.setMnemonic('f');
+        mnuFacultad.setText("Facultades");
+        mnuFacultad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuFacultadActionPerformed(evt);
+            }
+        });
+        mnuCatalogos.add(mnuFacultad);
 
-        MnuRepCalendario.setMnemonic('l');
-        MnuRepCalendario.setText("Calendario");
-        mnuCatalogos.add(MnuRepCalendario);
-
-        MnuRepTipoActividad.setMnemonic('i');
-        MnuRepTipoActividad.setText("Tipo Actividad");
-        mnuCatalogos.add(MnuRepTipoActividad);
-
-        MnuRepEstructuraEvaluacion.setMnemonic('v');
-        MnuRepEstructuraEvaluacion.setText("Estructura de Evaluación");
-        mnuCatalogos.add(MnuRepEstructuraEvaluacion);
+        mnuUniversidad.setMnemonic('u');
+        mnuUniversidad.setText("Universidades");
+        mnuUniversidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuUniversidadActionPerformed(evt);
+            }
+        });
+        mnuCatalogos.add(mnuUniversidad);
+        mnuCatalogos.add(jSeparator7);
 
         MnuRepDocente.setMnemonic('d');
         MnuRepDocente.setText("Docente");
@@ -536,7 +571,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCatalogosActionPerformed
 
     private void mnuUniversidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUniversidadActionPerformed
-        repUniversidadIF universidadRep = new repUniversidadIF();
+        RepUniversidadIF universidadRep = new RepUniversidadIF();
         centerJIF(universidadRep);
         Escritorio.add(universidadRep);
         universidadRep.toFront();
@@ -548,31 +583,15 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuUniversidadActionPerformed
 
     private void mnuFacultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFacultadActionPerformed
-        repFacultadIF facultadRep = new repFacultadIF();
-        centerJIF(facultadRep);
-        Escritorio.add(facultadRep);
-        facultadRep.toFront();
-        try {
-            facultadRep.setSelected(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_mnuFacultadActionPerformed
 
     private void mnuCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCarreraActionPerformed
-        repCarreraIF carreraRep = new repCarreraIF();
-        centerJIF(carreraRep);
-        Escritorio.add(carreraRep);
-        carreraRep.toFront();
-        try {
-            carreraRep.setSelected(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
-        }
+  
     }//GEN-LAST:event_mnuCarreraActionPerformed
 
     private void mnuAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignaturaActionPerformed
-        repAsignaturaIF asignaturaRep = new repAsignaturaIF();
+        RepAsignaturaIF asignaturaRep = new RepAsignaturaIF();
         centerJIF(asignaturaRep);
         Escritorio.add(asignaturaRep);
         asignaturaRep.toFront();
@@ -620,7 +639,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuRegistroAsistenciaActionPerformed
 
     private void MnuRepDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepDocenteActionPerformed
-        repDocenteIF docenteRep = new repDocenteIF();
+        RepDocenteIF docenteRep = new RepDocenteIF();
         centerJIF(docenteRep);
         Escritorio.add(docenteRep);
         docenteRep.toFront();        
@@ -632,7 +651,9 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuRepDocenteActionPerformed
 
     private void MnuCambioAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCambioAsignaturaActionPerformed
-                
+        SeleccionarAsignatura saVent = new SeleccionarAsignatura();
+        this.dispose();
+        saVent.setVisible(true);
     }//GEN-LAST:event_MnuCambioAsignaturaActionPerformed
 
     private void MnuCambioContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCambioContrasenaActionPerformed
@@ -671,6 +692,66 @@ public final class Cnae extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MnuRecuperacionDatosActionPerformed
 
+    private void MnuRepEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepEstudiantesActionPerformed
+        RepEstudianteIF estudianteRep = new RepEstudianteIF();
+        centerJIF(estudianteRep);
+        Escritorio.add(estudianteRep);
+        estudianteRep.toFront();        
+        try {
+            estudianteRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRepEstudiantesActionPerformed
+
+    private void MnuRepEstructuraEvaluacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepEstructuraEvaluacionActionPerformed
+        RepEstructuraEvaluacionIF estructuraEvaluacionRep = new RepEstructuraEvaluacionIF();
+        centerJIF(estructuraEvaluacionRep);
+        Escritorio.add(estructuraEvaluacionRep);
+        estructuraEvaluacionRep.toFront();        
+        try {
+            estructuraEvaluacionRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRepEstructuraEvaluacionActionPerformed
+
+    private void MnuRepCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepCalendarioActionPerformed
+        RepCalendarioIF calendarioRep = new RepCalendarioIF();
+        centerJIF(calendarioRep);
+        Escritorio.add(calendarioRep);
+        calendarioRep.toFront();        
+        try {
+            calendarioRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRepCalendarioActionPerformed
+
+    private void MnuRepDetalleActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepDetalleActividadActionPerformed
+        RepActividadDetalleIF actividadDetalleRep = new RepActividadDetalleIF();
+        centerJIF(actividadDetalleRep);
+        Escritorio.add(actividadDetalleRep);
+        actividadDetalleRep.toFront();        
+        try {
+            actividadDetalleRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRepDetalleActividadActionPerformed
+
+    private void MnuRepActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepActividadActionPerformed
+        RepActividadIF actividadRep = new RepActividadIF();
+        centerJIF(actividadRep);
+        Escritorio.add(actividadRep);
+        actividadRep.toFront();        
+        try {
+            actividadRep.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Cnae.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnuRepActividadActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem MnuAcercaDe;
@@ -693,13 +774,13 @@ public final class Cnae extends javax.swing.JFrame {
     private javax.swing.JMenu MnuPrUtilitarios;
     private javax.swing.JMenuItem MnuRecuperacionDatos;
     private javax.swing.JMenuItem MnuRegistroAsistencia;
+    private javax.swing.JMenuItem MnuRepActividad;
     private javax.swing.JMenuItem MnuRepAsistencia;
     private javax.swing.JMenuItem MnuRepCalendario;
+    private javax.swing.JMenuItem MnuRepDetalleActividad;
     private javax.swing.JMenuItem MnuRepDocente;
     private javax.swing.JMenuItem MnuRepEstructuraEvaluacion;
     private javax.swing.JMenuItem MnuRepEstudiantes;
-    private javax.swing.JMenuItem MnuRepTipoActividad;
-    private javax.swing.JMenuItem MnuRepTipoEvaluacion;
     private javax.swing.JMenuItem MnuRespaldoDatos;
     private javax.swing.JMenuItem MnuSalir;
     private javax.swing.JMenuItem MnuTipoActividad;
@@ -713,6 +794,10 @@ public final class Cnae extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JMenuItem mnuAsignatura;
     private javax.swing.JMenuItem mnuCarrera;
     private javax.swing.JMenu mnuCatalogos;

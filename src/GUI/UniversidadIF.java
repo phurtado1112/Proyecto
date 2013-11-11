@@ -40,8 +40,8 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     Universidad u = new Universidad();
     //Statement stm;
     ResultSet rs;
-    private FileInputStream fis;
-    private int LongitudBit;
+//    private FileInputStream fis;
+//    private int LongitudBit;
     PreparedStatement ps;
 //    Universidad univer = new Universidad();
 
@@ -55,6 +55,10 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         LlenarTabla();
         BotonesInicio();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jLabel3.setVisible(false);
+        BtnBuscarLogo.setVisible(false);
+        LblLogo.setVisible(false);
+        jPanel2.setVisible(false);
     }
 
     public void limpiar(){
@@ -132,9 +136,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             tblUniversidad.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             tblUniversidad.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
             tblUniversidad.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-            tblUniversidad.getColumnModel().getColumn(2).setCellRenderer(centraCelda); 
-            int idUniv = Integer.parseInt(fila[0]);
-//            logo(idUniv);
+            tblUniversidad.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
         } catch(SQLException | NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Universidad: " + e.getMessage());
         } finally {
@@ -221,11 +223,11 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+            .addComponent(LblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(LblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -237,7 +239,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -254,7 +256,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                                 .addComponent(BtnBuscarLogo)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(70, 70, 70))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,29 +377,28 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNuevo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnGuardar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCancelar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 1, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
@@ -406,7 +407,7 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
                     .addComponent(btnActualizar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar))
-                .addContainerGap())
+                .addGap(65, 65, 65))
         );
 
         pack();
@@ -455,17 +456,12 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         if (validar()==true){
         int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){              
-            try {
-//                u.setnombreU(txtUniversidad.getText().trim());
-//                u.setSiglas(txtSiglas.getText().trim());
-////                u.setLogo((Blob)(FileInputStream)LblLogo.getIcon());
-//                u.setLongitudBit(LongitudBit);
-                u.guardarUniversidad(txtUniversidad.getText().trim(),txtSiglas.getText().trim(),this.fis,this.LongitudBit);
-            } catch (Exception ex) {
-                Logger.getLogger(UniversidadIF.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-//      
+        if(i==JOptionPane.OK_OPTION){
+                u.setnombreU(txtUniversidad.getText().trim());
+                u.setSiglas(txtSiglas.getText().trim());
+//                u.setLogo((Blob)(FileInputStream)LblLogo.getIcon());
+                u.guardarUniversidad();
+                //u.guardarUniversidad(txtUniversidad.getText().trim(),txtSiglas.getText().trim(),this.fis,this.LongitudBit);
         }
         LlenarTabla();
         limpiar();
@@ -512,52 +508,52 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblUniversidadMouseClicked
 
     private void LblLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblLogoMouseClicked
-    JFileChooser buscar = new JFileChooser();
-        buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int estado = buscar.showOpenDialog(null);
-        if (estado == JFileChooser.APPROVE_OPTION){
-            
-            try{
-                fis = new FileInputStream(buscar.getSelectedFile());
-                this.LongitudBit = (int)buscar.getSelectedFile().length();
-                
-                Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
-                              LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
-                LblLogo.setIcon(new ImageIcon(icono));
-                LblLogo.updateUI();
-                        
-                
-            }catch(FileNotFoundException ex){
-                
-                ex.printStackTrace();
-                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+//    JFileChooser buscar = new JFileChooser();
+//        buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//        int estado = buscar.showOpenDialog(null);
+//        if (estado == JFileChooser.APPROVE_OPTION){
+//            
+//            try{
+//                fis = new FileInputStream(buscar.getSelectedFile());
+//                this.LongitudBit = (int)buscar.getSelectedFile().length();
+//                
+//                Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
+//                              LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
+//                LblLogo.setIcon(new ImageIcon(icono));
+//                LblLogo.updateUI();
+//                        
+//                
+//            }catch(FileNotFoundException ex){
+//                
+//                ex.printStackTrace();
+//                
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
         
         
     }//GEN-LAST:event_LblLogoMouseClicked
 
     private void BtnBuscarLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarLogoActionPerformed
-        JFileChooser buscar = new JFileChooser();
-        buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int estado = buscar.showOpenDialog(null);
-        if (estado == JFileChooser.APPROVE_OPTION){            
-            try{
-                fis = new FileInputStream(buscar.getSelectedFile());
-                this.LongitudBit = (int)buscar.getSelectedFile().length();
-                
-                Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
-                              LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
-                LblLogo.setIcon(new ImageIcon(icono));
-                LblLogo.updateUI();                                        
-            }catch(FileNotFoundException ex){                
-                ex.printStackTrace();                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+//        JFileChooser buscar = new JFileChooser();
+//        buscar.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//        int estado = buscar.showOpenDialog(null);
+//        if (estado == JFileChooser.APPROVE_OPTION){            
+//            try{
+//                fis = new FileInputStream(buscar.getSelectedFile());
+//                this.LongitudBit = (int)buscar.getSelectedFile().length();
+//                
+//                Image icono = ImageIO.read(buscar.getSelectedFile()).getScaledInstance(
+//                              LblLogo.getWidth(), LblLogo.getHeight(), Image.SCALE_DEFAULT);
+//                LblLogo.setIcon(new ImageIcon(icono));
+//                LblLogo.updateUI();                                        
+//            }catch(FileNotFoundException ex){                
+//                ex.printStackTrace();                
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
     }//GEN-LAST:event_BtnBuscarLogoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -32,16 +32,16 @@ public class SeleccionarAsignatura extends JFrame {
     
     public SeleccionarAsignatura() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        cbxUniversidad.setModel(new DefaultComboBoxModel(new String[] {}));
-        cbxFacultad.setModel(new DefaultComboBoxModel(new String[] {}));
-        cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {}));                
+        this.setLocationRelativeTo(null);             
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         if (this.verificarAsignatura()>0){
             llenarTabla();
             ocultaFormulario();
         } else {
+            cbxUniversidad.setModel(new DefaultComboBoxModel(new String[] {}));
+            cbxFacultad.setModel(new DefaultComboBoxModel(new String[] {}));
+            cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {}));   
             muestraFormulario();
             llenarCBUni();
             llenarCBFac();

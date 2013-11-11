@@ -18,38 +18,37 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import util.Globales;
-
 /**
  *
  * @author PabloAntonio
  */
-public class repTipoActividad extends javax.swing.JInternalFrame {
+public class repTipoEvaluacion extends javax.swing.JInternalFrame {
 
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;
     /**
-     * Creates new form repTipoActividad
+     * Creates new form repTipoEvaluacion
      */
-    public repTipoActividad() {
+    public repTipoEvaluacion() {
         initComponents();
     }
 
-    public void reporteT_Actividad() {       
+    public void reporteT_Evaluacion(){       
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repTipoActividad.jasper");            
+            File f1 = new File("src/reportes/repTipoEvaluacion.jasper");            
             String template = f1.getPath();
             reporte = (JasperReport) JRLoader. loadObject(template);                                    
             
             jasperprint = JasperFillManager.fillReport(reporte, null, conn);
             JasperViewer visor=new JasperViewer(jasperprint,false);
-            visor.setTitle("Tipo Actividad- CNAE");
+            visor.setTitle("Tipo Evaluacion- CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en Reporte TipoActividad: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en Reporte TipoEvaluacion: " + e.getMessage());
         } finally {
             try {
                 conn.close();
@@ -70,8 +69,6 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
         btnEjecutar1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setTitle("Reporte de Catálogo de Tipo Actividad"); // NOI18N
-
         btnEjecutar1.setText("Ejecutar");
         btnEjecutar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +88,7 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(103, 103, 103)
@@ -101,14 +99,15 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
+            .addGap(0, 161, Short.MAX_VALUE)
+            .addGap(0, 161, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(65, 65, 65)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnEjecutar1)
                         .addComponent(jButton1))
-                    .addContainerGap(70, Short.MAX_VALUE)))
+                    .addContainerGap(73, Short.MAX_VALUE)))
         );
 
         pack();
@@ -116,18 +115,17 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
 
     private void btnEjecutar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutar1ActionPerformed
         
-         this.reporteT_Actividad();
-    }//GEN-LAST:event_btnEjecutar1ActionPerformed
+        this.reporteT_Evaluacion();
+}//GEN-LAST:event_btnEjecutar1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
-       int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
+        
+        int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             this.doDefaultCloseAction();
         }
-        
-}//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEjecutar1;
