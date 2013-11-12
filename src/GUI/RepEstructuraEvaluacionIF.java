@@ -64,6 +64,10 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             }
         }       
     }
+    
+    public void phd(){
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,6 +85,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 
         btnEjecutar1.setText("Ejecutar");
         btnEjecutar1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEjecutar1ActionPerformed(evt);
             }
@@ -88,6 +93,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -97,6 +103,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
             .addGap(0, 394, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -108,6 +115,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 158, Short.MAX_VALUE)
             .addGap(0, 158, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
