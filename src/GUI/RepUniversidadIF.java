@@ -93,7 +93,7 @@ public class RepUniversidadIF extends javax.swing.JInternalFrame {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepUniversidadIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
