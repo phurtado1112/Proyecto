@@ -24,7 +24,7 @@ import GUI.RepCalendarioIF;
 import GUI.RepEstudiantesIF;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import GUI.RepUniversidadIF;
+import GUI.RepUniversidadesIF;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -571,7 +571,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCatalogosActionPerformed
 
     private void mnuUniversidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUniversidadActionPerformed
-        RepUniversidadIF universidadRep = new RepUniversidadIF();
+        RepUniversidadesIF universidadRep = new RepUniversidadesIF();
         centerJIF(universidadRep);
         Escritorio.add(universidadRep);
         universidadRep.toFront();
