@@ -103,13 +103,13 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtAsignatura" min="-2" pref="217" max="-2" attributes="0"/>
                               <Component id="cbxActividad" min="-2" pref="216" max="-2" attributes="0"/>
                               <Component id="cbxActividadDet" min="-2" pref="217" max="-2" attributes="0"/>
+                              <Component id="txtAsignatura" alignment="0" min="-2" pref="310" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="44" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -136,7 +136,7 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="jdcFecha" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

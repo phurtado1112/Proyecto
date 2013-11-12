@@ -91,10 +91,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="TxtBuscar" min="-2" pref="268" max="-2" attributes="0"/>
-                      <Component id="txtAsignatura" min="-2" pref="201" max="-2" attributes="0"/>
                       <Component id="CbxFecha" min="-2" pref="98" max="-2" attributes="0"/>
+                      <Component id="txtAsignatura" alignment="0" min="-2" pref="310" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="151" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
