@@ -21,7 +21,7 @@ import GUI.RepAsignaturasIF;
 import GUI.RepDocentesIF;
 import GUI.RepEstructuraEvaluacionIF;
 import GUI.RepCalendarioIF;
-import GUI.RepEstudianteIF;
+import GUI.RepEstudiantesIF;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import GUI.RepUniversidadIF;
@@ -693,7 +693,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuRecuperacionDatosActionPerformed
 
     private void MnuRepEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRepEstudiantesActionPerformed
-        RepEstudianteIF estudianteRep = new RepEstudianteIF();
+        RepEstudiantesIF estudianteRep = new RepEstudiantesIF();
         centerJIF(estudianteRep);
         Escritorio.add(estudianteRep);
         estudianteRep.toFront();        
