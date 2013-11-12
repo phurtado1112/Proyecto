@@ -17,7 +17,7 @@ import GUI.NotasIF;
 import GUI.RepActividadDetalleIF;
 import GUI.RepActividadIF;
 import GUI.UniversidadIF;
-import GUI.RepAsignaturaIF;
+import GUI.RepAsignaturasIF;
 import GUI.RepDocenteIF;
 import GUI.RepEstructuraEvaluacionIF;
 import GUI.RepCalendarioIF;
@@ -591,7 +591,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCarreraActionPerformed
 
     private void mnuAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignaturaActionPerformed
-        RepAsignaturaIF asignaturaRep = new RepAsignaturaIF();
+        RepAsignaturasIF asignaturaRep = new RepAsignaturasIF();
         centerJIF(asignaturaRep);
         Escritorio.add(asignaturaRep);
         asignaturaRep.toFront();
