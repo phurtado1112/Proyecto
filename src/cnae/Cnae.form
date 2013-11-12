@@ -262,24 +262,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuAsignaturaActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mnuCarrera">
-                  <Properties>
-                    <Property name="mnemonic" type="int" value="114"/>
-                    <Property name="text" type="java.lang.String" value="Carreras"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCarreraActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mnuFacultad">
-                  <Properties>
-                    <Property name="mnemonic" type="int" value="102"/>
-                    <Property name="text" type="java.lang.String" value="Facultades"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuFacultadActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnuUniversidad">
                   <Properties>
                     <Property name="mnemonic" type="int" value="117"/>

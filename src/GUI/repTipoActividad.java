@@ -120,13 +120,11 @@ public class repTipoActividad extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEjecutar1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
        int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             this.doDefaultCloseAction();
-        }
-        
+        }        
 }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
