@@ -88,7 +88,7 @@ public void reporteEstudianteDetalle() {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepEstudianteIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }       
     }
