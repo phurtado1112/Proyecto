@@ -53,7 +53,7 @@ public class repTipoEvaluacion extends javax.swing.JInternalFrame {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepAsignaturasIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
