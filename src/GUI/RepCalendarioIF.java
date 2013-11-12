@@ -24,7 +24,7 @@ import util.Globales;
  *
  * @author PabloAntonio
  */
-public class repCalendario extends javax.swing.JInternalFrame {
+public class RepCalendarioIF extends javax.swing.JInternalFrame {
 
     public Connection conn;
     JasperReport reporte;
@@ -32,7 +32,7 @@ public class repCalendario extends javax.swing.JInternalFrame {
     /**
      * Creates new form repCalendario
      */
-    public repCalendario() {
+    public RepCalendarioIF() {
         initComponents();
     }
 
@@ -60,7 +60,7 @@ public class repCalendario extends javax.swing.JInternalFrame {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(repAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepCalendarioIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }       
     }
