@@ -60,7 +60,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepEstructuraEvaluacionIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }       
     }
