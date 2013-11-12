@@ -3,10 +3,11 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[select * from 'tipoactividad']]>
+	<queryString>
+		<![CDATA[select * from 'actividaddet_view' order by actividad]]>
 	</queryString>
-	<field name="idtipoactividad" class="java.lang.Object"/>
+	<field name="idactividaddet" class="java.lang.Object"/>
+	<field name="actividaddet" class="java.lang.Object"/>
 	<field name="actividad" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -14,11 +15,11 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="dc40d301-0e95-4706-8419-d222155c6078" x="188" y="24" width="211" height="29"/>
-				<textElement>
+				<reportElement uuid="dc40d301-0e95-4706-8419-d222155c6078" x="188" y="24" width="229" height="29"/>
+				<textElement textAlignment="Center">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Catálogo de Tipo Actividad]]></text>
+				<text><![CDATA[Catálogo de Detalle Actividad]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -41,30 +42,42 @@
 	<columnHeader>
 		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="9747e0d7-befe-4f33-99a8-2e6750196e78" x="0" y="0" width="286" height="20"/>
+				<reportElement uuid="9747e0d7-befe-4f33-99a8-2e6750196e78" x="0" y="0" width="167" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Id Tipo Actividad]]></text>
+				<text><![CDATA[Id Detalle de Actividad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ed86eb18-6acc-4edf-ac0f-f0d04fe6e516" x="286" y="0" width="286" height="20"/>
+				<reportElement uuid="ed86eb18-6acc-4edf-ac0f-f0d04fe6e516" x="188" y="0" width="188" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Actividad]]></text>
+				<text><![CDATA[Detalle de Actividad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="31f0ebd0-6b3b-4dc4-90d5-09dbf0934963" x="417" y="2" width="148" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[actividad]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement uuid="40c4bcdd-67ef-4e46-afdb-e58ec96bd09c" x="0" y="0" width="286" height="20"/>
+				<reportElement uuid="40c4bcdd-67ef-4e46-afdb-e58ec96bd09c" x="0" y="0" width="167" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[""+$F{idtipoactividad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{idactividaddet}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0d97e304-3fc5-4980-b197-c6808bfef091" x="286" y="0" width="286" height="20"/>
+				<reportElement uuid="0d97e304-3fc5-4980-b197-c6808bfef091" x="188" y="0" width="188" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{actividaddet}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="823add68-cb19-4e5d-9efb-91d69cd3d33a" x="417" y="6" width="148" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[""+$F{actividad}]]></textFieldExpression>
 			</textField>

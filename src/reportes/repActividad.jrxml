@@ -3,11 +3,11 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[select * from 'evaluacion']]>
+	<queryString>
+		<![CDATA[select * from 'Actividad']]>
 	</queryString>
-	<field name="idevaluacion" class="java.lang.Object"/>
-	<field name="evaluacion" class="java.lang.Object"/>
+	<field name="idactividad" class="java.lang.Object"/>
+	<field name="actividad" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -18,7 +18,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Catálogo de Tipo Evaluación]]></text>
+				<text><![CDATA[Catálogo de Actividad]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -45,14 +45,14 @@
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Id Evaluación]]></text>
+				<text><![CDATA[Id Actividad]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="81e28c9a-2da0-4b50-b86f-f15143e02cdb" x="334" y="17" width="100" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Evalución]]></text>
+				<text><![CDATA[Actividad]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -61,12 +61,12 @@
 			<textField>
 				<reportElement uuid="9b82a8c2-46cd-40e2-9706-def69d04e486" x="150" y="5" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[""+$F{idevaluacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{idactividad}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b5032152-0c24-4380-92e5-4e71f18bbddf" x="336" y="5" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[""+$F{evaluacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{actividad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
