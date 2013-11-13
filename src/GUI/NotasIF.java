@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 package GUI;
+import clases.Actividad;
 import clases.Asignatura;
 import clases.Calendario;
 import clases.EstructuraEvaluacion;
-import clases.Evaluaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,6 +22,7 @@ import java.awt.event.ItemEvent;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import util.Globales;
 
 /**
  *
@@ -35,38 +36,37 @@ public class NotasIF extends javax.swing.JInternalFrame {
     Asignatura a = new Asignatura();
     Notas N = new Notas();
     Calendario C = new Calendario();
-    Evaluaciones E = new Evaluaciones();
+    //Evaluaciones E = new Evaluaciones();
+    Actividad ac = new Actividad();
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
-    int id = 1;
-    /**
-     * Creates new form Evaluación
-     */
+    //int id = 1;
+
     public NotasIF() {
         initComponents();
         cnx.Conecta();
+        llenarTXT();
         limpiar();
-        llenarCBEstEva();
-        llenarCBEva();
+        llenarCbxActDet();
+        llenarCbxAct();
         llenarCBFecha();
         BotonesInicio();       
         LlenarTabla();
         setJTexFieldChanged(TxtBuscar);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
-
     
     private void limpiar(){
-        CbxEstrucEvaluacion.setSelectedItem(-1);
+        cbxActividadDet.setSelectedItem(-1);
     }
     
     private void Deshabilitar() {        
-        CbxEstrucEvaluacion.setEnabled(false);
+        cbxActividadDet.setEnabled(false);
     }
     
     private void Habilitar(){
-        CbxEstrucEvaluacion.setEnabled(true);
+        cbxActividadDet.setEnabled(true);
     }
     
     private void BotonesInicio(){
@@ -75,23 +75,22 @@ public class NotasIF extends javax.swing.JInternalFrame {
         btnCancelar.setEnabled(true);
     }
     
-    private void BotonesModificar(){
-        btnGuardar.setEnabled(false);
-        btnIntroducir.setEnabled(false);      
-        btnCancelar.setEnabled(true);
-    }
-    
-    private void BotonesClick(){
-        btnGuardar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-    }
+//    private void BotonesModificar(){
+//        btnGuardar.setEnabled(false);
+//        btnIntroducir.setEnabled(false);      
+//        btnCancelar.setEnabled(true);
+//    }
+//    
+//    private void BotonesClick(){
+//        btnGuardar.setEnabled(false);
+//        btnCancelar.setEnabled(true);
+//    }
     
     private void LlenarTabla() {
        int[] anchos = {30, 100, 100};
        
        cnx.Conecta();
-        try{
-           
+        try{           
             String [] titulos ={"ID","Nombre","Nota"};
             
             String SQL = "Select * from estudiantea_view";
@@ -101,17 +100,14 @@ public class NotasIF extends javax.swing.JInternalFrame {
             String [] fila = new String[2];
             while(rs.next()){
                 fila[0] = rs.getString("idestudiante");
-                fila[1] = rs.getString("nombre");
-                
-
+                fila[1] = rs.getString("nombre");                
                 model.addRow(fila);
             }
             TblNotas.setModel(model);
             
             for(int i = 0; i < TblNotas.getColumnCount(); i++) {
                 TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-            }
-            
+            }            
             //Centra los datos en las celdas
          DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
             centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
@@ -119,7 +115,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
             TblNotas.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
             TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
-
     } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + e.getMessage());
         } finally {
@@ -131,13 +126,12 @@ public class NotasIF extends javax.swing.JInternalFrame {
        int[] anchos = {30, 100, 100};
        
        cnx.Conecta();
-        try{
-           
+        try{           
             String [] titulos ={"ID","Nombre","Nota"};
             
             String SQL = "Select * from notas_view where nombre like '%" + TxtBuscar.getText() + "%' and "
-                    + "fecha = '" + CbxFecha.getSelectedItem() + "' and "
-                    + "nombreEs = " + "'" + CbxEstrucEvaluacion.getSelectedItem() + "'";
+                    + "fecha = '" + cbxFecha.getSelectedItem() + "' and "
+                    + "nombreEs = " + "'" + cbxActividadDet.getSelectedItem() + "'";
             
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
@@ -146,9 +140,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
             while(rs.next()){
                 fila[0] = rs.getString("idnotas");
                 fila[1] = rs.getString("nombre");
-                fila[2] = rs.getString("nota");
-             
-
+                fila[2] = rs.getString("nota");             
                 model.addRow(fila);
             }
             TblNotas.setModel(model);
@@ -158,13 +150,12 @@ public class NotasIF extends javax.swing.JInternalFrame {
             }
             
             //Centra los datos en las celdas
-         DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
+            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
             centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
             TblNotas.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
             TblNotas.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
             TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);   
-             
+            TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);                
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + e.getMessage());
         } finally {
@@ -172,37 +163,37 @@ public class NotasIF extends javax.swing.JInternalFrame {
         }
     }
     
-    private void llenarCBEva() {
+    private void llenarCbxAct() {
         cnx.Conecta();
         try {            
             modeloCombo = new DefaultComboBoxModel();            
-            String SQL = "select evaluacion from evaluacion";
+            String SQL = "select actividad from actividad";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("evaluacion"));
+                modeloCombo.addElement(rs.getObject("actividad"));
             }
             rs.close();
-            CbxEvaluacion.setModel(modeloCombo);
+            cbxActividad.setModel(modeloCombo);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error LlenarCBEva: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error LlenarCbxAct: " + ex.getMessage());
         }
-        LlenarTabla();
+        //LlenarTabla();
         cnx.Desconecta();
     }
     
-     private void llenarCBEstEva() {
+     private void llenarCbxActDet() {
         cnx.Conecta();
         try {            
             modeloCombo = new DefaultComboBoxModel();            
-            String SQL = "select nombreEs from estructuraevaluacion where idevaluacion = " + E.ObtenerIDevaluacion(CbxEvaluacion.getSelectedItem().toString());
+            String SQL = "select actividaddet from actividaddet where idactividad = " + ac.consultaIdAct(cbxActividad.getSelectedItem().toString());
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 modeloCombo.addElement(rs.getObject("nombreEs"));
             }
             rs.close();
-            CbxEstrucEvaluacion.setModel(modeloCombo);
+            cbxActividadDet.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
         }
@@ -221,43 +212,35 @@ public class NotasIF extends javax.swing.JInternalFrame {
                 modeloCombo.addElement(rs.getObject("fecha"));
             }
             rs.close();
-            CbxFecha.setModel(modeloCombo);
+            cbxFecha.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCBFecha: " + ex.getMessage());
         }
         LlenarTabla();
         cnx.Desconecta();
     }
-     
-     
-   
-     
-     private void setJTexFieldChanged(JTextField txt)
-    {
+                  
+    private void setJTexFieldChanged(JTextField txt){
         DocumentListener documentListener = new DocumentListener() {
 
-        @Override
-        public void changedUpdate(DocumentEvent documentEvent) {
-            printIt(documentEvent);
-        }
-
-        @Override
-        public void insertUpdate(DocumentEvent documentEvent) {
-            printIt(documentEvent);
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent documentEvent) {
-            printIt(documentEvent);
-        }
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                printIt(documentEvent);
+            }
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                printIt(documentEvent);
+            }
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                printIt(documentEvent);
+            }
         };
         txt.getDocument().addDocumentListener(documentListener);
-
     }
 
     private void printIt(DocumentEvent documentEvent) {
         DocumentEvent.EventType type = documentEvent.getType();
-
         if (type.equals(DocumentEvent.EventType.CHANGE))
         {
             txtbuscador();
@@ -272,11 +255,27 @@ public class NotasIF extends javax.swing.JInternalFrame {
         }
     }
     
-    private void txtbuscador()
-    {
-        
+    private void txtbuscador() {        
         LlenarTablaSegunTxt();
     }
+    
+    private void llenarTXT() {
+        cnx.Conecta();
+         try {             
+            String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                txtAsignatura.setText(rs.getString("nombreA"));
+            }
+            rs.close();            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarTXT: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+         }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -288,13 +287,15 @@ public class NotasIF extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        CbxEstrucEvaluacion = new javax.swing.JComboBox();
+        cbxActividadDet = new javax.swing.JComboBox();
         TxtBuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        CbxFecha = new javax.swing.JComboBox();
+        cbxFecha = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        CbxEvaluacion = new javax.swing.JComboBox();
+        cbxActividad = new javax.swing.JComboBox();
+        txtAsignatura = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblNotas = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
@@ -306,6 +307,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Registro de Notas");
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {
@@ -313,13 +315,13 @@ public class NotasIF extends javax.swing.JInternalFrame {
         }
         setVisible(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Evaluación"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de notas"));
 
-        jLabel1.setText("Evaluación");
+        jLabel1.setText("Detalle de Actividad");
 
-        CbxEstrucEvaluacion.addItemListener(new java.awt.event.ItemListener() {
+        cbxActividadDet.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CbxEstrucEvaluacionItemStateChanged(evt);
+                cbxActividadDetItemStateChanged(evt);
             }
         });
 
@@ -327,21 +329,26 @@ public class NotasIF extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Fecha");
 
-        CbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CbxFecha.addItemListener(new java.awt.event.ItemListener() {
+        cbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFecha.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CbxFechaItemStateChanged(evt);
+                cbxFechaItemStateChanged(evt);
             }
         });
 
-        jLabel4.setText("Estructura Evaluuacion");
+        jLabel4.setText("Actividad");
 
-        CbxEvaluacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CbxEvaluacion.addItemListener(new java.awt.event.ItemListener() {
+        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CbxEvaluacionItemStateChanged(evt);
+                cbxActividadItemStateChanged(evt);
             }
         });
+
+        txtAsignatura.setEditable(false);
+        txtAsignatura.setEnabled(false);
+
+        jLabel5.setText("Asignatura");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -349,46 +356,52 @@ public class NotasIF extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(69, 69, 69)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel1)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel4)))
-                .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel4))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(CbxEvaluacion, javax.swing.GroupLayout.Alignment.LEADING, 0, 196, Short.MAX_VALUE)
-                        .addComponent(CbxFecha, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(CbxEstrucEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbxActividadDet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxActividad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(CbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(CbxEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(CbxEstrucEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                    .addComponent(cbxActividadDet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)))
+                    .addComponent(jLabel2))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         TblNotas.setModel(new javax.swing.table.DefaultTableModel(
@@ -419,7 +432,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
             }
         });
 
-        btnIntroducir.setText("Introducir");
+        btnIntroducir.setText("Nota");
         btnIntroducir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIntroducirActionPerformed(evt);
@@ -437,24 +450,28 @@ public class NotasIF extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(btnGuardar)
-                .addGap(30, 30, 30)
-                .addComponent(btnIntroducir)
-                .addGap(127, 127, 127)
+                .addGap(18, 18, 18)
+                .addComponent(btnIntroducir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addGap(27, 27, 27)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -481,24 +498,17 @@ public class NotasIF extends javax.swing.JInternalFrame {
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
             DefaultTableModel modelo = (DefaultTableModel)TblNotas.getModel();
-       int filas = modelo.getRowCount();
-       
-        try
-        {
-            for (int f = 0; f < filas; f++) {
-                
-            N.GuardarNotas(modelo.getValueAt(f, 2).toString(),
-                    Estev.consultaIdEstEva(CbxEstrucEvaluacion.getSelectedItem().toString()) ,
-                    modelo.getValueAt(f, 0).toString(), C.ConsultarIDCal(CbxFecha.getSelectedItem().toString()));
-                    
+            int filas = modelo.getRowCount();       
+            try {
+                for (int f = 0; f < filas; f++) {                
+                N.GuardarNotas(modelo.getValueAt(f, 2).toString(),
+                        Estev.consultaIdEstEva(cbxActividadDet.getSelectedItem().toString()) ,
+                        modelo.getValueAt(f, 0).toString(), C.ConsultarIDCal(cbxFecha.getSelectedItem().toString()));                    
+                }
+            JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, "Error guardar Asistencia: " + e.getMessage());
             }
-          JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
-        }
-            
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, "Error guardar Asistencia: " + e.getMessage());
-        }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -517,50 +527,41 @@ public class NotasIF extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void CbxEstrucEvaluacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbxEstrucEvaluacionItemStateChanged
-
-        
-         if(evt.getStateChange() == ItemEvent.SELECTED)
-        {
-           
+    private void cbxActividadDetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadDetItemStateChanged
+         if(evt.getStateChange() == ItemEvent.SELECTED) {
             LlenarTablaSegunTxt();
-
         }
-        
-    }//GEN-LAST:event_CbxEstrucEvaluacionItemStateChanged
+    }//GEN-LAST:event_cbxActividadDetItemStateChanged
 
-    private void CbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbxFechaItemStateChanged
-        if(evt.getStateChange() == ItemEvent.SELECTED)
-        {
-             
-            LlenarTablaSegunTxt();
-          
+    private void cbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFechaItemStateChanged
+        if(evt.getStateChange() == ItemEvent.SELECTED) {             
+            LlenarTablaSegunTxt();         
         }
-    }//GEN-LAST:event_CbxFechaItemStateChanged
+    }//GEN-LAST:event_cbxFechaItemStateChanged
 
-    private void CbxEvaluacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbxEvaluacionItemStateChanged
-         if(evt.getStateChange() == ItemEvent.SELECTED)
-        {
-           llenarCBEstEva();
-          
+    private void cbxActividadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadItemStateChanged
+         if(evt.getStateChange() == ItemEvent.SELECTED) {
+           llenarCbxActDet();          
         }
-    }//GEN-LAST:event_CbxEvaluacionItemStateChanged
+    }//GEN-LAST:event_cbxActividadItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox CbxEstrucEvaluacion;
-    private javax.swing.JComboBox CbxEvaluacion;
-    private javax.swing.JComboBox CbxFecha;
     private javax.swing.JTable TblNotas;
     private javax.swing.JTextField TxtBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnIntroducir;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox cbxActividad;
+    private javax.swing.JComboBox cbxActividadDet;
+    private javax.swing.JComboBox cbxFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtAsignatura;
     // End of variables declaration//GEN-END:variables
 }

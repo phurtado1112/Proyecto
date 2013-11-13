@@ -263,8 +263,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         } finally {
             cnx.Desconecta();
          }
-    }
-    
+    }    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -350,7 +349,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        btnIntroducir.setText("Introducir");
+        btnIntroducir.setText("Asistencia");
         btnIntroducir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIntroducirActionPerformed(evt);
@@ -417,15 +416,15 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnGuardar)
-                        .addGap(14, 14, 14)
+                        .addGap(18, 18, 18)
                         .addComponent(btnIntroducir)
-                        .addGap(174, 174, 174)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardar)
+                        .addGap(155, 155, 155)
                         .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 24, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
