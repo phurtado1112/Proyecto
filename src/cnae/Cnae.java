@@ -10,8 +10,6 @@ import GUI.EstructuraEvaluacionIF;
 import GUI.EstudianteIF;
 import GUI.ActividadDetIF;
 import GUI.FacultadIF;
-import GUI.RecuperacionDeDatos;
-import GUI.Respaldo;
 import GUI.ActividadIF;
 import GUI.NotasIF;
 import GUI.Reestaurar;
