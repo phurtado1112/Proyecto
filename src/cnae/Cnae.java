@@ -14,6 +14,7 @@ import GUI.RecuperacionDeDatos;
 import GUI.Respaldo;
 import GUI.ActividadIF;
 import GUI.NotasIF;
+import GUI.Reestaurar;
 import GUI.RepActividadDetalleIF;
 import GUI.RepActividadIF;
 import GUI.UniversidadIF;
@@ -25,6 +26,7 @@ import GUI.RepEstudiantesIF;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import GUI.RepUniversidadesIF;
+import GUI.Respaldar;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -601,7 +603,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuCambioContrasenaActionPerformed
 
     private void MnuRespaldoDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRespaldoDatosActionPerformed
-        Respaldo respal= new Respaldo();
+        Respaldar respal= new Respaldar();
         centerJIF(respal);
         Escritorio.add(respal);
         respal.toFront();
@@ -613,7 +615,7 @@ public final class Cnae extends javax.swing.JFrame {
     }//GEN-LAST:event_MnuRespaldoDatosActionPerformed
 
     private void MnuRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuRecuperacionDatosActionPerformed
-        RecuperacionDeDatos recup= new RecuperacionDeDatos();
+        Reestaurar recup= new Reestaurar();
         centerJIF(recup);
         Escritorio.add(recup);
         recup.toFront();
