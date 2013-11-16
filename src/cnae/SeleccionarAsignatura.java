@@ -252,10 +252,13 @@ public class SeleccionarAsignatura extends JFrame {
 
         pnlAsignatura.setBorder(javax.swing.BorderFactory.createTitledBorder("Asignatura"));
 
+        lblCarrera.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCarrera.setText("Carrera: ");
 
+        lblUniversidad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblUniversidad.setText("Universidad: ");
 
+        lblFacultad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblFacultad.setText("Facultad: ");
 
         cbxUniversidad.addActionListener(new java.awt.event.ActionListener() {
@@ -270,12 +273,16 @@ public class SeleccionarAsignatura extends JFrame {
             }
         });
 
+        lblAsignatura.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblAsignatura.setText("Asignatura");
 
+        lblAnio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblAnio.setText("Año");
 
+        lblGrupo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblGrupo.setText("Grupo");
 
+        lblPeriodo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblPeriodo.setText("Período");
 
         javax.swing.GroupLayout pnlAsignaturaLayout = new javax.swing.GroupLayout(pnlAsignatura);
@@ -309,7 +316,7 @@ public class SeleccionarAsignatura extends JFrame {
                         .addComponent(lblPeriodo)
                         .addGap(18, 18, 18)
                         .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlAsignaturaLayout.setVerticalGroup(
             pnlAsignaturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,14 +398,14 @@ public class SeleccionarAsignatura extends JFrame {
                         .addComponent(pnlAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnGuardarAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                        .addComponent(btnGuardarAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                         .addGap(417, 417, 417)
                         .addComponent(btnCancelar)
                         .addGap(18, 18, 18)
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(

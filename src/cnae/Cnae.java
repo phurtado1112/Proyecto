@@ -391,7 +391,7 @@ public final class Cnae extends javax.swing.JFrame {
         MnuPrUtilitarios.add(MnuRespaldoDatos);
 
         MnuRecuperacionDatos.setMnemonic('d');
-        MnuRecuperacionDatos.setText("Recuperación de Datos");
+        MnuRecuperacionDatos.setText("Reestablecer Datos");
         MnuRecuperacionDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuRecuperacionDatosActionPerformed(evt);

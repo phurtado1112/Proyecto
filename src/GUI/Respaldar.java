@@ -36,7 +36,7 @@ public void copiarFichero(String orig,String desti)
 		try {
                     OutputStream out;
                     try (InputStream in = new FileInputStream(archivoOrigen)) {
-                        out = new FileOutputStream(archivoDestino+"/CNAE.sqlite");
+                        out = new FileOutputStream(archivoDestino+"/cnae.sqlite");
                         byte[] buf = new byte[1024];
                         int len;
                         while ((len = in.read(buf)) > 0) {
@@ -55,12 +55,11 @@ public void copiarFichero(String orig,String desti)
         btnguardar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btnbuscar1 = new javax.swing.JButton();
-        btnbuscar2 = new javax.swing.JButton();
+        btnbuscar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         txtbuscar = new javax.swing.JTextField();
         txtdestino = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Respaldar Base de Datos");
 
         btnguardar.setText("Respaldar");
@@ -79,17 +78,19 @@ public void copiarFichero(String orig,String desti)
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Respaldar Datos"));
 
-        btnbuscar1.setText("Buscar");
-        btnbuscar1.addActionListener(new java.awt.event.ActionListener() {
+        btnbuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscar1ActionPerformed(evt);
+                btnbuscarActionPerformed(evt);
             }
         });
 
-        btnbuscar2.setText("Guardar en destino");
-        btnbuscar2.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnGuardar.setText("Guardar en destino");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscar2ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -101,12 +102,12 @@ public void copiarFichero(String orig,String desti)
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnbuscar1)
+                        .addComponent(btnbuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnbuscar2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(txtdestino, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -115,11 +116,11 @@ public void copiarFichero(String orig,String desti)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnbuscar1)
+                    .addComponent(btnbuscar)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnbuscar2)
+                    .addComponent(btnGuardar)
                     .addComponent(txtdestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -158,10 +159,10 @@ public void copiarFichero(String orig,String desti)
 
     }//GEN-LAST:event_btnguardarActionPerformed
 
-    private void btnbuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscar2ActionPerformed
-        if(evt.getSource()==btnbuscar2)
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(evt.getSource()==btnGuardar)
         {
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser("c:\\");
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //Solamente directorios
             int seleccion = fileChooser.showOpenDialog(null);
             if (seleccion == JFileChooser.APPROVE_OPTION)
@@ -171,13 +172,13 @@ public void copiarFichero(String orig,String desti)
                 txtdestino.setText(nombre);
             }
         }
-    }//GEN-LAST:event_btnbuscar2ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnbuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscar1ActionPerformed
-        if(evt.getSource()==btnbuscar1)
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        if(evt.getSource()==btnbuscar)
         {
             // La ruta donde se guardara la base de datos
-            JFileChooser fileChooser = new JFileChooser("C:\\Users\\Villarreal\\Documents\\GitHub\\Utilitarios-master");
+            JFileChooser fileChooser = new JFileChooser("..\\cnaes");
             FileNameExtensionFilter filter = new FileNameExtensionFilter("sqlite", "sqlite"); /*****sqlite****/
             fileChooser.setFileFilter(filter);
             int seleccion = fileChooser.showOpenDialog(null);
@@ -188,7 +189,7 @@ public void copiarFichero(String orig,String desti)
                 txtbuscar.setText(nombre);
             }
         }
-    }//GEN-LAST:event_btnbuscar1ActionPerformed
+    }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
         int i = JOptionPane.showConfirmDialog(null, "Desea Salir?","Confirmar",
@@ -199,8 +200,8 @@ public void copiarFichero(String orig,String desti)
     }//GEN-LAST:event_btnsalirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnbuscar1;
-    private javax.swing.JButton btnbuscar2;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnsalir;
     private javax.swing.JPanel jPanel1;

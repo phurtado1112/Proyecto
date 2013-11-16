@@ -147,8 +147,10 @@ public class SesionInicio extends JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Inicio de Sesión"));
 
+        jLabelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelUsuario.setText("Usuario: ");
 
+        jLabelContrasena.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelContrasena.setText("Contraseña: ");
 
         btnInicioSesion.setText("Inicio Sesión");

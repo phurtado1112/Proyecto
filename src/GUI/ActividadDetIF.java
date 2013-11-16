@@ -243,9 +243,11 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblActividadDet);
-        tblActividadDet.getColumnModel().getColumn(0).setResizable(false);
-        tblActividadDet.getColumnModel().getColumn(1).setResizable(false);
-        tblActividadDet.getColumnModel().getColumn(2).setResizable(false);
+        if (tblActividadDet.getColumnModel().getColumnCount() > 0) {
+            tblActividadDet.getColumnModel().getColumn(0).setResizable(false);
+            tblActividadDet.getColumnModel().getColumn(1).setResizable(false);
+            tblActividadDet.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -256,8 +258,10 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle de Actividad"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Actividad");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Detalle de Actividad");
 
         cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -275,7 +279,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDetActividad, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                     .addComponent(cbxActividad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

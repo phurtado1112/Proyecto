@@ -53,12 +53,12 @@ public void copiarFichero(String orig,String desti)
         btnguardar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        buscar_archivo = new javax.swing.JButton();
-        ruta_respaldo = new javax.swing.JButton();
+        btnBuscarArchivo = new javax.swing.JButton();
+        btnRutaRespaldo = new javax.swing.JButton();
         txtbuscar = new javax.swing.JTextField();
         txtdestino = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reestablecer Datos");
 
         btnguardar.setText("Reestablecer");
@@ -77,17 +77,19 @@ public void copiarFichero(String orig,String desti)
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Reestablecer Base de Datos"));
 
-        buscar_archivo.setText("Buscar archivo");
-        buscar_archivo.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarArchivo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBuscarArchivo.setText("Buscar archivo");
+        btnBuscarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscar_archivoActionPerformed(evt);
+                btnBuscarArchivoActionPerformed(evt);
             }
         });
 
-        ruta_respaldo.setText("Trazar ruta de respaldo");
-        ruta_respaldo.addActionListener(new java.awt.event.ActionListener() {
+        btnRutaRespaldo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnRutaRespaldo.setText("Reestablecer a");
+        btnRutaRespaldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ruta_respaldoActionPerformed(evt);
+                btnRutaRespaldoActionPerformed(evt);
             }
         });
 
@@ -101,12 +103,12 @@ public void copiarFichero(String orig,String desti)
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(ruta_respaldo)
+                        .addComponent(btnRutaRespaldo)
                         .addGap(18, 18, 18)
                         .addComponent(txtdestino, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buscar_archivo)
+                        .addComponent(btnBuscarArchivo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -116,11 +118,11 @@ public void copiarFichero(String orig,String desti)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buscar_archivo)
+                    .addComponent(btnBuscarArchivo)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ruta_respaldo)
+                    .addComponent(btnRutaRespaldo)
                     .addComponent(txtdestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -130,16 +132,14 @@ public void copiarFichero(String orig,String desti)
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(btnguardar)
-                        .addGap(71, 71, 71)
-                        .addComponent(btnsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(btnguardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +149,7 @@ public void copiarFichero(String orig,String desti)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnsalir)
                     .addComponent(btnguardar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,11 +167,11 @@ public void copiarFichero(String orig,String desti)
         }
     }//GEN-LAST:event_btnsalirActionPerformed
 
-    private void ruta_respaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruta_respaldoActionPerformed
-        if(evt.getSource()==ruta_respaldo)
+    private void btnRutaRespaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaRespaldoActionPerformed
+        if(evt.getSource()==btnRutaRespaldo)
         {
             //En este caso indicamo la ruta donde estara se guardara el archivo
-            JFileChooser fileChooser = new JFileChooser("C:\\Users\\Villarreal\\Documents\\GitHub");
+            JFileChooser fileChooser = new JFileChooser("..\\cnaes");
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); /*****Directorios solamente***///
             int seleccion = fileChooser.showOpenDialog(null);
             if (seleccion == JFileChooser.APPROVE_OPTION)
@@ -181,13 +181,13 @@ public void copiarFichero(String orig,String desti)
                 txtdestino.setText(nombre);
             }
         }
-    }//GEN-LAST:event_ruta_respaldoActionPerformed
+    }//GEN-LAST:event_btnRutaRespaldoActionPerformed
 
-    private void buscar_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_archivoActionPerformed
-        if(evt.getSource()==buscar_archivo)
+    private void btnBuscarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarArchivoActionPerformed
+        if(evt.getSource()==btnBuscarArchivo)
         {
             // En este caso no le agregamos filtro, porque queremos que lo encuentre donde tiene el respaldo
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser("C:\\");
             FileNameExtensionFilter filter = new FileNameExtensionFilter("sqlite", "sqlite"); /*****sqlite****/
             fileChooser.setFileFilter(filter);
             int seleccion = fileChooser.showOpenDialog(null);
@@ -198,14 +198,14 @@ public void copiarFichero(String orig,String desti)
                 txtbuscar.setText(nombre);
             }
         }
-    }//GEN-LAST:event_buscar_archivoActionPerformed
+    }//GEN-LAST:event_btnBuscarArchivoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarArchivo;
+    private javax.swing.JButton btnRutaRespaldo;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnsalir;
-    private javax.swing.JButton buscar_archivo;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton ruta_respaldo;
     private javax.swing.JTextField txtbuscar;
     private javax.swing.JTextField txtdestino;
     // End of variables declaration//GEN-END:variables

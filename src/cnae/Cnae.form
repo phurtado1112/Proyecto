@@ -313,7 +313,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="MnuRecuperacionDatos">
               <Properties>
                 <Property name="mnemonic" type="int" value="100"/>
-                <Property name="text" type="java.lang.String" value="Recuperaci&#xf3;n de Datos"/>
+                <Property name="text" type="java.lang.String" value="Reestablecer Datos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnuRecuperacionDatosActionPerformed"/>

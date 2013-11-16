@@ -276,20 +276,27 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
 
         pnlDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Asignatura"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Asignatura");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Código de Grupo");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Carrera");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("Período");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("Año");
 
         cbxCarrera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Universidad");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Facultad");
 
         cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -331,7 +338,7 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtAnio, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                    .addComponent(txtAnio, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                     .addComponent(txtPeriodo))
                 .addContainerGap())
         );
@@ -401,11 +408,13 @@ public class AsignaturaIF extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblAsignatura);
-        tblAsignatura.getColumnModel().getColumn(0).setResizable(false);
-        tblAsignatura.getColumnModel().getColumn(1).setResizable(false);
-        tblAsignatura.getColumnModel().getColumn(2).setResizable(false);
-        tblAsignatura.getColumnModel().getColumn(3).setResizable(false);
-        tblAsignatura.getColumnModel().getColumn(4).setResizable(false);
+        if (tblAsignatura.getColumnModel().getColumnCount() > 0) {
+            tblAsignatura.getColumnModel().getColumn(0).setResizable(false);
+            tblAsignatura.getColumnModel().getColumn(1).setResizable(false);
+            tblAsignatura.getColumnModel().getColumn(2).setResizable(false);
+            tblAsignatura.getColumnModel().getColumn(3).setResizable(false);
+            tblAsignatura.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {

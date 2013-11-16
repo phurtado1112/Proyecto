@@ -53,6 +53,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
     private void Deshabilitar() {
         txtFacultad.setEnabled(false);
         cbxUniversidad.removeAllItems();
+        cbxUniversidad.setEnabled(false);
     }
     
     public void Habilitar(){
@@ -184,8 +185,10 @@ public class FacultadIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Facultad"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Facultad");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Universidad");
 
         cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -197,14 +200,12 @@ public class FacultadIF extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFacultad, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbxUniversidad, 0, 364, Short.MAX_VALUE)
+                    .addComponent(txtFacultad))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -242,9 +243,11 @@ public class FacultadIF extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblFacultad);
-        tblFacultad.getColumnModel().getColumn(0).setMinWidth(50);
-        tblFacultad.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tblFacultad.getColumnModel().getColumn(0).setMaxWidth(55);
+        if (tblFacultad.getColumnModel().getColumnCount() > 0) {
+            tblFacultad.getColumnModel().getColumn(0).setMinWidth(50);
+            tblFacultad.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblFacultad.getColumnModel().getColumn(0).setMaxWidth(55);
+        }
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {

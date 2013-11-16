@@ -92,10 +92,5 @@ public class Asistencia {
         } finally {
             cnx.Desconecta();
         }
-    }
-
-        
-        
-    
-
+    }    
 }

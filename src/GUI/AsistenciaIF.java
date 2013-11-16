@@ -69,15 +69,15 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     }
 
     private void limpiar(){
-        CbxFecha.setSelectedItem(-1);
+        cbxFecha.setSelectedItem(-1);
     }
     
     private void Deshabilitar() {        
-        CbxFecha.setEnabled(false);
+        cbxFecha.setEnabled(false);
     }
     
     private void Habilitar(){
-        CbxFecha.setEnabled(true);
+        cbxFecha.setEnabled(true);
     }
     
     private void BotonesInicio(){
@@ -141,12 +141,12 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
        
        cnx.Conecta();
         try{
-           String fecha=CbxFecha.getSelectedItem().toString();
+           String fecha=cbxFecha.getSelectedItem().toString();
            JOptionPane.showMessageDialog(null, "la fecha es " + fecha);
             String [] titulos ={"ID","Nombre","Asistencia"};
             
             String SQL = "Select * from asistencia_view where nombre like '%" + TxtBuscar.getText() +
-                    "%' and fecha = '" + CbxFecha.getSelectedItem().toString() + "'";
+                    "%' and fecha = '" + cbxFecha.getSelectedItem().toString() + "'";
             
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
@@ -192,7 +192,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 modeloCombo.addElement(rs.getString("fecha"));
             }
-            CbxFecha.setModel(modeloCombo);
+            cbxFecha.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
         } finally {
@@ -276,7 +276,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        CbxFecha = new javax.swing.JComboBox();
+        cbxFecha = new javax.swing.JComboBox();
         TxtBuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -298,20 +298,25 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha de Asistencia"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Fecha");
 
-        CbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CbxFecha.addItemListener(new java.awt.event.ItemListener() {
+        cbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFecha.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CbxFechaItemStateChanged(evt);
+                cbxFechaItemStateChanged(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Buscar");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Asignatura");
 
         txtAsignatura.setEditable(false);
+        txtAsignatura.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtAsignatura.setDisabledTextColor(new java.awt.Color(255, 0, 0));
         txtAsignatura.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -327,9 +332,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,7 +346,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -463,7 +468,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             for (int i = 0; i < filas; i++) {
                    int ax = a.consultaIdA(txtAsignatura.getText());
               asis.setAsistencia(modelo.getValueAt(i, 2).toString()); 
-               asis.setIdcalendario(Ca.ConsultarIDCal(CbxFecha.getSelectedItem().toString()));
+               asis.setIdcalendario(Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString()));
                asis.setIdestudiante(Integer.parseInt(modelo.getValueAt(i, 0).toString()));
                asis.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
                JOptionPane.showMessageDialog(null, "Id Asignatur tiene el valor de " + ax );
@@ -493,22 +498,22 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void CbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbxFechaItemStateChanged
+    private void cbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFechaItemStateChanged
         if(evt.getStateChange() == ItemEvent.SELECTED)
         {
             LlenarTablaSegunTxt();
             TblAsistencia.setEnabled(false);
         }
-    }//GEN-LAST:event_CbxFechaItemStateChanged
+    }//GEN-LAST:event_cbxFechaItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox CbxFecha;
     private javax.swing.JTable TblAsistencia;
     private javax.swing.JTextField TxtBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnIntroducir;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox cbxFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

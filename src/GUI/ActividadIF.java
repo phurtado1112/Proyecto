@@ -192,6 +192,7 @@ public class ActividadIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Actividades"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Actividad");
         jLabel1.setToolTipText("");
 
@@ -204,7 +205,7 @@ public class ActividadIF extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(txtActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,10 +248,12 @@ public class ActividadIF extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblActividad);
-        tblActividad.getColumnModel().getColumn(0).setResizable(false);
-        tblActividad.getColumnModel().getColumn(0).setPreferredWidth(20);
-        tblActividad.getColumnModel().getColumn(1).setResizable(false);
-        tblActividad.getColumnModel().getColumn(1).setPreferredWidth(350);
+        if (tblActividad.getColumnModel().getColumnCount() > 0) {
+            tblActividad.getColumnModel().getColumn(0).setResizable(false);
+            tblActividad.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblActividad.getColumnModel().getColumn(1).setResizable(false);
+            tblActividad.getColumnModel().getColumn(1).setPreferredWidth(350);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
