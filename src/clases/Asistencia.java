@@ -22,6 +22,8 @@ public class Asistencia {
     Calendario Ca = new Calendario();
     Estudiantes Es = new Estudiantes();
     PreparedStatement ps;
+    Statement stm;
+    ResultSet rs;
         
     public Asistencia(){
 
@@ -92,5 +94,37 @@ public class Asistencia {
         } finally {
             cnx.Desconecta();
         }
-    }    
+    }
+    
+    public void ActualizarAsistencia(){
+        cnx.Conecta();
+        try {
+            String SQL = "update asistencia set asistencia= ? where idasistencia = ?";
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setString(1, asistencia);
+            ps.setInt(2, idasistencia);
+            ps.executeUpdate();        
+            ps.close();
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error Actualizar Asistencia a Clase: " + e.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+    }
+    
+    public int validarFecha(int idcalend){
+        int cantidad = 0;
+        cnx.Conecta();
+        try{
+            String SQL = "select count(*) from asistencia where idcalendario= "+idcalend;          
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();                      
+            cantidad = rs.getInt("count(*)");            
+            ps.close();
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error Validación de Fecha a Clase: " + e.getMessage());
+        }
+        cnx.Desconecta();       
+        return cantidad;        
+    }
 }
