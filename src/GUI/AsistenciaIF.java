@@ -61,11 +61,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     }
      
     public void Asistencia(JTable Tabla, TableColumn columna ){
-    
         String Asis[] = {"Presente","Ausente"};
         JComboBox Combo = new JComboBox(Asis);
         columna.setCellEditor(new DefaultCellEditor(Combo));
- 
     }
 
     private void limpiar(){
@@ -461,8 +459,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        DefaultTableModel modelo = (DefaultTableModel)TblAsistencia.getModel();
-       int filas = modelo.getRowCount();
-       
+       int filas = modelo.getRowCount();      
         try
         {
             for (int i = 0; i < filas; i++) {
@@ -479,7 +476,8 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         catch(HeadlessException | NumberFormatException e)
         {
             JOptionPane.showMessageDialog(null, "Error guardar Asistencia: " + e.getMessage());
-        }        
+        }
+        BotonesInicio();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
