@@ -68,6 +68,8 @@ public class RepActividadDetalleIF extends javax.swing.JInternalFrame {
         btnEjecutar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
+        setTitle("Reporte de Actividad");
+
         btnEjecutar.setText("Ejecutar");
         btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +102,7 @@ public class RepActividadDetalleIF extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEjecutar)
                     .addComponent(btnSalir))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();

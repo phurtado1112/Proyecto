@@ -77,7 +77,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         btnEjecutar1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setTitle("Reporte de Catálogo Estructura Evaluación");
+        setTitle("Reporte de Estructura Evaluación");
 
         btnEjecutar1.setText("Ejecutar");
         btnEjecutar1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +98,6 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 394, Short.MAX_VALUE)
-            .addGap(0, 394, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(103, 103, 103)
@@ -109,15 +108,14 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-            .addGap(0, 158, Short.MAX_VALUE)
+            .addGap(0, 162, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(65, 65, 65)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnEjecutar1)
                         .addComponent(jButton1))
-                    .addContainerGap(70, Short.MAX_VALUE)))
+                    .addContainerGap(74, Short.MAX_VALUE)))
         );
 
         pack();

@@ -24,7 +24,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author PabloAntonio
  */
-public class RepDocentesIF extends javax.swing.JInternalFrame {
+public class repDocenteIF extends javax.swing.JInternalFrame {
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;    
@@ -32,7 +32,7 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
     /**
      * Creates new form repDocenteIF
      */
-    public RepDocentesIF() {
+    public repDocenteIF() {
         initComponents();
     }
 
@@ -41,7 +41,7 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repDocente.jasper");            
+            File f1 = new File("src/reportes/repUniversidad.jasper");            
             String template = f1.getPath();
             reporte = (JasperReport) JRLoader. loadObject(template);                                    
             
@@ -55,7 +55,7 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepDocentesIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(repAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -72,7 +72,9 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
         btnEjecutar = new javax.swing.JButton();
         Salir = new javax.swing.JButton();
 
-        setTitle("Reporte de Docente");
+        setIconifiable(true);
+        setMaximizable(true);
+        setTitle("Reporte de Catálogo de Docente");
 
         btnEjecutar.setText("Ejecutar");
         btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
@@ -93,20 +95,20 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
+                .addGap(64, 64, 64)
                 .addComponent(btnEjecutar)
-                .addGap(71, 71, 71)
-                .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
+                .addGap(88, 88, 88)
+                .addComponent(Salir)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEjecutar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(72, 72, 72))
+                    .addComponent(btnEjecutar)
+                    .addComponent(Salir))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();

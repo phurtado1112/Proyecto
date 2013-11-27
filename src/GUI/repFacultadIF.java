@@ -18,44 +18,41 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-
-
 /**
  *
  * @author PabloAntonio
  */
-public class RepDocentesIF extends javax.swing.JInternalFrame {
+public class repFacultadIF extends javax.swing.JInternalFrame {
     public Connection conn;
     JasperReport reporte;
-    JasperPrint jasperprint;    
-
+    JasperPrint jasperprint;
     /**
-     * Creates new form repDocenteIF
+     * Creates new form repFacultadIF
      */
-    public RepDocentesIF() {
+    public repFacultadIF() {
         initComponents();
     }
 
-    public void reporteD() {       
+    public void reporteFac() {       
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repDocente.jasper");            
+            File f1 = new File("src/reportes/repUniversidad.jasper");            
             String template = f1.getPath();
             reporte = (JasperReport) JRLoader. loadObject(template);                                    
             
             jasperprint = JasperFillManager.fillReport(reporte, null, conn);
             JasperViewer visor=new JasperViewer(jasperprint,false);
-            visor.setTitle("Docentes - CNAE");
+            visor.setTitle("Facultades - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en Reporte Docente: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en Reporte Universidad: " + e.getMessage());
         } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(RepDocentesIF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(repAsignaturaIF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -69,10 +66,23 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         btnEjecutar = new javax.swing.JButton();
-        Salir = new javax.swing.JButton();
 
-        setTitle("Reporte de Docente");
+        setTitle("Reporte de Catálogo de Facultades");
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
+        setVisible(true);
+
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnEjecutar.setText("Ejecutar");
         btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
@@ -81,51 +91,44 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
             }
         });
 
-        Salir.setText("Salir");
-        Salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalirActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
-                .addComponent(btnEjecutar)
-                .addGap(71, 71, 71)
-                .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
+                .addContainerGap()
+                .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEjecutar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(72, 72, 72))
+                    .addComponent(btnEjecutar)
+                    .addComponent(jButton1))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-       int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
             JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            this.doDefaultCloseAction();  
+            this.doDefaultCloseAction();
         }
-    }//GEN-LAST:event_SalirActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-        this.reporteD();
+        this.reporteFac();
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Salir;
     private javax.swing.JButton btnEjecutar;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
