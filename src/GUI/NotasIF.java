@@ -129,7 +129,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         try{           
             String [] titulos ={"ID","Nombre","Nota"};
             
-            String SQL = "Select * from estudiantea_view";
+            String SQL = "Select * from estudiantea_view where idasignatura=" + Globales.id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
@@ -162,9 +162,10 @@ public class NotasIF extends javax.swing.JInternalFrame {
        int[] anchos = {30, 100, 100};       
        cnx.Conecta();
         try{                         
-              String [] titulos ={"ID","Nombre","Asistencia"};              
+              String [] titulos ={"ID","Nombre","Notas"};              
               String SQL = "Select * from notas_view where idcalendario = " + Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString()) + 
-                      " and idactividaddet = "+ad.consultaId(cbxActividadDet.getSelectedItem().toString());
+                      " and idactividaddet = "+ad.consultaId(cbxActividadDet.getSelectedItem().toString()) +
+                      " and idasignatura="+Globales.id;
               
               model = new DefaultTableModel(null, titulos);
               stm = cnx.conn.createStatement();
@@ -198,46 +199,46 @@ public class NotasIF extends javax.swing.JInternalFrame {
         }
     }
     
-    private void busquedaModificar(String nomb) {
-       int[] anchos = {30, 100, 100};
-       
-       cnx.Conecta();
-        try{           
-            String [] titulos ={"ID","Nombre","Nota"};
-            
-            String SQL = "Select * from notas_view where nombre like '%" + nomb + "%' and "
-                    + "fecha = '" + cbxFecha.getSelectedItem() + "' and "
-                    + "nombreEs = " + "'" + cbxActividadDet.getSelectedItem() + "'";
-            
-            model = new DefaultTableModel(null, titulos);
-            stm = cnx.conn.createStatement();
-            rs = stm.executeQuery(SQL);
-            String [] fila = new String[3];
-            while(rs.next()){
-                fila[0] = rs.getString("idnotas");
-                fila[1] = rs.getString("nombre");
-                fila[2] = rs.getString("nota");             
-                model.addRow(fila);
-            }
-            TblNotas.setModel(model);
-            
-            for(int i = 0; i < TblNotas.getColumnCount(); i++) {
-                TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-            }
-            
-            //Centra los datos en las celdas
-//            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-//            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-//            TblNotas.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-//            TblNotas.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-//            TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-//            TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);                
-        } catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + ex.getMessage());
-        } finally {
-            cnx.Desconecta();
-        }
-    }
+//    private void busquedaModificar(String nomb) {
+//       int[] anchos = {30, 100, 100};
+//       
+//       cnx.Conecta();
+//        try{           
+//            String [] titulos ={"ID","Nombre","Nota"};
+//            
+//            String SQL = "Select * from notas_view where nombre like '%" + nomb + "%' and "
+//                    + "fecha = '" + cbxFecha.getSelectedItem() + "' and "
+//                    + "nombreEs = " + "'" + cbxActividadDet.getSelectedItem() + "'";
+//            
+//            model = new DefaultTableModel(null, titulos);
+//            stm = cnx.conn.createStatement();
+//            rs = stm.executeQuery(SQL);
+//            String [] fila = new String[3];
+//            while(rs.next()){
+//                fila[0] = rs.getString("idnotas");
+//                fila[1] = rs.getString("nombre");
+//                fila[2] = rs.getString("nota");             
+//                model.addRow(fila);
+//            }
+//            TblNotas.setModel(model);
+//            
+//            for(int i = 0; i < TblNotas.getColumnCount(); i++) {
+//                TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+//            }
+//            
+//            //Centra los datos en las celdas
+////            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
+////            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
+////            TblNotas.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
+////            TblNotas.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
+////            TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
+////            TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);                
+//        } catch(SQLException ex){
+//            JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + ex.getMessage());
+//        } finally {
+//            cnx.Desconecta();
+//        }
+//    }
     
     private void llenarCBFecha() {
         cnx.Conecta();
@@ -408,7 +409,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
                             val=false;
                             break;                            
                         }
-                    }catch (Exception e){
+                    }catch (HeadlessException | NumberFormatException e){
                         JOptionPane.showMessageDialog(null,"No se permiten letras "+e.getMessage());
                         val=false;
                         break;

@@ -120,7 +120,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         try{           
             String [] titulos ={"ID","Nombre","Asistencia"};
             
-            String SQL = "Select * from estudiantea_view";
+            String SQL = "Select * from estudiantea_view where idasignatura =" + Globales.id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
