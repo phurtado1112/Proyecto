@@ -68,21 +68,21 @@ public class Actividad {
     
     public void EliminarActividad(){
         cnx.Conecta();
-                try {
-                    String SQL = "delete from actividad where idactividad=?";
-                    
-                    ps = cnx.conn.prepareStatement(SQL);     
-                    ps.setInt(1, idactividad);                    
-                    int n = ps.executeUpdate();
-                    if(n>0){                
-                        JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
-                    }
-                    ps.close();
-                } catch(SQLException | HeadlessException e){
-                    JOptionPane.showMessageDialog(null, "Error Eliminar actividad: " + e.getMessage());            
-                } finally {
-                    cnx.Desconecta();
-                }
+        try {
+            String SQL = "delete from actividad where idactividad=?";
+
+            ps = cnx.conn.prepareStatement(SQL);     
+            ps.setInt(1, idactividad);                    
+            int n = ps.executeUpdate();
+            if(n>0){                
+                JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
+            }
+            ps.close();
+        } catch(SQLException | HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error Eliminar actividad: " + e.getMessage());            
+        } finally {
+        cnx.Desconecta();
+        }
     }
     
     public void GuardarActividad(){
@@ -105,22 +105,22 @@ public class Actividad {
     }
     
     public int consultaIdAct(String Activ){
-    int id = 0;
-    cnx.Conecta();
-        try{
-            String SQL = "Select idactividad from actividad where actividad = "+"\""+Activ+"\"";
-            
-            ps = cnx.conn.prepareStatement(SQL);
-            rs = ps.executeQuery();            
-            while(rs.next()){
-                id = rs.getInt("idactividad");
-            }            
-            ps.close();
-        } catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error consulta Id actividad: " + e.getMessage());
-        }
-    cnx.Desconecta();       
-    return id;
+        int id = 0;
+        cnx.Conecta();
+            try{
+                String SQL = "Select idactividad from actividad where actividad = "+"\""+Activ+"\"";
+
+                ps = cnx.conn.prepareStatement(SQL);
+                rs = ps.executeQuery();            
+                while(rs.next()){
+                    id = rs.getInt("idactividad");
+                }            
+                ps.close();
+            } catch(SQLException | HeadlessException e){
+                JOptionPane.showMessageDialog(null, "Error consulta Id actividad: " + e.getMessage());
+            }
+        cnx.Desconecta();       
+        return id;
     }
     
     public String consultaActividad(int id){

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repAsistencia_dia" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1c2587ba-b646-4488-8200-9a6c558b87e8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idAsig" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select "idasistencia",("nombreE" || " " || "apellidoE") as "nombre","asistencia","fecha","nombreA","nombreC","nombreF" ,"nombreU"
+from estudiante as e left join asistencia as a
+on (e.idestudiante=a.idestudiante) left join "asignatura" as asig
+on (asig.idasignatura=a.idasignatura) left join "calendario" as c
+on (a.idcalendario=c.idcalendario)  left join "carrera" as ca
+on (asig.idcarrera=ca.idcarrera) left join "facultad" as f
+on (ca.idfacultad=f.idfacultad) left join "universidad" as u
+on (f.iduniversidad=u.iduniversidad) where e.idasignatura = $P{idAsig}]]>
+	</queryString>
+	<field name="idasistencia" class="java.lang.Object"/>
+	<field name="nombre" class="java.lang.Object"/>
+	<field name="asistencia" class="java.lang.Object"/>
+	<field name="fecha" class="java.lang.Object"/>
+	<field name="nombreA" class="java.lang.Object"/>
+	<field name="nombreC" class="java.lang.Object"/>
+	<field name="nombreF" class="java.lang.Object"/>
+	<field name="nombreU" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f40e1ef2-a4dc-4211-b6ab-27d17e2d5196" x="5" y="48" width="567" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0307944a-1bde-4668-a89e-d49e975cd617" x="5" y="69" width="567" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9cc3ee0a-8150-40a1-a54e-5b3def480a17" x="5" y="25" width="567" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="57a8d52a-46bf-44fc-b867-564260e6fea3" x="5" y="100" width="567" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Asistencia]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9b3726cf-8d49-4202-9e62-08b63a859039" x="5" y="0" width="567" height="27"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreU}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0a0fd2ea-1698-4760-a3bb-ae2d1c27b2a4" x="342" y="16" width="133" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Emisión]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="817e40bf-3c4c-4f9e-8468-d84a6b9d13a2" x="471" y="16" width="119" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6128e448-1f79-4f4a-937f-30067213fab2" x="0" y="7" width="143" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Asistencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="87abb231-8632-4e6b-949c-41ba1f535e28" x="143" y="7" width="143" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d82359fe-c958-4a80-8096-3276678a31e2" x="286" y="7" width="143" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asistencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f971c3eb-a1eb-4178-bbfa-08c426c60a02" x="429" y="7" width="143" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="6eff6a87-38f1-4870-afb0-86a49426f7b6" x="0" y="0" width="143" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{idasistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f61c5d4b-7490-4a4c-90b5-de1b92270cca" x="143" y="0" width="143" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a24b07d1-a040-4f0e-bf49-5f761e06a8eb" x="286" y="0" width="143" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{asistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4782df4b-f6ee-4f25-aec1-746a2e571130" x="429" y="0" width="143" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7efadb7f-2c0d-4c4a-ab99-d6154a3ec27d" x="458" y="13" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="c0f66612-d757-4eba-b164-ecb57d485260" x="538" y="13" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
