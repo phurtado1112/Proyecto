@@ -7,29 +7,16 @@ import clases.Actividad;
 import clases.ActividadDet;
 import clases.Asignatura;
 import clases.Calendario;
-//import clases.EstructuraEvaluacion;
-//import clases.Estudiantes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 import clases.Notas;
 import java.awt.HeadlessException;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.TableColumn;
 import util.Globales;
 import util.Valida;
 
@@ -41,20 +28,16 @@ public class NotasIF extends javax.swing.JInternalFrame {
 
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
-//    EstructuraEvaluacion Estev = new EstructuraEvaluacion();
     Notas n = new Notas();
     Calendario c = new Calendario();
-    //Evaluaciones E = new Evaluaciones();
     Actividad ac = new Actividad();
     ActividadDet ad = new ActividadDet();
-//    Estudiantes e = new Estudiantes();
     Asignatura a = new Asignatura();
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
     Valida va=new Valida();
     Calendario Ca = new Calendario();
-    //int id = 1;
 
     public NotasIF() {
         initComponents();
@@ -75,15 +58,9 @@ public class NotasIF extends javax.swing.JInternalFrame {
     private void Habilitar(){        
         cbxFecha.setEnabled(true);
         llenarCBFecha();
-        
         cbxActividad.setEnabled(true);
-        //llenarCbxAct();
-        
         cbxActividadDet.setEnabled(true);
-        //llenarCbxActDet();
-                
         TblNotas.setEnabled(true);
-        
     }
     
     private void Deshabilitar() {        
@@ -116,11 +93,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
         btnModificar.setEnabled(true);        
         btnCancelar.setEnabled(true);
     }
-   
-//    private void BotonesClick(){
-//        btnGuardar.setEnabled(false);
-//        btnCancelar.setEnabled(true);
-//    }
     
     private void LlenarTablaIngreso() {
        int[] anchos = {30, 100, 100};
@@ -144,13 +116,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < TblNotas.getColumnCount(); i++) {
                 TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }            
-            //Centra los datos en las celdas
-//         DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-//            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-//            TblNotas.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-//            TblNotas.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-//            TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-//            TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);            
     } catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + ex.getMessage());
         } finally {
@@ -182,63 +147,13 @@ public class NotasIF extends javax.swing.JInternalFrame {
 
               for(int i = 0; i < TblNotas.getColumnCount(); i++) {
                     TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-                }
-
-              //Centra los datos en las celdas
-//              DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-//              centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-//              tblAsistencia.getColumnModel().getColumn(0).setCellRenderer(centraCelda);            
-//              tblAsistencia.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(1).setHeaderRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);              
+                }          
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Notas para edición: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
-    
-//    private void busquedaModificar(String nomb) {
-//       int[] anchos = {30, 100, 100};
-//       
-//       cnx.Conecta();
-//        try{           
-//            String [] titulos ={"ID","Nombre","Nota"};
-//            
-//            String SQL = "Select * from notas_view where nombre like '%" + nomb + "%' and "
-//                    + "fecha = '" + cbxFecha.getSelectedItem() + "' and "
-//                    + "nombreEs = " + "'" + cbxActividadDet.getSelectedItem() + "'";
-//            
-//            model = new DefaultTableModel(null, titulos);
-//            stm = cnx.conn.createStatement();
-//            rs = stm.executeQuery(SQL);
-//            String [] fila = new String[3];
-//            while(rs.next()){
-//                fila[0] = rs.getString("idnotas");
-//                fila[1] = rs.getString("nombre");
-//                fila[2] = rs.getString("nota");             
-//                model.addRow(fila);
-//            }
-//            TblNotas.setModel(model);
-//            
-//            for(int i = 0; i < TblNotas.getColumnCount(); i++) {
-//                TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-//            }
-//            
-//            //Centra los datos en las celdas
-////            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-////            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-////            TblNotas.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-////            TblNotas.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-////            TblNotas.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-////            TblNotas.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);                
-//        } catch(SQLException ex){
-//            JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + ex.getMessage());
-//        } finally {
-//            cnx.Desconecta();
-//        }
-//    }
     
     private void llenarCBFecha() {
         cnx.Conecta();
@@ -301,45 +216,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
         cbxActividadDet.setSelectedIndex(-1);
         cnx.Desconecta();
     }
-                       
-//    private void setJTexFieldChanged(JTextField txt){
-//        DocumentListener documentListener = new DocumentListener() {
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent documentEvent) {
-//                printIt(documentEvent);
-//            }
-//            @Override
-//            public void insertUpdate(DocumentEvent documentEvent) {
-//                printIt(documentEvent);
-//            }
-//            @Override
-//            public void removeUpdate(DocumentEvent documentEvent) {
-//                printIt(documentEvent);
-//            }
-//        };
-//        txt.getDocument().addDocumentListener(documentListener);
-//    }
-//
-//    private void printIt(DocumentEvent documentEvent) {
-//        DocumentEvent.EventType type = documentEvent.getType();
-//        if (type.equals(DocumentEvent.EventType.CHANGE))
-//        {
-//            txtbuscador();
-//        }
-//        else if (type.equals(DocumentEvent.EventType.INSERT))
-//        {
-//            txtbuscador();
-//        }
-//        else if (type.equals(DocumentEvent.EventType.REMOVE))
-//        {
-//            txtbuscador();
-//        }
-//    }
-    
-//    private void txtbuscador() {        
-//        LlenarTablaSegunTxt();
-//    }
          
     private void llenarTxtAsignatura() {
         cnx.Conecta();
@@ -734,11 +610,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
         {
             llenarCbxAct();            
         }
-        
-          
-//        if(evt.getStateChange() == ItemEvent.SELECTED) {             
-//            LlenarTablaSegunTxt();         
-//        }
     }//GEN-LAST:event_cbxFechaItemStateChanged
 
     private void cbxActividadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadItemStateChanged
@@ -749,17 +620,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         else
         {
             llenarCbxActDet();            
-        }        
-        
-//        if ((cbxActividad.getSelectedIndex()==-1) || jcbIngresar.isSelected()==true)
-//        {  }
-//        else
-//        {
-//            LlenarTablaModificar();            
-//        }
-//         if(evt.getStateChange() == ItemEvent.SELECTED) {
-//           llenarCbxActDet();          
-//        }
+        }
     }//GEN-LAST:event_cbxActividadItemStateChanged
 
     private void jcbModificarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbModificarItemStateChanged
