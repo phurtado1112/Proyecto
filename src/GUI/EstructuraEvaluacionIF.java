@@ -201,11 +201,11 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 //            JOptionPane.showMessageDialog(this, "Formato para nota no valido");
 //            val = false;
 //        }  
-        else if(Integer.parseInt(valor)>100)
-        { //Valida que la nota no sea mayor que 100
-            JOptionPane.showMessageDialog(this, "El valor máximo para el campo de texto Valor es 100");
-            val = false;
-        }
+//        else if(Integer.parseInt(valor)>100)
+//        { //Valida que la nota no sea mayor que 100
+//            JOptionPane.showMessageDialog(this, "El valor máximo para el campo de texto Valor es 100");
+//            val = false;
+//        }
 //        } else {
 //            val=true;
 //        }       
