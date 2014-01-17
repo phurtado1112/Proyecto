@@ -518,7 +518,9 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
                 "on (ad.idactividad=ac.idactividad) where idcalendario = " + tblCalendario.getValueAt(fila, 0);
                 stm = cnx.conn.createStatement();
                 rs = stm.executeQuery(SQL);
+                
                 String actDet = rs.getString("actividaddet").toString();
+                
                 jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));               
                 cbxActividad.setSelectedItem(rs.getString("actividad"));
                 cbxActividadDet.setSelectedItem(actDet);
