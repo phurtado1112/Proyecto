@@ -28,15 +28,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnGuardarAsignatura" pref="107" max="32767" attributes="1"/>
-                      <EmptySpace min="-2" pref="417" max="-2" attributes="0"/>
-                      <Component id="btnCancelar" min="-2" max="-2" attributes="1"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnGuardarAsignatura" max="32767" attributes="1"/>
+                      <EmptySpace min="-2" pref="401" max="-2" attributes="0"/>
                       <Component id="btnAceptar" min="-2" pref="82" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCancelar" min="-2" max="-2" attributes="1"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jScrollPane1" pref="715" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

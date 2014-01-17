@@ -136,7 +136,7 @@ public class ActividadDet {
     return id;
     }
     
-    public String consultaActividad(int id){
+    public String consultaActividadDet(int id){
         String fila= "";
         cnx.Conecta();
         try{
@@ -153,7 +153,7 @@ public class ActividadDet {
         return fila;
     }
     
-    public ArrayList<String> consultaActividad(){
+    public ArrayList<String> consultaActividadDet(){
         cnx.Conecta();
         ArrayList<String> ls = new ArrayList<>();
         try{

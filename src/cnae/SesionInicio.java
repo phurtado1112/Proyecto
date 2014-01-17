@@ -153,6 +153,11 @@ public class SesionInicio extends JFrame {
         jLabelContrasena.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelContrasena.setText("Contraseña: ");
 
+        txtUsuario.setText("phurtado");
+        txtUsuario.setToolTipText("");
+
+        pwdContrasena.setText("alepa1");
+
         btnInicioSesion.setText("Inicio Sesión");
         btnInicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

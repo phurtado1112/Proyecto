@@ -134,8 +134,15 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUsuario">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="phurtado"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="pwdContrasena">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="alepa1"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnInicioSesion">
           <Properties>

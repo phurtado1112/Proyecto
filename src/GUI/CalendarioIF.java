@@ -508,20 +508,20 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
             int fila = tblCalendario.getSelectedRow();
             Habilitar();
             llenarCBAct();
-            llenarCBActDet();
             llenarTXT();
             BotonesClick();
             cnx.Conecta();
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MMM/yyyy");
             try{                                               
-                String SQL = "Select * from calendario where idcalendario = " + tblCalendario.getValueAt(fila, 0);
+                String SQL = "select idcalendario, fecha, c.idactividaddet, ad.actividaddet, ac.actividad from calendario as c join actividaddet as ad \n" +
+                "on (c.idactividaddet=ad.idactividaddet) join actividad as ac\n" +
+                "on (ad.idactividad=ac.idactividad) where idcalendario = " + tblCalendario.getValueAt(fila, 0);
                 stm = cnx.conn.createStatement();
                 rs = stm.executeQuery(SQL);
-                
-                rs.next();
-                //jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
-                jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));
-                cbxActividadDet.setSelectedItem(ad.consultaActividad(rs.getInt("idactividaddet")));                
+                String actDet = rs.getString("actividaddet").toString();
+                jdcFecha.setDate(formatoFecha.parse(rs.getString("fecha")));               
+                cbxActividad.setSelectedItem(rs.getString("actividad"));
+                cbxActividadDet.setSelectedItem(actDet);
             } catch(SQLException | ParseException e){
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             } finally {
