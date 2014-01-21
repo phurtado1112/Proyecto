@@ -195,6 +195,7 @@ public class SeleccionarAsignatura extends JFrame {
             for(int i = 0; i < tblAsignatura.getColumnCount(); i++) {
                 tblAsignatura.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
+            tblAsignatura.changeSelection(0, 1, false, false);
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error de llenarTabla: " + e.getMessage());
         } finally {
