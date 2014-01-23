@@ -13,7 +13,7 @@ public class Conecta {
     public String ruta;
     
     public Conecta(){
-        ruta="cnae.sqlite"; //especificamos la ruta de la base
+        ruta="src/data/cnae.sqlite"; //especificamos la ruta de la base
     }
     
     public void Conecta(){
