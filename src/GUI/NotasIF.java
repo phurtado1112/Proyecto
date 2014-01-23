@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import clases.Actividad;
 import clases.ActividadDet;
 import clases.Asignatura;
@@ -36,131 +37,130 @@ public class NotasIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
-    Valida va=new Valida();
+    Valida va = new Valida();
     Calendario Ca = new Calendario();
 
     public NotasIF() {
         initComponents();
-        cnx.Conecta();        
-        limpiar();        
-        BotonesInicio();       
-        LlenarTablaIngreso();        
+        cnx.Conecta();
+        limpiar();
+        BotonesInicio();
+        LlenarTablaIngreso();
         llenarTxtAsignatura();
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
-    
-    private void limpiar(){
+
+    private void limpiar() {
         cbxFecha.removeAllItems();
         cbxActividad.removeAllItems();
-        cbxActividadDet.removeAllItems();        
+        cbxActividadDet.removeAllItems();
     }
-      
-    private void Habilitar(){        
+
+    private void Habilitar() {
         cbxFecha.setEnabled(true);
         llenarCBFecha();
         cbxActividad.setEnabled(true);
         cbxActividadDet.setEnabled(true);
         TblNotas.setEnabled(true);
     }
-    
-    private void Deshabilitar() {        
+
+    private void Deshabilitar() {
         cbxFecha.setEnabled(false);
         cbxActividad.setEnabled(false);
-        cbxActividadDet.setEnabled(false);        
+        cbxActividadDet.setEnabled(false);
         LlenarTablaIngreso();
         TblNotas.setEnabled(false);
     }
-    
-    private void BotonesInicio(){      
+
+    private void BotonesInicio() {
         jcbIngresar.setEnabled(true);
         jcbIngresar.setSelected(false);
         btnGuardar.setEnabled(false);
         jcbModificar.setEnabled(true);
         jcbModificar.setSelected(false);
         btnModificar.setEnabled(false);
-        btnCancelar.setEnabled(false);                        
+        btnCancelar.setEnabled(false);
     }
-    
-     private void BotonesIngresar(){
+
+    private void BotonesIngresar() {
         btnGuardar.setEnabled(true);
         jcbModificar.setEnabled(false);
         btnModificar.setEnabled(false);
-        btnCancelar.setEnabled(true);        
-    }
-     
-     private void BotonesModificar(){
-        jcbIngresar.setEnabled(false);    
-        btnModificar.setEnabled(true);        
         btnCancelar.setEnabled(true);
     }
-    
+
+    private void BotonesModificar() {
+        jcbIngresar.setEnabled(false);
+        btnModificar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+
     private void LlenarTablaIngreso() {
-       int[] anchos = {30, 100, 100};
-       
-       cnx.Conecta();
-        try{           
-            String [] titulos ={"ID","Nombre","Nota"};
-            
+        int[] anchos = {30, 100, 100};
+
+        cnx.Conecta();
+        try {
+            String[] titulos = {"ID", "Nombre", "Nota"};
+
             String SQL = "Select * from estudiantea_view where idasignatura=" + Globales.id;
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
-            String [] fila = new String[2];
-            while(rs.next()){
+            String[] fila = new String[2];
+            while (rs.next()) {
                 fila[0] = rs.getString("idestudiante");
-                fila[1] = rs.getString("nombre");                
+                fila[1] = rs.getString("nombre");
                 model.addRow(fila);
             }
             TblNotas.setModel(model);
-            
-            for(int i = 0; i < TblNotas.getColumnCount(); i++) {
+
+            for (int i = 0; i < TblNotas.getColumnCount(); i++) {
                 TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-            }            
-    } catch(SQLException ex){
+            }
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarTabla notas: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
-    
-    private void LlenarTablaModificar() {
-       int[] anchos = {30, 100, 100};       
-       cnx.Conecta();
-        try{                         
-              String [] titulos ={"ID","Nombre","Notas"};              
-              String SQL = "Select * from notas_view where idcalendario = " + Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString()) + 
-                      " and idactividaddet = "+ad.consultaId(cbxActividadDet.getSelectedItem().toString()) +
-                      " and idasignatura="+Globales.id;
-              
-              model = new DefaultTableModel(null, titulos);
-              stm = cnx.conn.createStatement();
-              rs = stm.executeQuery(SQL);
-              String [] fila = new String[3];
-              while(rs.next())
-              {
-                  fila[0] = rs.getString("idnotas");
-                  fila[1] = rs.getString("nombre");
-                  fila[2] = rs.getString("nota");            
-                  model.addRow(fila);
-              }
-              TblNotas.setModel(model);
 
-              for(int i = 0; i < TblNotas.getColumnCount(); i++) {
-                    TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-                }          
-        } catch(SQLException e){
+    private void LlenarTablaModificar() {
+        int[] anchos = {30, 100, 100};
+        cnx.Conecta();
+        try {
+            String[] titulos = {"ID", "Nombre", "Notas"};
+            String SQL = "Select * from notas_view where idcalendario = " + Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString())
+                    + " and idactividaddet = " + ad.consultaId(cbxActividadDet.getSelectedItem().toString())
+                    + " and idasignatura=" + Globales.id;
+
+            model = new DefaultTableModel(null, titulos);
+            stm = cnx.conn.createStatement();
+            rs = stm.executeQuery(SQL);
+            String[] fila = new String[3];
+            while (rs.next()) {
+                fila[0] = rs.getString("idnotas");
+                fila[1] = rs.getString("nombre");
+                fila[2] = rs.getString("nota");
+                model.addRow(fila);
+            }
+            TblNotas.setModel(model);
+
+            for (int i = 0; i < TblNotas.getColumnCount(); i++) {
+                TblNotas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            }
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Notas para edición: " + e.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
-    
+
     private void llenarCBFecha() {
         cnx.Conecta();
-        try {            
-            modeloCombo = new DefaultComboBoxModel();            
+        try {
+            modeloCombo = new DefaultComboBoxModel();
             String SQL = "select distinct fecha from notacombobox_view";
-            stm = cnx.conn.createStatement();            
+            stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 modeloCombo.addElement(rs.getObject("fecha"));
@@ -173,20 +173,20 @@ public class NotasIF extends javax.swing.JInternalFrame {
         //LlenarTablaIngreso();
         cbxFecha.setSelectedIndex(-1);
         cnx.Desconecta();
-    }    
-    
+    }
+
     private void llenarCbxAct() {
         cnx.Conecta();
         try {
-                modeloCombo = new DefaultComboBoxModel();            
-                String SQL = "select distinct actividad from notacombobox_view where fecha = '"+cbxFecha.getSelectedItem().toString() +"'";
-                stm = cnx.conn.createStatement();            
-                rs = stm.executeQuery(SQL);
-                while (rs.next()) {
-                    modeloCombo.addElement(rs.getObject("actividad"));
-                }
-                rs.close();
-                cbxActividad.setModel(modeloCombo);                                                    
+            modeloCombo = new DefaultComboBoxModel();
+            String SQL = "select distinct actividad from notacombobox_view where fecha = '" + cbxFecha.getSelectedItem().toString() + "'";
+            stm = cnx.conn.createStatement();
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloCombo.addElement(rs.getObject("actividad"));
+            }
+            rs.close();
+            cbxActividad.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCbxAct: " + ex.getMessage());
         }
@@ -194,21 +194,21 @@ public class NotasIF extends javax.swing.JInternalFrame {
         cbxActividad.setSelectedIndex(-1);
         cnx.Desconecta();
     }
-    
-     private void llenarCbxActDet() {
+
+    private void llenarCbxActDet() {
         cnx.Conecta();
         try {
-                modeloCombo = new DefaultComboBoxModel();            
-                String SQL = "select actividaddet from notacombobox_view where actividad = '" + cbxActividad.getSelectedItem().toString() +"' and fecha = '" 
-                        + cbxFecha.getSelectedItem().toString() +"'";
-                stm = cnx.conn.createStatement();            
-                rs = stm.executeQuery(SQL);
-                while (rs.next()) {
-                    modeloCombo.addElement(rs.getObject("actividaddet"));
-                }
-                rs.close();
-                cbxActividadDet.setModel(modeloCombo);
-         
+            modeloCombo = new DefaultComboBoxModel();
+            String SQL = "select actividaddet from notacombobox_view where actividad = '" + cbxActividad.getSelectedItem().toString() + "' and fecha = '"
+                    + cbxFecha.getSelectedItem().toString() + "'";
+            stm = cnx.conn.createStatement();
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloCombo.addElement(rs.getObject("actividaddet"));
+            }
+            rs.close();
+            cbxActividadDet.setModel(modeloCombo);
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCbxActDet: " + ex.getMessage());
         }
@@ -216,88 +216,89 @@ public class NotasIF extends javax.swing.JInternalFrame {
         cbxActividadDet.setSelectedIndex(-1);
         cnx.Desconecta();
     }
-         
+
     private void llenarTxtAsignatura() {
         cnx.Conecta();
-         try {             
+        try {
             String SQL = "select nombreA from asignatura where idasignatura = " + Globales.id;
-            stm = cnx.conn.createStatement();            
+            stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 txtAsignatura.setText(rs.getString("nombreA"));
             }
-            rs.close();            
+            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarTXTAsignatura: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
-         }
+        }
     }
-    
+
     private void llenarTxtValor() {
         cnx.Conecta();
-         try {
-             TblNotas.setVisible(true);
-            String SQL = "select valor from notacombobox_view where actividaddet= '" + cbxActividadDet.getSelectedItem().toString() +
-                    "' and actividad= '" +cbxActividad.getSelectedItem().toString() +"' and fecha= '" +cbxFecha.getSelectedItem().toString() +"'";
-            stm = cnx.conn.createStatement();            
+        try {
+            TblNotas.setVisible(true);
+            String SQL = "select valor from notacombobox_view where actividaddet= '" + cbxActividadDet.getSelectedItem().toString()
+                    + "' and actividad= '" + cbxActividad.getSelectedItem().toString() + "' and fecha= '" + cbxFecha.getSelectedItem().toString() + "'";
+            stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 txtValor.setText(rs.getString("valor"));
             }
-            rs.close();            
+            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarTXTValor: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
-         }
+        }
     }
-            
-    private boolean valida()
-    {
-        boolean val=true;        
-        if (cbxFecha.getSelectedIndex()==-1 || cbxActividad.getSelectedIndex()==-1 || cbxActividadDet.getSelectedIndex()==-1)
-        {
-            JOptionPane.showMessageDialog(null, "Las listas desplegables no pueden estar vacíos");
-            val=false;            
-        }        
-        else
-        {
-                Double nota;
-                TblNotas.getCellEditor().stopCellEditing();   //Detiene la edicion del JTable
-                DefaultTableModel modelo = (DefaultTableModel)TblNotas.getModel();
-                int filas = modelo.getRowCount();                
-                for (int i = 0; i < filas; i++) 
-                {
-                    try
-                    {
-                        nota=Double.parseDouble(modelo.getValueAt(i,2).toString());
-                        if (nota>Double.parseDouble(txtValor.getText()))
-                        {
-                            JOptionPane.showMessageDialog(null,"La nota ingresada no puede ser mayor que la actividad");
-                            val=false;
-                            break;                
-                        }
 
-                        if (nota<0)
-                        {
-                            JOptionPane.showMessageDialog(null,"La nota no puede ser negativa");
-                            val=false;
-                            break;                            
-                        }
-                    }catch (HeadlessException | NumberFormatException e){
-                        JOptionPane.showMessageDialog(null,"No se permiten letras "+e.getMessage());
-                        val=false;
+    private boolean valida() {
+        boolean val = true;
+        if (cbxFecha.getSelectedIndex() == -1 || cbxActividad.getSelectedIndex() == -1 || cbxActividadDet.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Las listas desplegables no pueden estar vacíos");
+            val = false;
+        } else {
+            Double nota = 0.00;
+            try {
+                TblNotas.getCellEditor().stopCellEditing();
+            } catch (Exception e) {
+
+            }
+            DefaultTableModel modelo = (DefaultTableModel) TblNotas.getModel();
+            int filas = modelo.getRowCount();
+            for (int i = 0; i < filas; i++) {
+                try {
+                    if (modelo.getValueAt(i, 2) == null){
+                        modelo.setValueAt(0.00,i,2);
+                    } else {
+                        nota = Double.parseDouble(modelo.getValueAt(i, 2).toString());
+                    }
+                    if (nota > Double.parseDouble(txtValor.getText())) {
+                        JOptionPane.showMessageDialog(null, "La nota ingresada del alumno "+modelo.getValueAt(i, 1)+" no puede ser mayor que la actividad");
+                        val = false;
                         break;
-                    }                                                                                                         
+                    }
+
+                    if (nota < 0) {
+                        JOptionPane.showMessageDialog(null, "La nota del alumno "+modelo.getValueAt(i, 1)+" no puede ser negativa");
+                        val = false;
+                        break;
+                    }
+                } catch (HeadlessException | NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "La nota del alumno "+modelo.getValueAt(i, 1)+" no es válida");
+                    val = false;
+                    break;
                 }
-        }              
+            }
+        }
         return val;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARnInG: Do nOT modify this code. The content of this method is always
- regenerated by the Form Editor.
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -550,89 +551,70 @@ public class NotasIF extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-                limpiar();
-                Deshabilitar();
-                LlenarTablaIngreso();
-                BotonesInicio();                
+        limpiar();
+        Deshabilitar();
+        LlenarTablaIngreso();
+        BotonesInicio();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (valida()==false)
-        { }
-        else if(n.validarRegistros(Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString()),
-         ad.consultaId(cbxActividadDet.getSelectedItem().toString()))>0)        
-        {            
-            JOptionPane.showMessageDialog(null, "Ya existe un registro de estas Actividades \n "+
-                        "Si desea cambiar el valor utilice la función Modificar.");
-        }
-        else 
-        {            
-            int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-            if(i==JOptionPane.OK_OPTION)
-            {
-                DefaultTableModel modelo = (DefaultTableModel)TblNotas.getModel();
-                int filas = modelo.getRowCount();            
-                try 
-                {
-                    for (int f = 0; f < filas; f++) 
-                    {                    
+        if (valida() == false) {
+        } else {
+            int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?", "Confirmar",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            if (i == JOptionPane.OK_OPTION) {
+                DefaultTableModel modelo = (DefaultTableModel) TblNotas.getModel();
+                int filas = modelo.getRowCount();
+                try {
+                    for (int f = 0; f < filas; f++) {
                         n.setIdcalendario(c.ConsultarIDCal(cbxFecha.getSelectedItem().toString()));
                         n.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
                         n.setIdestudiante(Integer.parseInt(modelo.getValueAt(f, 0).toString()));
                         double valor = Double.parseDouble(modelo.getValueAt(f, 2).toString());
                         n.setValor(valor); //Ponerlo a 2 cifras
                         n.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
-                        n.GuardarNotas();                        
+                        n.GuardarNotas();
                     }
                     JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
                     limpiar();
                     Deshabilitar();
                     BotonesInicio();
-                } catch(HeadlessException ex) {
+                } catch (HeadlessException ex) {
                     JOptionPane.showMessageDialog(null, "Error guardar Notas: " + ex.getMessage());
                 }
-            }            
+            }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea Salir?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
+        int i = JOptionPane.showConfirmDialog(null, "Desea Salir?", "Confirmar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (i == JOptionPane.OK_OPTION) {
             this.doDefaultCloseAction();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFechaItemStateChanged
-        if (cbxFecha.getSelectedIndex()==-1)
-        { }  
-        else 
-        {
-            llenarCbxAct();            
+        if (cbxFecha.getSelectedIndex() == -1) {
+        } else {
+            llenarCbxAct();
         }
     }//GEN-LAST:event_cbxFechaItemStateChanged
 
     private void cbxActividadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadItemStateChanged
-        if (cbxActividad.getSelectedIndex()==-1)
-        { 
-            cbxActividadDet.removeAllItems(); 
-        }
-        else
-        {
-            llenarCbxActDet();            
+        if (cbxActividad.getSelectedIndex() == -1) {
+            cbxActividadDet.removeAllItems();
+        } else {
+            llenarCbxActDet();
         }
     }//GEN-LAST:event_cbxActividadItemStateChanged
 
     private void jcbModificarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbModificarItemStateChanged
-        if (jcbModificar.isSelected())
-        {
+        if (jcbModificar.isSelected()) {
             Habilitar();
             BotonesModificar();
-            TblNotas.setVisible(false);            
-        }
-        else
-        {
+            TblNotas.setVisible(false);
+        } else {
             limpiar();
             Deshabilitar();
             BotonesInicio();
@@ -642,65 +624,64 @@ public class NotasIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbModificarItemStateChanged
 
     private void jcbIngresarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbIngresarItemStateChanged
-        if (jcbIngresar.isSelected())
-        {
+        if (jcbIngresar.isSelected()) {
             Habilitar();
             BotonesIngresar();
-        }
-        else
-        {
+        } else {
             limpiar();
             Deshabilitar();
-            BotonesInicio();            
+            BotonesInicio();
         }
     }//GEN-LAST:event_jcbIngresarItemStateChanged
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if (valida()==false)
-        {  }
-        else
-        {
-            int i = JOptionPane.showConfirmDialog(null, "Desea Modificar?","Confirmar",
-                JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-            if(i==JOptionPane.OK_OPTION){
-                DefaultTableModel modelo = (DefaultTableModel)TblNotas.getModel();
-                int filas = modelo.getRowCount();       
+        if (valida() == false) {
+        } else {
+            int i = JOptionPane.showConfirmDialog(null, "Desea Modificar?", "Confirmar",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            if (i == JOptionPane.OK_OPTION) {
+                DefaultTableModel modelo = (DefaultTableModel) TblNotas.getModel();
+                int filas = modelo.getRowCount();
                 try {
-                    for (int f = 0; f < filas; f++) {                        
+                    for (int f = 0; f < filas; f++) {
                         n.setIdnota(Integer.parseInt(modelo.getValueAt(f, 0).toString()));
                         n.setIdcalendario(c.ConsultarIDCal(cbxFecha.getSelectedItem().toString()));
-                        n.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));                                                                       
+                        n.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
                         n.setValor(Double.parseDouble(modelo.getValueAt(f, 2).toString())); //Ponerlo a 2 cifras                        
-                        n.ModificarNotas();                    
+                        n.ModificarNotas();
                     }
-                JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
-                limpiar();
-                Deshabilitar();
-                BotonesInicio();
-                } catch(HeadlessException ex) {
+                    JOptionPane.showMessageDialog(null, "Datos Guardados Exitosamente");
+                    limpiar();
+                    Deshabilitar();
+                    BotonesInicio();
+                } catch (HeadlessException ex) {
                     JOptionPane.showMessageDialog(null, "Error guardar Asistencia: " + ex.getMessage());
                 }
             }
         }
-        
-            
+
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void cbxActividadDetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadDetItemStateChanged
-        
-        if (cbxActividadDet.getSelectedIndex()==-1)
-        { 
+
+        if (cbxActividadDet.getSelectedIndex() == -1) {
             txtValor.setText("");
-        } else if(jcbIngresar.isSelected()==true)             
-        {
-            llenarTxtValor();    
-        } else if (jcbModificar.isSelected()==true)
-        {
+        } else if (jcbIngresar.isSelected() == true) {
+            if (n.validarFecha(c.ConsultarIDCal(cbxFecha.getSelectedItem().toString()),
+                    ad.consultaId(cbxActividadDet.getSelectedItem().toString()),
+                    a.consultaIdA(txtAsignatura.getText())
+            ) > 0) {
+                JOptionPane.showMessageDialog(null, "Ya existe un registro de notas con los campos seleccionados para esa fecha\n "
+                        + "Si desea cambiar el valor de alguna nota utilice la función Modificar.");
+                cbxFecha.setSelectedIndex(-1);
+            } else {
+                llenarTxtValor();
+            }
+        } else if (jcbModificar.isSelected() == true) {
             llenarTxtValor();
             LlenarTablaModificar();
         }
-        
-        
     }//GEN-LAST:event_cbxActividadDetItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

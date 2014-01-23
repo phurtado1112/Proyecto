@@ -479,11 +479,20 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFechaItemStateChanged
-        if ((cbxFecha.getSelectedIndex()==-1) || jcbIngresar.isSelected()==true)
-        {  }
-        else
+        //Validación 22/01/2014
+        if (cbxFecha.getSelectedIndex()==-1)     
         {
-            LlenarTablaModificar();            
+            
+        }else if (jcbIngresar.isSelected()==true && cbxFecha.getSelectedIndex()!=-1)
+        {
+            if(asis.validarFecha(Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString()))>0)
+            {
+                JOptionPane.showMessageDialog(null, "Ya existe un registro de asistencia con esa Fecha \n "+
+                        "Si desea cambiar el valor de las asistencias utilice la función Modificar.");               
+                cbxFecha.setSelectedIndex(-1);                
+            }
+        } else {
+            LlenarTablaModificar();
         }
     }//GEN-LAST:event_cbxFechaItemStateChanged
 

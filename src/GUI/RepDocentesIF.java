@@ -41,7 +41,7 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repDocente.jasper");            
+            File f1 = new File("\\reportes\\repDocente.jasper");            
             String template = f1.getPath();
             reporte = (JasperReport) JRLoader. loadObject(template);                                    
             
