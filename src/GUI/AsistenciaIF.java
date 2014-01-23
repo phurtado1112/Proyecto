@@ -9,20 +9,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import util.Conecta;
-import java.awt.event.ItemEvent;
 import clases.Calendario;
 import clases.Asistencia;
 import clases.Estudiantes;
 import java.awt.HeadlessException;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import util.Globales;
 import util.Valida;
 /**
@@ -41,13 +35,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     Conecta cnx = new Conecta();
     ResultSet rs;
     Statement stm;
-//    int id = 1;
-    
- 
-    //private Boolean[] editables= {false,false,true};
-    /**
-     * Creates new form Asistencia
-     */
+
     public AsistenciaIF() {
         initComponents();
         cnx.Conecta();
@@ -66,19 +54,15 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
     private void limpiar(){
         cbxFecha.removeAllItems();
-        txtBuscar.setText("");
     }
   
     private void Habilitar(){
         cbxFecha.setEnabled(true);
         llenarCB();
-        //txtBuscar.setEnabled(true);  
-        va.SeleccionarTodo(txtBuscar);                
     }
     
     private void Deshabilitar() {        
         cbxFecha.setEnabled(false);
-        txtBuscar.setEnabled(false);       
         LlenarTablaIngreso();
         tblAsistencia.setEnabled(false);
     }
@@ -103,15 +87,8 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private void BotonesModificar(){
         jcbIngresar.setEnabled(false);    
         btnModificar.setEnabled(true);
-//        btnIntroducir.setEnabled(false);
-        txtBuscar.setEnabled(true);  
         btnCancelar.setEnabled(true);
     }
-//    
-//    private void BotonesClick(){
-//        btnGuardar.setEnabled(false);
-//        btnCancelar.setEnabled(true);
-//    }
 
     private void LlenarTablaIngreso() {
        int[] anchos = {30, 100, 100};
@@ -135,14 +112,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblAsistencia.getColumnCount(); i++) {
                 tblAsistencia.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-            
-            //Centra los datos en las celdas
-//            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-//            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-//            tblAsistencia.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-//            tblAsistencia.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-//            tblAsistencia.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-//            tblAsistencia.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
              Asistencia(tblAsistencia, tblAsistencia.getColumnModel().getColumn(2));   
              
         } catch(SQLException e){
@@ -175,15 +144,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
               for(int i = 0; i < tblAsistencia.getColumnCount(); i++) {
                     tblAsistencia.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
                 }
-
-              //Centra los datos en las celdas
-//              DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-//              centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-//              tblAsistencia.getColumnModel().getColumn(0).setCellRenderer(centraCelda);            
-//              tblAsistencia.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(1).setHeaderRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
               Asistencia(tblAsistencia, tblAsistencia.getColumnModel().getColumn(2));            
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia para edición: " + e.getMessage());
@@ -192,46 +152,37 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         }
     }
                
-    private void busquedaModificar(String nomb) {
-       int[] anchos = {30, 100, 100};       
-       cnx.Conecta();
-        try{           
-              String [] titulos ={"ID","Nombre","Asistencia"};            
-              String SQL = "Select * from asistencia_view where nombre like '%" + nomb +
-                        "%' and fecha = '" + cbxFecha.getSelectedItem().toString() + "'";
-
-              model = new DefaultTableModel(null, titulos);
-              stm = cnx.conn.createStatement();
-              rs = stm.executeQuery(SQL);
-              String [] fila = new String[3];
-              while(rs.next())
-              {
-                  fila[0] = rs.getString("idasistencia");
-                  fila[1] = rs.getString("nombre");
-                  fila[2] = rs.getString("asistencia");            
-                  model.addRow(fila);
-              }
-              tblAsistencia.setModel(model);
-
-              for(int i = 0; i < tblAsistencia.getColumnCount(); i++) {
-                    tblAsistencia.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-                }
-
-              //Centra los datos en las celdas
-//              DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-//              centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-//              tblAsistencia.getColumnModel().getColumn(0).setCellRenderer(centraCelda);            
-//              tblAsistencia.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(1).setHeaderRenderer(centraCelda);
-//              tblAsistencia.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
-              Asistencia(tblAsistencia, tblAsistencia.getColumnModel().getColumn(2));            
-        } catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia para edición: " + e.getMessage());
-        } finally {
-            cnx.Desconecta();
-        }
-    }
+//    private void busquedaModificar(String nomb) {
+//       int[] anchos = {30, 100, 100};       
+//       cnx.Conecta();
+//        try{           
+//              String [] titulos ={"ID","Nombre","Asistencia"};            
+//              String SQL = "Select * from asistencia_view where nombre like '%" + nomb +
+//                        "%' and fecha = '" + cbxFecha.getSelectedItem().toString() + "'";
+//
+//              model = new DefaultTableModel(null, titulos);
+//              stm = cnx.conn.createStatement();
+//              rs = stm.executeQuery(SQL);
+//              String [] fila = new String[3];
+//              while(rs.next())
+//              {
+//                  fila[0] = rs.getString("idasistencia");
+//                  fila[1] = rs.getString("nombre");
+//                  fila[2] = rs.getString("asistencia");            
+//                  model.addRow(fila);
+//              }
+//              tblAsistencia.setModel(model);
+//
+//              for(int i = 0; i < tblAsistencia.getColumnCount(); i++) {
+//                    tblAsistencia.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+//                }
+//              Asistencia(tblAsistencia, tblAsistencia.getColumnModel().getColumn(2));            
+//        } catch(SQLException e){
+//            JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia para edición: " + e.getMessage());
+//        } finally {
+//            cnx.Desconecta();
+//        }
+//    }
         
     private DefaultComboBoxModel llenarCB() {        
         cnx.Conecta();
@@ -249,54 +200,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         } finally {
             cnx.Desconecta();
         }
-        //LlenarTabla();
         cbxFecha.setSelectedIndex(-1);
         return modeloCombo;        
     }
-       
-//    private void setJTexFieldChanged(JTextField txt)
-//    {
-//        DocumentListener documentListener = new DocumentListener() {
-//
-//        @Override
-//        public void changedUpdate(DocumentEvent documentEvent) {
-//            printIt(documentEvent);
-//        }
-//
-//        @Override
-//        public void insertUpdate(DocumentEvent documentEvent) {
-//            printIt(documentEvent);
-//        }
-//
-//        @Override
-//        public void removeUpdate(DocumentEvent documentEvent) {
-//            printIt(documentEvent);
-//        }
-//        };
-//        txt.getDocument().addDocumentListener(documentListener);
-//    }
-//
-//    private void printIt(DocumentEvent documentEvent) {
-//        DocumentEvent.EventType type = documentEvent.getType();
-//
-//        if (type.equals(DocumentEvent.EventType.CHANGE))
-//        {
-//            txtbuscador();
-//        }
-//        else if (type.equals(DocumentEvent.EventType.INSERT))
-//        {
-//            txtbuscador();
-//        }
-//        else if (type.equals(DocumentEvent.EventType.REMOVE))
-//        {
-//            txtbuscador();
-//        }
-//    }
-    
-//    private void txtbuscador()
-//    {        
-//        LlenarTablaSegunTxt();
-//    }
     
     private void llenarTXT() {
         cnx.Conecta();
@@ -327,8 +233,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbxFecha = new javax.swing.JComboBox();
-        txtBuscar = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtAsignatura = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
@@ -361,16 +265,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             }
         });
 
-        txtBuscar.setEnabled(false);
-        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyTyped(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Buscar");
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Asignatura");
 
@@ -387,14 +281,12 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,11 +299,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap())
+                .addGap(44, 44, 44))
         );
 
         btnGuardar.setText("Guardar");
@@ -511,9 +399,9 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
@@ -549,8 +437,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
                 DefaultTableModel modelo = (DefaultTableModel)tblAsistencia.getModel();
                 int filas = modelo.getRowCount();      
                 for (int i = 0; i < filas; i++) 
-                {
-                    //int ax = a.consultaIdA(txtAsignatura.getText());               
+                {  
                     if (tblAsistencia.getValueAt(i, 2)==null)
                     {
                         asis.setAsistencia("Ausente");
@@ -598,12 +485,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         {
             LlenarTablaModificar();            
         }
-//       
-//        if(evt.getStateChange() == ItemEvent.SELECTED)
-//        {
-//            LlenarTablaSegunTxt();
-//            tblAsistencia.setEnabled(false);
-//        }
     }//GEN-LAST:event_cbxFechaItemStateChanged
 
     private void jcbModificarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbModificarItemStateChanged
@@ -620,16 +501,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             BotonesInicio();            
         }
     }//GEN-LAST:event_jcbModificarItemStateChanged
-
-    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
-        String nombre=txtBuscar.getText();        
-        if(nombre.equals("") && cbxFecha.getSelectedIndex()==-1)
-        {  }
-        else                     
-        {           
-            busquedaModificar(nombre);
-        }
-    }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void jcbIngresarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbIngresarItemStateChanged
         if (jcbIngresar.isSelected())
@@ -683,7 +554,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox cbxFecha;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -691,6 +561,5 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox jcbModificar;
     private javax.swing.JTable tblAsistencia;
     private javax.swing.JTextField txtAsignatura;
-    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -579,8 +579,9 @@ public class NotasIF extends javax.swing.JInternalFrame {
                     {                    
                         n.setIdcalendario(c.ConsultarIDCal(cbxFecha.getSelectedItem().toString()));
                         n.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
-                        n.setIdestudiante(Integer.parseInt(modelo.getValueAt(f, 0).toString()));                                                
-                        n.setValor(Double.parseDouble(modelo.getValueAt(f, 2).toString())); //Ponerlo a 2 cifras
+                        n.setIdestudiante(Integer.parseInt(modelo.getValueAt(f, 0).toString()));
+                        double valor = Double.parseDouble(modelo.getValueAt(f, 2).toString());
+                        n.setValor(valor); //Ponerlo a 2 cifras
                         n.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
                         n.GuardarNotas();                        
                     }
