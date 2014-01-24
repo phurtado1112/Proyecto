@@ -241,7 +241,6 @@ public class SesionInicio extends JFrame {
     }//GEN-LAST:event_btnInicioSesionActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        //this.setVisible(false);
         this.dispose();
         new IngresoInicialDocente().setVisible(true);
     }//GEN-LAST:event_btnRegistroActionPerformed

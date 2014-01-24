@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 import util.Globales;
@@ -25,6 +26,7 @@ public class IngresoInicialDocente extends javax.swing.JFrame {
         initComponents();
         Globales.Probar=0;
         this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         }
     
     private void Limpiar(){
@@ -201,7 +203,8 @@ public class IngresoInicialDocente extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         GuardarDocente();
-        this.setVisible(false);    
+        this.dispose();
+        //this.setVisible(false);    
         new SesionInicio().setVisible(true); 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

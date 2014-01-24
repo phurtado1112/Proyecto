@@ -454,8 +454,8 @@ private void btnGuardarAsignaturaActionPerformed(java.awt.event.ActionEvent evt)
 
 private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
     Globales.id = Integer.parseInt(this.tblAsignatura.getValueAt(this.tblAsignatura.getSelectedRow(), 0).toString());
-    //System.out.println(Globales.id);
-    this.setVisible(false);
+    this.dispose();
+    //this.setVisible(false);
     new Cnae().setVisible(true);
 }//GEN-LAST:event_btnAceptarActionPerformed
 
