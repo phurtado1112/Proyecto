@@ -58,7 +58,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
   
     private void Habilitar(){
         cbxFecha.setEnabled(true);
-        llenarCB();
     }
     
     private void Deshabilitar() {        
@@ -151,38 +150,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             cnx.Desconecta();
         }
     }
-               
-//    private void busquedaModificar(String nomb) {
-//       int[] anchos = {30, 100, 100};       
-//       cnx.Conecta();
-//        try{           
-//              String [] titulos ={"ID","Nombre","Asistencia"};            
-//              String SQL = "Select * from asistencia_view where nombre like '%" + nomb +
-//                        "%' and fecha = '" + cbxFecha.getSelectedItem().toString() + "'";
-//
-//              model = new DefaultTableModel(null, titulos);
-//              stm = cnx.conn.createStatement();
-//              rs = stm.executeQuery(SQL);
-//              String [] fila = new String[3];
-//              while(rs.next())
-//              {
-//                  fila[0] = rs.getString("idasistencia");
-//                  fila[1] = rs.getString("nombre");
-//                  fila[2] = rs.getString("asistencia");            
-//                  model.addRow(fila);
-//              }
-//              tblAsistencia.setModel(model);
-//
-//              for(int i = 0; i < tblAsistencia.getColumnCount(); i++) {
-//                    tblAsistencia.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-//                }
-//              Asistencia(tblAsistencia, tblAsistencia.getColumnModel().getColumn(2));            
-//        } catch(SQLException e){
-//            JOptionPane.showMessageDialog(null, "Error LlenarTabla Asistencia para edición: " + e.getMessage());
-//        } finally {
-//            cnx.Desconecta();
-//        }
-//    }
         
     private DefaultComboBoxModel llenarCB() {        
         cnx.Conecta();
@@ -197,6 +164,27 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
             cbxFecha.setModel(modeloCombo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCB: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+        cbxFecha.setSelectedIndex(-1);
+        return modeloCombo;        
+    }
+    
+    private DefaultComboBoxModel llenarCBModificar() {        
+        cnx.Conecta();
+        try {            
+            modeloCombo = new DefaultComboBoxModel();
+            String SQL = "select distinct c.fecha from calendario as c inner join asistencia as a on "
+                          + "(c.idcalendario=a.idcalendario)";
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloCombo.addElement(rs.getString("fecha"));
+            }
+            cbxFecha.setModel(modeloCombo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarCB para Modificación: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
@@ -479,7 +467,6 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbxFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFechaItemStateChanged
-        //Validación 22/01/2014
         if (cbxFecha.getSelectedIndex()==-1)     
         {
             
@@ -487,11 +474,27 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         {
             if(asis.validarFecha(Ca.ConsultarIDCal(cbxFecha.getSelectedItem().toString()))>0)
             {
-                JOptionPane.showMessageDialog(null, "Ya existe un registro de asistencia con esa Fecha \n "+
-                        "Si desea cambiar el valor de las asistencias utilice la función Modificar.");               
-                cbxFecha.setSelectedIndex(-1);                
+                String fecha=cbxFecha.getSelectedItem().toString();
+                int i = JOptionPane.showConfirmDialog(null, "Ya existe un registro de asistencia con la fecha: \n"
+                        + fecha + " \nDesea Modificarlo ?", "Confirmar",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (i == JOptionPane.OK_OPTION) 
+                {
+                    limpiar();                    
+                    BotonesInicio();
+                    jcbModificar.setSelected(true);
+                    cbxFecha.setSelectedItem(fecha);
+                    LlenarTablaModificar();
+                } else
+                {
+                    limpiar();
+                    Deshabilitar();
+                    LlenarTablaIngreso();
+                    BotonesInicio();
+                }
             }
-        } else {
+        } else
+        {
             LlenarTablaModificar();
         }
     }//GEN-LAST:event_cbxFechaItemStateChanged
@@ -501,6 +504,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         {
             Habilitar();
             BotonesModificar();
+            llenarCBModificar();
             tblAsistencia.setEnabled(true);
         }
         else
@@ -516,6 +520,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         {
             Habilitar();
             BotonesIngresar();
+            llenarCB();
             tblAsistencia.setEnabled(true);
         }
         else

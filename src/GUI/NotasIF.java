@@ -58,7 +58,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
 
     private void Habilitar() {
         cbxFecha.setEnabled(true);
-        llenarCBFecha();
         cbxActividad.setEnabled(true);
         cbxActividadDet.setEnabled(true);
         TblNotas.setEnabled(true);
@@ -170,7 +169,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCBFecha: " + ex.getMessage());
         }
-        //LlenarTablaIngreso();
         cbxFecha.setSelectedIndex(-1);
         cnx.Desconecta();
     }
@@ -190,7 +188,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCbxAct: " + ex.getMessage());
         }
-        //LlenarTabla();
         cbxActividad.setSelectedIndex(-1);
         cnx.Desconecta();
     }
@@ -212,9 +209,31 @@ public class NotasIF extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error LlenarCbxActDet: " + ex.getMessage());
         }
-        //LlenarTabla();
         cbxActividadDet.setSelectedIndex(-1);
         cnx.Desconecta();
+    }
+    
+    private DefaultComboBoxModel llenarCBFechaModificar() {        
+        cnx.Conecta();
+        try {            
+            modeloCombo = new DefaultComboBoxModel();
+            String SQL = "select distinct pivote.fecha from "
+                    + "(select distinct c.idcalendario, nc.fecha  from calendario as c inner join notacombobox_view as nc "
+                               + "on (c.fecha=nc.fecha)"
+                    + ") as pivote inner join notas as n on (pivote.idcalendario=n.idcalendario)";
+            stm = cnx.conn.createStatement();            
+            rs = stm.executeQuery(SQL);
+            while (rs.next()) {
+                modeloCombo.addElement(rs.getString("fecha"));
+            }
+            cbxFecha.setModel(modeloCombo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error LlenarCB para Modificación: " + ex.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+        cbxFecha.setSelectedIndex(-1);
+        return modeloCombo;        
     }
 
     private void llenarTxtAsignatura() {
@@ -613,6 +632,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         if (jcbModificar.isSelected()) {
             Habilitar();
             BotonesModificar();
+            llenarCBFechaModificar();
             TblNotas.setVisible(false);
         } else {
             limpiar();
@@ -627,6 +647,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         if (jcbIngresar.isSelected()) {
             Habilitar();
             BotonesIngresar();
+            llenarCBFecha();
         } else {
             limpiar();
             Deshabilitar();
@@ -664,23 +685,51 @@ public class NotasIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void cbxActividadDetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadDetItemStateChanged
-
-        if (cbxActividadDet.getSelectedIndex() == -1) {
+        if (cbxActividadDet.getSelectedIndex()==-1)
+        { 
             txtValor.setText("");
-        } else if (jcbIngresar.isSelected() == true) {
-            if (n.validarFecha(c.ConsultarIDCal(cbxFecha.getSelectedItem().toString()),
-                    ad.consultaId(cbxActividadDet.getSelectedItem().toString()),
-                    a.consultaIdA(txtAsignatura.getText())
-            ) > 0) {
-                JOptionPane.showMessageDialog(null, "Ya existe un registro de notas con los campos seleccionados para esa fecha\n "
-                        + "Si desea cambiar el valor de alguna nota utilice la función Modificar.");
-                cbxFecha.setSelectedIndex(-1);
-            } else {
-                llenarTxtValor();
-            }
-        } else if (jcbModificar.isSelected() == true) {
+        } else if(jcbIngresar.isSelected()==true)             
+        {
+            if (n.validarFecha(c.ConsultarIDCal(cbxFecha.getSelectedItem().toString()), 
+                               ad.consultaId(cbxActividadDet.getSelectedItem().toString()),
+                               a.consultaIdA(txtAsignatura.getText())
+                              )>0)
+            {
+                String fecha=cbxFecha.getSelectedItem().toString();
+                String actividad=cbxActividad.getSelectedItem().toString();
+                String actividaddet=cbxActividadDet.getSelectedItem().toString();
+                
+                int i = JOptionPane.showConfirmDialog(null, "Ya existe un registro con los siguientes campos:\n"
+                        +"Fecha:                               "+ fecha + "\n"
+                        +"Actividad:                          "+actividad+"\n"
+                        +"Detalle de Actividad:       "+ actividaddet + 
+                        "\nDesea Modificarlo ?", "Confirmar",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (i == JOptionPane.OK_OPTION) 
+                {
+                    limpiar();
+                    BotonesInicio();
+                    jcbModificar.setSelected(true);
+                    llenarCBFechaModificar();
+                    cbxFecha.setSelectedItem(fecha);
+                    cbxActividad.setSelectedItem(actividad);
+                    cbxActividadDet.setSelectedItem(actividaddet);
+                } else
+                {
+                    limpiar();
+                    Deshabilitar();
+                    LlenarTablaIngreso();
+                    BotonesInicio();
+                }
+            } 
+            else
+                {
+                    llenarTxtValor();
+                }
+        } else if (jcbModificar.isSelected()==true)
+        {
+            LlenarTablaModificar();  //Inverti el orden en que se encontraban estos dos metodos.
             llenarTxtValor();
-            LlenarTablaModificar();
         }
     }//GEN-LAST:event_cbxActividadDetItemStateChanged
 
