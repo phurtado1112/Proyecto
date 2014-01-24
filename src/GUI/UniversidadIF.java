@@ -130,13 +130,6 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblUniversidad.getColumnCount(); i++) {
                 tblUniversidad.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-            
-            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            tblUniversidad.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblUniversidad.getColumnModel().getColumn(2).setHeaderRenderer(centraCelda);
-            tblUniversidad.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-            tblUniversidad.getColumnModel().getColumn(2).setCellRenderer(centraCelda);
         } catch(SQLException | NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Universidad: " + e.getMessage());
         } finally {

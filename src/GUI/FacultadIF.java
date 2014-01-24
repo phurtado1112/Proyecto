@@ -129,11 +129,6 @@ public class FacultadIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblFacultad.getColumnCount(); i++) {
                 tblFacultad.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-            //Centra los datos en las celdas
-            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            tblFacultad.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblFacultad.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Facultad: " + e.getMessage());
         } finally {

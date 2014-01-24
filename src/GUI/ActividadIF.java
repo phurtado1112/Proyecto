@@ -97,11 +97,6 @@ public class ActividadIF extends javax.swing.JInternalFrame {
             for (int i = 0; i < tblActividad.getColumnCount(); i++) {
                 tblActividad.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-
-            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            tblActividad.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblActividad.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Actividad: " + e.getMessage());
         } finally {

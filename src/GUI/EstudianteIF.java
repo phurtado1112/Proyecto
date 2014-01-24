@@ -134,17 +134,6 @@ public class EstudianteIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblEstudiantes.getColumnCount(); i++) {
                 tblEstudiantes.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-            //Centra los datos en las celdas
-            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            tblEstudiantes.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(3).setHeaderRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(3).setCellRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(4).setHeaderRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(4).setCellRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(5).setHeaderRenderer(centraCelda);
-            tblEstudiantes.getColumnModel().getColumn(5).setCellRenderer(centraCelda);
         } catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error de llenarTabla: " + ex.getMessage());
         } finally {

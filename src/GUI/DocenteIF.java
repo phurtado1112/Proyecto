@@ -112,13 +112,6 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             for(int i = 0; i < tblDocente.getColumnCount(); i++) {
                 tblDocente.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-            
-            //Centra los datos en las celdas
-            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            
-            tblDocente.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblDocente.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error LlenarTabla Docente: " + e.getMessage());
         } finally {

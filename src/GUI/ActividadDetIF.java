@@ -127,11 +127,6 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             for (int i = 0; i < tblActividadDet.getColumnCount(); i++) {
                 tblActividadDet.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
-            //Centra los datos en las celdas
-            DefaultTableCellRenderer centraCelda = new DefaultTableCellRenderer();
-            centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
-            tblActividadDet.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
-            tblActividadDet.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error Llenar Tabla Detalle de Evaluación: " + ex.getMessage());
         } finally {
