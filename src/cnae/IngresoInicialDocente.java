@@ -202,10 +202,9 @@ public class IngresoInicialDocente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        GuardarDocente();
-        this.dispose();
-        //this.setVisible(false);    
-        new SesionInicio().setVisible(true); 
+        GuardarDocente();        
+        this.setVisible(false);    
+        new SesionInicio().setVisible(true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

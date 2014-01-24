@@ -453,9 +453,8 @@ private void btnGuardarAsignaturaActionPerformed(java.awt.event.ActionEvent evt)
 }//GEN-LAST:event_btnGuardarAsignaturaActionPerformed
 
 private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-    Globales.id = Integer.parseInt(this.tblAsignatura.getValueAt(this.tblAsignatura.getSelectedRow(), 0).toString());
-    this.dispose();
-    //this.setVisible(false);
+    Globales.id = Integer.parseInt(this.tblAsignatura.getValueAt(this.tblAsignatura.getSelectedRow(), 0).toString());    
+    this.setVisible(false);
     new Cnae().setVisible(true);
 }//GEN-LAST:event_btnAceptarActionPerformed
 
