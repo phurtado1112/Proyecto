@@ -160,4 +160,20 @@ public class Actividad {
         cnx.Desconecta();
         return ls;                                  
     }
+    
+    public int validarRegistro(String actividad) {
+        int cantidad = 0;
+        cnx.Conecta();
+        try {
+            String SQL = "select count(*) from actividad where actividad like '"+ actividad+"'";
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();
+            cantidad = rs.getInt("count(*)");
+            ps.close();
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error Validación de Registro a Clase: " + e.getMessage());
+        }
+        cnx.Desconecta();
+        return cantidad;
+    }
 }

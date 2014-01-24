@@ -19,6 +19,7 @@ import util.Valida;
  * @author Pablo
  */
 public class ActividadDetIF extends javax.swing.JInternalFrame {
+
     DefaultTableModel model;
     DefaultComboBoxModel modeloCombo;
     Conecta cnx = new Conecta();
@@ -29,7 +30,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     PreparedStatement ps;
     ResultSet rs;
     int id = 1;
-    
+
     /**
      * Creates new form ActividadDetIF
      */
@@ -41,55 +42,55 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
         LlenarTabla();
 //        llenarTXT();
     }
-    
-    private void limpiar(){
+
+    private void limpiar() {
         txtDetActividad.setText("");
         cbxActividad.removeAllItems();
     }
-    
+
     private void Deshabilitar() {
         txtDetActividad.setEnabled(false);
         cbxActividad.setEnabled(false);
     }
-    
-    private void Habilitar(){
+
+    private void Habilitar() {
         txtDetActividad.setEnabled(true);
         va.LetrasNumerosEspacio(txtDetActividad);
         va.SeleccionarTodo(txtDetActividad);
         cbxActividad.setEnabled(true);
         txtDetActividad.requestFocus();
     }
-    
-    private void BotonesInicio(){
+
+    private void BotonesInicio() {
         btnNuevo.setEnabled(true);
         btnActualizar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
         btnCancelar.setEnabled(false);
     }
-    
-    private void BotonesNuevo(){
+
+    private void BotonesNuevo() {
         btnNuevo.setEnabled(false);
         btnActualizar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(true);
         btnCancelar.setEnabled(true);
     }
-    
-    private void BotonesClick(){
+
+    private void BotonesClick() {
         btnNuevo.setEnabled(false);
         btnGuardar.setEnabled(false);
         btnActualizar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnEliminar.setEnabled(true);
     }
-    
+
     public final void llenarCB() {
         cnx.Conecta();
-        try {            
-            modeloCombo = new DefaultComboBoxModel();            
+        try {
+            modeloCombo = new DefaultComboBoxModel();
             String SQL = "select actividad from actividad";
-            stm = cnx.conn.createStatement();            
+            stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 modeloCombo.addElement(rs.getObject("actividad"));
@@ -102,18 +103,19 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             cnx.Desconecta();
         }
     }
+
     //Llena con datos el JTable con un consulta
     private void LlenarTabla() {
         int[] anchos = {30, 300, 100};
         cnx.Conecta();
-        try{
-            String [] titulos ={"ID","Detalle Actividad","Actividad"};
+        try {
+            String[] titulos = {"ID", "Detalle Actividad", "Actividad"};
             String SQL = "Select * from actividaddet_view";
             model = new DefaultTableModel(null, titulos);
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
-            String [] fila = new String[3];
-            while(rs.next()){
+            String[] fila = new String[3];
+            while (rs.next()) {
                 fila[0] = rs.getString("idactividaddet");
                 fila[1] = rs.getString("actividaddet");
                 fila[2] = rs.getString("actividad");
@@ -122,7 +124,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             tblActividadDet.setModel(model);
             //Dimensiona el ancho de las columnas de la tabla
             tblActividadDet.setModel(model);
-            for(int i = 0; i < tblActividadDet.getColumnCount(); i++) {
+            for (int i = 0; i < tblActividadDet.getColumnCount(); i++) {
                 tblActividadDet.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
             }
             //Centra los datos en las celdas
@@ -130,21 +132,28 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
             centraCelda.setHorizontalAlignment(SwingConstants.CENTER);
             tblActividadDet.getColumnModel().getColumn(0).setHeaderRenderer(centraCelda);
             tblActividadDet.getColumnModel().getColumn(0).setCellRenderer(centraCelda);
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error Llenar Tabla Detalle de Evaluación: " + ex.getMessage());
         } finally {
             cnx.Desconecta();
         }
     }
-    
-    private boolean validar(){
+
+    private boolean validar() {
         boolean val;
-        if(txtDetActividad.getText().trim().length()==0){ //Valida campo Nombre
+        if (txtDetActividad.getText().trim().length() == 0) { //Valida campo Nombre
             JOptionPane.showMessageDialog(this, "El campo de texto Detalle de Evaluación está vacío,por favor llenarlo");
             val = false;
+        } else if (te.validarRegistro(e.consultaIdAct(this.cbxActividad.getSelectedItem().toString().trim()), txtDetActividad.getText().trim()) > 0) {
+            JOptionPane.showMessageDialog(null, "Ya existe un registro con esos parametros:\n"
+                    + "Actividad: " + cbxActividad.getSelectedItem().toString() + "\n"
+                    + "Detalle: " + txtDetActividad.getText().trim());
+            txtDetActividad.setText("");
+            txtDetActividad.requestFocus();
+            val = false;
         } else {
-            val=true;
-        }       
+            val = true;
+        }
         return val;
     }
 
@@ -341,9 +350,9 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea Salir?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
+        int i = JOptionPane.showConfirmDialog(null, "Desea Salir?", "Confirmar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (i == JOptionPane.OK_OPTION) {
             this.doDefaultCloseAction();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -356,36 +365,38 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (validar()==true){            
-        int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){            
-            te.setActividadDet(txtDetActividad.getText().trim());
-            te.setIdActividad(e.consultaIdAct(this.cbxActividad.getSelectedItem().toString().trim()));
-            te.guardarEvaluacionDet();
-        }
-        limpiar();
-        Deshabilitar();
-        LlenarTabla();
-        BotonesInicio();
+        if (validar() == true) {
+            int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?", "Confirmar",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            if (i == JOptionPane.OK_OPTION) {
+                String nombreactividaddet = txtDetActividad.getText().trim();
+                te.setActividadDet(nombreactividaddet.replace(nombreactividaddet.charAt(0), Character.toUpperCase(nombreactividaddet.charAt(0))));
+                te.setIdActividad(e.consultaIdAct(this.cbxActividad.getSelectedItem().toString().trim()));
+                te.guardarEvaluacionDet();
+            }
+            limpiar();
+            Deshabilitar();
+            LlenarTabla();
+            BotonesInicio();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        if (validar()==true){            
-        int i = JOptionPane.showConfirmDialog(null, "Desea Acutalizar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-            int fila = tblActividadDet.getSelectedRow();
-            te.setActividadDet(txtDetActividad.getText().trim());
-            te.setIdActividad(e.consultaIdAct(cbxActividad.getSelectedItem().toString().trim()));
-            te.setIdActividadDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
-            te.actualizarActividadDet();
-        }
-        limpiar();
-        Deshabilitar();
-        LlenarTabla();
-        BotonesInicio();
+        if (validar() == true) {
+            int i = JOptionPane.showConfirmDialog(null, "Desea Acutalizar?", "Confirmar",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            if (i == JOptionPane.OK_OPTION) {
+                int fila = tblActividadDet.getSelectedRow();
+                String nombreactividaddet = txtDetActividad.getText().trim();
+                te.setActividadDet(nombreactividaddet.replace(nombreactividaddet.charAt(0), Character.toUpperCase(nombreactividaddet.charAt(0))));
+                te.setIdActividad(e.consultaIdAct(cbxActividad.getSelectedItem().toString().trim()));
+                te.setIdActividadDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
+                te.actualizarActividadDet();
+            }
+            limpiar();
+            Deshabilitar();
+            LlenarTabla();
+            BotonesInicio();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -397,13 +408,13 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblActividadDetJTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblActividadDetJTableMouseClicked
-        if (evt.getButton()==1){
+        if (evt.getButton() == 1) {
             int fila = tblActividadDet.getSelectedRow();
             Habilitar();
             llenarCB();
             BotonesClick();
             cnx.Conecta();
-            try{                
+            try {
                 String SQL = "Select * from actividaddet where idactividaddet = " + tblActividadDet.getValueAt(fila, 0);
                 ps = cnx.conn.prepareStatement(SQL);
                 rs = ps.executeQuery();
@@ -411,7 +422,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
                 rs.next();
                 txtDetActividad.setText(rs.getString("actividaddet"));
                 cbxActividad.setSelectedItem(e.consultaActividad(rs.getInt("idactividad")));
-            } catch(SQLException ex){
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             } finally {
                 cnx.Desconecta();
@@ -420,10 +431,10 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblActividadDetJTableMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea Eliminar?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-        int fila = tblActividadDet.getSelectedRow();
+        int i = JOptionPane.showConfirmDialog(null, "Desea Eliminar?", "Confirmar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (i == JOptionPane.OK_OPTION) {
+            int fila = tblActividadDet.getSelectedRow();
             te.setIdActividadDet(Integer.parseInt(tblActividadDet.getValueAt(fila, 0).toString()));
             te.eliminarActividadDet();
         }

@@ -37,8 +37,8 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public void reporteD() {       
-        String ruta = "src/reportes/repDocente.jasper";
+    public void reporteD() {
+        String ruta = "cnaes.jar/reportes/repDocente.jasper";
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");

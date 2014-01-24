@@ -36,6 +36,7 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     ActividadDet ad = new ActividadDet();
     Asignatura a = new Asignatura();
     EstructuraEvaluacion ee = new EstructuraEvaluacion();
+    Double notaActualizar;
 
     /**
      * Creates new form EstructuraEvaluacionIF
@@ -177,16 +178,19 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     }
 
     private boolean validar() {
-        boolean val = true;        
+        boolean val = true;
         String valor = txtValor.getText().trim(); //Hace referencia al txtValor
 
-        if (valor.length() == 0) { //Valida la nota
+        if (cbxActividad.getSelectedIndex() == -1 || cbxActividadDet.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Las listas desplegables no contienen valores");
+            val = false;
+        } else if (valor.length() == 0) { //Valida la nota
             JOptionPane.showMessageDialog(this, "El campo de texto Valor está vacío,por favor llenarlo");
             val = false;
         } else if (valor.startsWith(".") && valor.endsWith(".")) {  //Valida si solamente se puso 1 punto
             JOptionPane.showMessageDialog(this, "Formato para nota no valido");
             val = false;
-        } else if (Integer.parseInt(valor) > 100) { //Valida que la nota no sea mayor que 100
+        } else if (Double.parseDouble(valor) > 100) { //Valida que la nota no sea mayor que 100
             JOptionPane.showMessageDialog(this, "El valor máximo para el campo de texto Valor es 100");
             val = false;
         }
@@ -406,11 +410,16 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         limpiar();
         BotonesNuevo();
         llenarCBAc();
-        llenarCBAcDet();
+        cbxActividad.setSelectedIndex(-1);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        if (validar() == true) {
+        if (ee.validarRegistros(ac.consultaIdAct(cbxActividad.getSelectedItem().toString()), ad.consultaId(cbxActividadDet.getSelectedItem().toString())) > 0
+                && notaActualizar == Math.rint(Double.parseDouble(txtValor.getText().trim()) * 100) / 100) {
+            JOptionPane.showMessageDialog(null, "Ya existe un registro con:\n"
+                    + "Actividad: " + cbxActividad.getSelectedItem().toString() + "\n"
+                    + "Detalle:   " + cbxActividadDet.getSelectedItem().toString());
+        } else if (validar() == true) {
             int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?", "Confirmar",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
             if (i == JOptionPane.OK_OPTION) {
@@ -444,9 +453,14 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (validar() == true) {
+        if (ee.validarRegistros(ac.consultaIdAct(cbxActividad.getSelectedItem().toString()), ad.consultaId(cbxActividadDet.getSelectedItem().toString())) > 0) {
+            JOptionPane.showMessageDialog(null, "Ya existe un registro con:\n"
+                    + "Actividad: " + cbxActividad.getSelectedItem().toString() + "\n"
+                    + "Detalle:   " + cbxActividadDet.getSelectedItem().toString());
+        } else if (validar() == true) {
+
             int i = JOptionPane.showConfirmDialog(null, "Desea Guardar?", "Confirmar",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (i == JOptionPane.OK_OPTION) {
                 ee.setIdactividad(ac.consultaIdAct(cbxActividad.getSelectedItem().toString()));
                 ee.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
@@ -502,7 +516,12 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblEstructuraEvaluacionMouseClicked
 
     private void cbxActividadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxActividadItemStateChanged
-        this.cbxActividadDet.setModel(llenarCBAcDet());
+        if (cbxActividad.getSelectedItem() == "") {
+
+        } else {
+            llenarCBAcDet();
+            cbxActividadDet.setSelectedIndex(-1);
+        }
     }//GEN-LAST:event_cbxActividadItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

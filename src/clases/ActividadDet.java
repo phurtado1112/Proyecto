@@ -4,7 +4,6 @@ import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Conecta;
@@ -169,5 +168,21 @@ public class ActividadDet {
         }
         cnx.Desconecta();
         return ls;                                  
+    }
+    
+    public int validarRegistro(int idactividad, String actividaddet) {
+        int cantidad = 0;
+        cnx.Conecta();
+        try {
+            String SQL = "select count(*) from actividaddet where idactividad="+idactividad+" and actividaddet like '"+actividaddet+"'";
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();
+            cantidad = rs.getInt("count(*)");
+            ps.close();
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error Validación de Registro a Clase: " + e.getMessage());
+        }
+        cnx.Desconecta();
+        return cantidad;
     }
 }
