@@ -20,7 +20,6 @@ public class Conecta {
         try{
            Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
            conn=DriverManager.getConnection("jdbc:sqlite:"+ruta); //conexion con la base 
-//           conn=DriverManager.getConnection("jdbc:sqlite:src/data/cnae.sqlite"); //conexion con la base 
         }catch(ClassNotFoundException | SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, e);//hubo un error
   } 

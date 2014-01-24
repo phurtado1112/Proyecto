@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import java.io.File;
+//import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,7 +27,8 @@ import net.sf.jasperreports.view.JasperViewer;
 public class RepDocentesIF extends javax.swing.JInternalFrame {
     public Connection conn;
     JasperReport reporte;
-    JasperPrint jasperprint;    
+    JasperPrint jasperprint;
+    JasperViewer visor;
 
     /**
      * Creates new form repDocenteIF
@@ -37,16 +38,14 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
     }
 
     public void reporteD() {       
+        String ruta = "src/reportes/repDocente.jasper";
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
-            
-            File f1 = new File("\\reportes\\repDocente.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template);                                    
-            
+
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(ruta);            
             jasperprint = JasperFillManager.fillReport(reporte, null, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint);
             visor.setTitle("Docentes - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
