@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 
@@ -20,8 +21,9 @@ public class CambioContrasena extends javax.swing.JInternalFrame {
    
     public CambioContrasena() {
         initComponents();
-           llenarTabla(); 
-           JOptionPane.showMessageDialog(null,"Por favor seleccionar usuario");          
+           llenarTabla();
+           setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);        
+           //JOptionPane.showMessageDialog(null,"Por favor seleccionar usuario");          
     }
 
     public String ContrasenaVieja(){        
@@ -260,7 +262,7 @@ public class CambioContrasena extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(null, "Desea Salir?","Confirmar",
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
         if(i==JOptionPane.OK_OPTION){
-            System.exit(0);}
+            this.doDefaultCloseAction();}
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblCambioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCambioMouseClicked
