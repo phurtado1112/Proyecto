@@ -196,7 +196,9 @@ public final class Cnae extends javax.swing.JFrame {
         MnuPrCatalogo.add(MnuEstructuraEvaluacion);
 
         MnuCalendario.setMnemonic('a');
-        MnuCalendario.setLabel("Calendario");
+        MnuCalendario.setText("Calendario");
+        MnuCalendario.setToolTipText("");
+        MnuCalendario.setName(""); // NOI18N
         MnuCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnuCalendarioActionPerformed(evt);
