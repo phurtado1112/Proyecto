@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
 
 public class SesionInicio extends JFrame {
@@ -22,7 +23,6 @@ public class SesionInicio extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         if(this.comprobarDocente()==false){
-            //this.btnRegistro.setEnabled(false);
             this.btnRegistro.setVisible(false);
         } else {
             this.btnInicioSesion.setVisible(false);
@@ -40,14 +40,16 @@ public class SesionInicio extends JFrame {
         } else {
             cnx.Conecta();
             try{
-                Usuario = this.txtUsuario.getText().trim();       
-                Contrasena = this.pwdContrasena.getText();
+                Usuario = this.txtUsuario.getText().trim();
+                Contrasena = new String(this.pwdContrasena.getPassword());
+                //JOptionPane.showMessageDialog(null, "La Contraseña es " + Contrasena);
                 String SQL="select usuario,contrasena from docente";
                 st = cnx.conn.createStatement();
                 rs = st.executeQuery(SQL);
                 rs.next();
                 String user = rs.getString("usuario");
                 String pass = rs.getString("contrasena");
+                //JOptionPane.showMessageDialog(null, "El pass es " + pass);
                 if(this.comprobarDocente()==true){
                     JOptionPane.showMessageDialog(this, "No hay registro de docente, porfavor registrese!");
                     this.txtUsuario.setText("");

@@ -360,7 +360,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             d.setNombre(txtNombre.getText().trim());
             d.setApellido(txtApellido.getText().trim());
             d.setUsuario(txtUsuario.getText().trim());
-            d.setPassword(pswContrasena.getText());
+            d.setPassword(new String(pswContrasena.getPassword()));
             d.setIdDocente(Integer.parseInt(tblDocente.getValueAt(fila, 0).toString()));
             d.actualizarDocente();
         }
@@ -379,7 +379,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
             d.setNombre(txtNombre.getText().trim());
             d.setApellido(txtApellido.getText().trim());
             d.setUsuario(txtUsuario.getText().trim());
-            d.setPassword(pswContrasena.getText());
+            d.setPassword(new String(pswContrasena.getPassword()));
             d.guardarDocente();
         }
         LlenarTabla();
@@ -404,7 +404,7 @@ public class DocenteIF extends javax.swing.JInternalFrame {
                 txtNombre.setText(rs.getString("nombre"));
                 txtApellido.setText(rs.getString("apellido"));
                 txtUsuario.setText(rs.getString("usuario"));
-                pswContrasena.setText("contrasena");
+                pswContrasena.setText(rs.getString("contrasena"));
             } catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Error Docente Mouse Cliked: " + e.getMessage());
             } finally {
