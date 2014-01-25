@@ -177,9 +177,6 @@ public class UniversidadIF extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
         setResizable(true);
         setTitle("Catálogo de Universidad");
         try {

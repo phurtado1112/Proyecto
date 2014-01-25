@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -29,6 +28,7 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;
+    JasperViewer visor;
     /**
      * Creates new form repEvaluacion
      */
@@ -41,17 +41,13 @@ public class RepEstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repEstructuraEvaluacion.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template); 
-            
             Map parametros = new HashMap<>();
             parametros.put("idAsig", Globales.id);
-            
             JOptionPane.showMessageDialog(null, "El valor de idasig: " + parametros);
             
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repEstructuraEvaluacion.jasper"); 
             jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint,false);
             visor.setTitle("Estructura Evaluación - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {

@@ -343,9 +343,6 @@ public class NotasIF extends javax.swing.JInternalFrame {
         jcbModificar = new javax.swing.JCheckBox();
         btnModificar = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
         setResizable(true);
         setTitle("Registro de Notas");
         try {

@@ -38,12 +38,11 @@ public class RepDocentesIF extends javax.swing.JInternalFrame {
     }
 
     public void reporteD() {
-        String ruta = "cnaes.jar/reportes/repDocente.jasper";
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
 
-            reporte = (JasperReport) JRLoader.loadObjectFromFile(ruta);            
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repDocente.jasper");            
             jasperprint = JasperFillManager.fillReport(reporte, null, conn);
             visor = new JasperViewer(jasperprint);
             visor.setTitle("Docentes - CNAE");

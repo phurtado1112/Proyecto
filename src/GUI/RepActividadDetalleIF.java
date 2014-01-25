@@ -27,6 +27,7 @@ public class RepActividadDetalleIF extends javax.swing.JInternalFrame {
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;
+    JasperViewer visor;
     
     public RepActividadDetalleIF() {
         initComponents();
@@ -36,13 +37,10 @@ public class RepActividadDetalleIF extends javax.swing.JInternalFrame {
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
-            
-            File f1 = new File("src/reportes/repActividadDetalle.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template);                                    
-            
+
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repActividadDetalle.jasper");
             jasperprint = JasperFillManager.fillReport(reporte, null, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint,false);
             visor.setTitle("Detalle de Actividad- CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {

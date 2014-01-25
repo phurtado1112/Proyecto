@@ -26,34 +26,32 @@ import util.Conecta;
  * @author PabloAntonio
  */
 public class RepUniversidadesIF extends javax.swing.JInternalFrame {
+
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;
+    JasperViewer visor;
     Statement stm;
     Conecta cnx = new Conecta();
     DefaultComboBoxModel modeloCombo;
     ResultSet rs;
     Universidad u = new Universidad();
-    
-    
+
     /**
      * Creates new form repUniversidadIF
      */
     public RepUniversidadesIF() {
-        initComponents();        
+        initComponents();
     }
-    
-    public void reporteU() {       
+
+    public void reporteU() {
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
-            conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
-            
-            File f1 = new File("src/reportes/repUniversidad.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template);                                    
-            
+            conn = DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
+
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repUniversidad.jasper");
             jasperprint = JasperFillManager.fillReport(reporte, null, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint, false);
             visor.setTitle("Universidades - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
@@ -66,25 +64,21 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
             }
         }
     }
-    
-    public void reporteUDet() {       
+
+    public void reporteUDet() {
         try {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
-            conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
-            
-            int Univer = u.consultaIdU(cbUniversidad.getSelectedItem().toString());            
-            
-            File f1 = new File("src/reportes/repCarrera.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template);                                    
-            
+            conn = DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
+
+            int Univer = u.consultaIdU(cbUniversidad.getSelectedItem().toString());
+
             Map parametros = new HashMap<>();
             parametros.put("iduniv", Univer);
-            
             JOptionPane.showMessageDialog(null, "El valor de iduniv: " + parametros);
-            
+
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repCarrera.jasper");
             jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint, false);
             visor.setTitle("Universidades - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
@@ -97,13 +91,13 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
             }
         }
     }
-    
-        public final void llenarCB() {
+
+    public final void llenarCB() {
         cnx.Conecta();
-        try {            
-            modeloCombo = new DefaultComboBoxModel();            
+        try {
+            modeloCombo = new DefaultComboBoxModel();
             String SQL = "select nombreU from universidad";
-            stm = cnx.conn.createStatement();            
+            stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
                 modeloCombo.addElement(rs.getObject("nombreU"));
@@ -116,6 +110,7 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
             cnx.Desconecta();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -230,30 +225,27 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?","Confirmar",
-            JOptionPane.OK_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(i==JOptionPane.OK_OPTION){
-            this.doDefaultCloseAction();  
+        int i = JOptionPane.showConfirmDialog(null, "Desea Salir del Informe?", "Confirmar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (i == JOptionPane.OK_OPTION) {
+            this.doDefaultCloseAction();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-       
-        if(rbDetalle.isSelected()==true){
+        if (rbDetalle.isSelected() == true) {
             this.reporteUDet();
-        } else{
+        } else {
             this.reporteU();
-        }        
+        }
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
     private void rbDetalleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbDetalleItemStateChanged
-        if(rbDetalle.isSelected()==true){
+        if (rbDetalle.isSelected() == true) {
             cbUniversidad.setEnabled(true);
             llenarCB();
-            //codigo para llenar el combobox
-        } else{
+        } else {
             cbUniversidad.setEnabled(false);
-//            this.reporteU();
         }
     }//GEN-LAST:event_rbDetalleItemStateChanged
 

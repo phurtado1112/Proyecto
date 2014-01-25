@@ -29,6 +29,7 @@ public class RepEstudiantesIF extends javax.swing.JInternalFrame {
     public Connection conn;
     JasperReport reporte;
     JasperPrint jasperprint;
+    JasperViewer visor;
     /**
      * Creates new form repEstudianteIF
      */
@@ -40,17 +41,14 @@ public void reporteEstudianteDetalle() {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repEstudianteDetalle.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template); 
-            
             Map parametros = new HashMap<>();
             parametros.put("idAsig", Globales.id);
             
             JOptionPane.showMessageDialog(null, "El valor de idasig: " + parametros);
             
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repEstudianteDetalle.jasper"); 
             jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint,false);
             visor.setTitle("Estudiante - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
@@ -69,17 +67,13 @@ public void reporteEstudianteDetalle() {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
             
-            File f1 = new File("src/reportes/repEstudiante.jasper");            
-            String template = f1.getPath();
-            reporte = (JasperReport) JRLoader. loadObject(template); 
-            
             Map parametros = new HashMap<>();
             parametros.put("idAsig", Globales.id);
-            
             JOptionPane.showMessageDialog(null, "El valor de idasig: " + parametros);
             
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("src/reportes/repEstudiante.jasper"); 
             jasperprint = JasperFillManager.fillReport(reporte, parametros, conn);
-            JasperViewer visor=new JasperViewer(jasperprint,false);
+            visor = new JasperViewer(jasperprint,false);
             visor.setTitle("Estudiante - CNAE");
             visor.setVisible(true);
         } catch (JRException | ClassNotFoundException | SQLException e) {
