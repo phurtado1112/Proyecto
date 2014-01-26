@@ -19,8 +19,8 @@ import util.Valida;
  */
 public class CarreraIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
-    DefaultComboBoxModel modeloComboF;
-    DefaultComboBoxModel modeloComboU;
+    DefaultComboBoxModel<String> modeloComboF;
+    DefaultComboBoxModel<String> modeloComboU;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     Statement stm;
@@ -35,8 +35,8 @@ public class CarreraIF extends javax.swing.JInternalFrame {
     
     public CarreraIF() {
         initComponents();
-        cbxUniversidad.setModel(new DefaultComboBoxModel(new String[] {}));
-        cbxFacultad.setModel(new DefaultComboBoxModel(new String[] {}));
+        cbxUniversidad.setModel(new DefaultComboBoxModel<String>(new String[] {}));
+        cbxFacultad.setModel(new DefaultComboBoxModel<String>(new String[] {}));
         cnx.Conecta();
         Deshabilitar();
         LlenarTabla();
@@ -92,15 +92,15 @@ public class CarreraIF extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
     }
     
-    private DefaultComboBoxModel llenarCBUni() {
+    private DefaultComboBoxModel<String> llenarCBUni() {
         cnx.Conecta();
         try {            
-            modeloComboU = new DefaultComboBoxModel();            
+            modeloComboU = new DefaultComboBoxModel<String>();            
             String SQL = "select nombreU from universidad";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboU.addElement(rs.getObject("nombreU"));
+                modeloComboU.addElement(rs.getString("nombreU"));
             }
             cbxUniversidad.setModel(modeloComboU);
         } catch (SQLException ex) {
@@ -111,15 +111,15 @@ public class CarreraIF extends javax.swing.JInternalFrame {
         return modeloComboU;
     }
     
-    private DefaultComboBoxModel llenarCBFac() {        
+    private DefaultComboBoxModel<String> llenarCBFac() {        
         cnx.Conecta();
         try {            
-            modeloComboF = new DefaultComboBoxModel();            
+            modeloComboF = new DefaultComboBoxModel<String>();            
             String SQL = "select nombreF from facultad where iduniversidad = " + u.consultaIdU((String)cbxUniversidad.getSelectedItem());
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboF.addElement(rs.getObject("nombreF"));
+                modeloComboF.addElement(rs.getString("nombreF"));
             }
             cbxFacultad.setModel(modeloComboF);
         } catch (SQLException ex) {
@@ -182,8 +182,8 @@ public class CarreraIF extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtCarrera = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        cbxUniversidad = new javax.swing.JComboBox();
-        cbxFacultad = new javax.swing.JComboBox();
+        cbxUniversidad = new javax.swing.JComboBox<String>();
+        cbxFacultad = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCarrera = new javax.swing.JTable();
@@ -210,14 +210,14 @@ public class CarreraIF extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Universidad");
 
-        cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxUniversidad.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxUniversidadItemStateChanged(evt);
             }
         });
 
-        cbxFacultad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFacultad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Facultad");
@@ -449,10 +449,12 @@ public class CarreraIF extends javax.swing.JInternalFrame {
                 stm = cnx.conn.createStatement();
                 rs = stm.executeQuery(SQL);
                 
-                rs.next();
+                //rs.next();
                 this.txtCarrera.setText(rs.getString("nombreC"));
-                this.cbxUniversidad.setSelectedItem(rs.getString("nombreU"));
-                this.cbxFacultad.setSelectedItem(rs.getString("nombreF"));      
+                String Univ = rs.getString("nombreU");
+                String Facul = rs.getString("nombreF");
+                this.cbxUniversidad.setSelectedItem(Univ);
+                this.cbxFacultad.setSelectedItem(Facul);      
             } catch(SQLException e){                
                 JOptionPane.showMessageDialog(null, "Error Carrera Mouse Cliked: " + e.getMessage());
             }finally {
@@ -472,8 +474,8 @@ public class CarreraIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxFacultad;
-    private javax.swing.JComboBox cbxUniversidad;
+    private javax.swing.JComboBox<String> cbxFacultad;
+    private javax.swing.JComboBox<String> cbxUniversidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

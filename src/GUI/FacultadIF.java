@@ -9,9 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 import util.Valida;
@@ -22,7 +20,7 @@ import util.Valida;
  */
 public class FacultadIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
-    DefaultComboBoxModel modeloCombo;
+    DefaultComboBoxModel<String> modeloCombo;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     Statement stm;
@@ -36,7 +34,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
      */
     public FacultadIF() {
         initComponents();
-        cbxUniversidad.setModel(new DefaultComboBoxModel(new String[] {}));
+        //cbxUniversidad.setModel(new DefaultComboBoxModel(new String[] {}));
         this.llenarCB();
         cnx.Conecta();
         Deshabilitar();
@@ -91,12 +89,12 @@ public class FacultadIF extends javax.swing.JInternalFrame {
     public final void llenarCB() {
         cnx.Conecta();
         try {            
-            modeloCombo = new DefaultComboBoxModel();            
+            modeloCombo = new DefaultComboBoxModel<String>();            
             String SQL = "select nombreU from universidad";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("nombreU"));
+                modeloCombo.addElement(rs.getString("nombreU"));
             }
             rs.close();
             cbxUniversidad.setModel(modeloCombo);
@@ -160,7 +158,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtFacultad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        cbxUniversidad = new javax.swing.JComboBox();
+        cbxUniversidad = new javax.swing.JComboBox<String>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFacultad = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
@@ -186,7 +184,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Universidad");
 
-        cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxUniversidad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -427,7 +425,7 @@ public class FacultadIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxUniversidad;
+    private javax.swing.JComboBox<String> cbxUniversidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

@@ -28,7 +28,7 @@ import util.Valida;
 public class NotasIF extends javax.swing.JInternalFrame {
 
     DefaultTableModel model;
-    DefaultComboBoxModel modeloCombo;
+    DefaultComboBoxModel<String> modeloCombo;
     Notas n = new Notas();
     Calendario c = new Calendario();
     Actividad ac = new Actividad();
@@ -157,12 +157,12 @@ public class NotasIF extends javax.swing.JInternalFrame {
     private void llenarCBFecha() {
         cnx.Conecta();
         try {
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select distinct fecha from notacombobox_view";
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("fecha"));
+                modeloCombo.addElement(rs.getString("fecha"));
             }
             rs.close();
             cbxFecha.setModel(modeloCombo);
@@ -176,12 +176,12 @@ public class NotasIF extends javax.swing.JInternalFrame {
     private void llenarCbxAct() {
         cnx.Conecta();
         try {
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select distinct actividad from notacombobox_view where fecha = '" + cbxFecha.getSelectedItem().toString() + "'";
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("actividad"));
+                modeloCombo.addElement(rs.getString("actividad"));
             }
             rs.close();
             cbxActividad.setModel(modeloCombo);
@@ -195,13 +195,13 @@ public class NotasIF extends javax.swing.JInternalFrame {
     private void llenarCbxActDet() {
         cnx.Conecta();
         try {
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select actividaddet from notacombobox_view where actividad = '" + cbxActividad.getSelectedItem().toString() + "' and fecha = '"
                     + cbxFecha.getSelectedItem().toString() + "'";
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("actividaddet"));
+                modeloCombo.addElement(rs.getString("actividaddet"));
             }
             rs.close();
             cbxActividadDet.setModel(modeloCombo);
@@ -213,10 +213,10 @@ public class NotasIF extends javax.swing.JInternalFrame {
         cnx.Desconecta();
     }
     
-    private DefaultComboBoxModel llenarCBFechaModificar() {        
+    private DefaultComboBoxModel<String> llenarCBFechaModificar() {        
         cnx.Conecta();
         try {            
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select distinct pivote.fecha from "
                     + "(select distinct c.idcalendario, nc.fecha  from calendario as c inner join notacombobox_view as nc "
                                + "on (c.fecha=nc.fecha)"
@@ -327,9 +327,9 @@ public class NotasIF extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cbxActividadDet = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        cbxFecha = new javax.swing.JComboBox();
+        cbxFecha = new javax.swing.JComboBox<String>();
         jLabel4 = new javax.swing.JLabel();
-        cbxActividad = new javax.swing.JComboBox();
+        cbxActividad = new javax.swing.JComboBox<String>();
         txtAsignatura = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -367,7 +367,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Fecha");
 
-        cbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFecha.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxFecha.setEnabled(false);
         cbxFecha.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -378,7 +378,7 @@ public class NotasIF extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Actividad");
 
-        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxActividad.setEnabled(false);
         cbxActividad.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -736,9 +736,9 @@ public class NotasIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxActividad;
-    private javax.swing.JComboBox cbxActividadDet;
-    private javax.swing.JComboBox cbxFecha;
+    private javax.swing.JComboBox<String> cbxActividad;
+    private javax.swing.JComboBox<String> cbxActividadDet;
+    private javax.swing.JComboBox<String> cbxFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

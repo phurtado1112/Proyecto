@@ -42,7 +42,7 @@ public class RepCalendarioIF extends javax.swing.JInternalFrame {
             Class.forName("org.sqlite.JDBC"); //driver a utilizar                       
             conn=DriverManager.getConnection("jdbc:sqlite:cnae.sqlite");
 
-            Map parametros = new HashMap<>();
+            Map<String,Object> parametros = new HashMap<String,Object>();
             parametros.put("idAsig", Globales.id);
             JOptionPane.showMessageDialog(null, "El valor de idasig: " + parametros);
 

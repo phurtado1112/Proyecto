@@ -19,9 +19,9 @@ import javax.swing.table.DefaultTableModel;
 public class SeleccionarAsignatura extends JFrame {
 
     DefaultTableModel modelo;
-    DefaultComboBoxModel modelocbxU;
-    DefaultComboBoxModel modelocbxF;
-    DefaultComboBoxModel modelocbxC;
+    DefaultComboBoxModel<String> modelocbxU;
+    DefaultComboBoxModel<String> modelocbxF;
+    DefaultComboBoxModel<String> modelocbxC;
     Conecta cnx = new Conecta();
     Asignatura a = new Asignatura();
     Carrera c = new Carrera();
@@ -39,9 +39,9 @@ public class SeleccionarAsignatura extends JFrame {
             llenarTabla();
             ocultaFormulario();
         } else {
-            cbxUniversidad.setModel(new DefaultComboBoxModel(new String[] {}));
-            cbxFacultad.setModel(new DefaultComboBoxModel(new String[] {}));
-            cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {}));   
+//            cbxUniversidad.setModel(new DefaultComboBoxModel<String>(new String[] {}));
+//            cbxFacultad.setModel(new DefaultComboBoxModel<String>(new String[] {}));
+//            cbxCarrera.setModel(new DefaultComboBoxModel<String>(new String[] {}));   
             muestraFormulario();
             llenarCBUni();
             llenarCBFac();
@@ -112,15 +112,15 @@ public class SeleccionarAsignatura extends JFrame {
         return i;
     }
 
-    private DefaultComboBoxModel llenarCBUni() {
+    private DefaultComboBoxModel<String> llenarCBUni() {
         cnx.Conecta();
         try {            
-            modelocbxU = new DefaultComboBoxModel();            
+            modelocbxU = new DefaultComboBoxModel<String>();            
             String SQL = "select nombreU from universidad";
             st = cnx.conn.createStatement();            
             rs = st.executeQuery(SQL);
             while (rs.next()) {
-                modelocbxU.addElement(rs.getObject("nombreU"));
+                modelocbxU.addElement(rs.getString("nombreU"));
             }
             cbxUniversidad.setModel(modelocbxU);
         } catch (SQLException ex) {
@@ -131,15 +131,15 @@ public class SeleccionarAsignatura extends JFrame {
         return modelocbxU;
     }
     
-    private DefaultComboBoxModel llenarCBFac() {
+    private DefaultComboBoxModel<String> llenarCBFac() {
         cnx.Conecta();
         try {            
-            modelocbxF = new DefaultComboBoxModel();            
+            modelocbxF = new DefaultComboBoxModel<String>();            
             String SQL = "select nombreF from facultad where iduniversidad = " + u.consultaIdU((String)cbxUniversidad.getSelectedItem());
             st = cnx.conn.createStatement();            
             rs = st.executeQuery(SQL);
             while (rs.next()) {
-                modelocbxF.addElement(rs.getObject("nombreF"));
+                modelocbxF.addElement(rs.getString("nombreF"));
             }
             cbxFacultad.setModel(modelocbxF);
         } catch (SQLException ex) {
@@ -150,15 +150,15 @@ public class SeleccionarAsignatura extends JFrame {
         return modelocbxF;
     }
     
-    private DefaultComboBoxModel llenarCBCar() {
+    private DefaultComboBoxModel<String> llenarCBCar() {
         cnx.Conecta();
         try {            
-            modelocbxC = new DefaultComboBoxModel();            
+            modelocbxC = new DefaultComboBoxModel<String>();            
             String SQL = "select nombreC from carrera where idfacultad = " + f.consultaId((String)cbxFacultad.getSelectedItem());
             st = cnx.conn.createStatement();            
             rs = st.executeQuery(SQL);
             while (rs.next()) {
-                modelocbxC.addElement(rs.getObject("nombreC"));
+                modelocbxC.addElement(rs.getString("nombreC"));
             }
             cbxCarrera.setModel(modelocbxC);
         } catch (SQLException ex) {
@@ -469,9 +469,9 @@ private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardarAsignatura;
-    private javax.swing.JComboBox cbxCarrera;
-    private javax.swing.JComboBox cbxFacultad;
-    private javax.swing.JComboBox cbxUniversidad;
+    private javax.swing.JComboBox<String> cbxCarrera;
+    private javax.swing.JComboBox<String> cbxFacultad;
+    private javax.swing.JComboBox<String> cbxUniversidad;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnio;
     private javax.swing.JLabel lblAsignatura;

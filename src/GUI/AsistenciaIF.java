@@ -26,7 +26,7 @@ import util.Valida;
 public class AsistenciaIF extends javax.swing.JInternalFrame {
     
     DefaultTableModel model;
-    DefaultComboBoxModel modeloCombo;
+    DefaultComboBoxModel<String> modeloCombo;
     Asignatura a = new Asignatura();
     Calendario Ca = new Calendario();
     Asistencia asis = new Asistencia();
@@ -48,7 +48,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
      
     public void Asistencia(JTable Tabla, TableColumn columna ){
         String Asis[] = {"Presente","Ausente"};
-        JComboBox Combo = new JComboBox(Asis);
+        JComboBox<String> Combo = new JComboBox<String>(Asis);
         columna.setCellEditor(new DefaultCellEditor(Combo));        
     }
 
@@ -151,10 +151,10 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         }
     }
         
-    private DefaultComboBoxModel llenarCB() {        
+    private DefaultComboBoxModel<String> llenarCB() {        
         cnx.Conecta();
         try {            
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select fecha from calendario";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
@@ -171,10 +171,10 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         return modeloCombo;        
     }
     
-    private DefaultComboBoxModel llenarCBModificar() {        
+    private DefaultComboBoxModel<String> llenarCBModificar() {        
         cnx.Conecta();
         try {            
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select distinct c.fecha from calendario as c inner join asistencia as a on "
                           + "(c.idcalendario=a.idcalendario)";
             stm = cnx.conn.createStatement();            
@@ -220,7 +220,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cbxFecha = new javax.swing.JComboBox();
+        cbxFecha = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         txtAsignatura = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
@@ -245,7 +245,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Fecha");
 
-        cbxFecha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFecha.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxFecha.setEnabled(false);
         cbxFecha.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -566,7 +566,7 @@ public class AsistenciaIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxFecha;
+    private javax.swing.JComboBox<String> cbxFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

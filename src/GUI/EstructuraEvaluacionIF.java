@@ -26,8 +26,8 @@ import util.Valida;
 public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
 
     DefaultTableModel model;
-    DefaultComboBoxModel modeloComboAc;
-    DefaultComboBoxModel modeloComboAcDet;
+    DefaultComboBoxModel<String> modeloComboAc;
+    DefaultComboBoxModel<String> modeloComboAcDet;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     ResultSet rs;
@@ -125,12 +125,12 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private DefaultComboBoxModel llenarCBAc() {
         cnx.Conecta();
         try {
-            modeloComboAc = new DefaultComboBoxModel();
+            modeloComboAc = new DefaultComboBoxModel<String>();
             String SQL = "select actividad from actividad";
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboAc.addElement(rs.getObject("actividad"));
+                modeloComboAc.addElement(rs.getString("actividad"));
             }
             cbxActividad.setModel(modeloComboAc);
         } catch (SQLException ex) {
@@ -144,12 +144,12 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private DefaultComboBoxModel llenarCBAcDet() {
         cnx.Conecta();
         try {
-            modeloComboAcDet = new DefaultComboBoxModel();
+            modeloComboAcDet = new DefaultComboBoxModel<String>();
             String SQL = "select actividaddet from actividaddet where idactividad = " + ac.consultaIdAct((String) cbxActividad.getSelectedItem());
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboAcDet.addElement(rs.getObject("actividaddet"));
+                modeloComboAcDet.addElement(rs.getString("actividaddet"));
             }
             cbxActividadDet.setModel(modeloComboAcDet);
         } catch (SQLException ex) {
@@ -211,8 +211,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         txtValor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cbxActividadDet = new javax.swing.JComboBox();
-        cbxActividad = new javax.swing.JComboBox();
+        cbxActividadDet = new javax.swing.JComboBox<String>();
+        cbxActividad = new javax.swing.JComboBox<String>();
         jLabel1 = new javax.swing.JLabel();
         txtAsignatura = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -242,9 +242,9 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Detalle Actividad");
 
-        cbxActividadDet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividadDet.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxActividad.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxActividadItemStateChanged(evt);
@@ -531,8 +531,8 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxActividad;
-    private javax.swing.JComboBox cbxActividadDet;
+    private javax.swing.JComboBox<String> cbxActividad;
+    private javax.swing.JComboBox<String> cbxActividadDet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

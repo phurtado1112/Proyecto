@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.Conecta;
 import util.Valida;
@@ -21,7 +19,7 @@ import util.Valida;
 public class ActividadDetIF extends javax.swing.JInternalFrame {
 
     DefaultTableModel model;
-    DefaultComboBoxModel modeloCombo;
+    DefaultComboBoxModel<String> modeloCombo;
     Conecta cnx = new Conecta();
     Valida va = new Valida();
     ActividadDet te = new ActividadDet();
@@ -40,7 +38,6 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
         Deshabilitar();
         BotonesInicio();
         LlenarTabla();
-//        llenarTXT();
     }
 
     private void limpiar() {
@@ -88,12 +85,12 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     public final void llenarCB() {
         cnx.Conecta();
         try {
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select actividad from actividad";
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("actividad"));
+                modeloCombo.addElement(rs.getString("actividad"));
             }
             rs.close();
             cbxActividad.setModel(modeloCombo);
@@ -173,7 +170,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtDetActividad = new javax.swing.JTextField();
-        cbxActividad = new javax.swing.JComboBox();
+        cbxActividad = new javax.swing.JComboBox<String>();
 
         setTitle("Catálogo de Detalle de Actividad");
         try {
@@ -268,7 +265,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Detalle de Actividad");
 
-        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -446,7 +443,7 @@ public class ActividadDetIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxActividad;
+    private javax.swing.JComboBox<String> cbxActividad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

@@ -33,7 +33,7 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
     JasperViewer visor;
     Statement stm;
     Conecta cnx = new Conecta();
-    DefaultComboBoxModel modeloCombo;
+    DefaultComboBoxModel<String> modeloCombo;
     ResultSet rs;
     Universidad u = new Universidad();
 
@@ -72,7 +72,7 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
 
             int Univer = u.consultaIdU(cbUniversidad.getSelectedItem().toString());
 
-            Map parametros = new HashMap<>();
+            Map<String,Object> parametros = new HashMap<String,Object>();
             parametros.put("iduniv", Univer);
             JOptionPane.showMessageDialog(null, "El valor de iduniv: " + parametros);
 
@@ -95,12 +95,12 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
     public final void llenarCB() {
         cnx.Conecta();
         try {
-            modeloCombo = new DefaultComboBoxModel();
+            modeloCombo = new DefaultComboBoxModel<String>();
             String SQL = "select nombreU from universidad";
             stm = cnx.conn.createStatement();
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloCombo.addElement(rs.getObject("nombreU"));
+                modeloCombo.addElement(rs.getString("nombreU"));
             }
             rs.close();
             cbUniversidad.setModel(modeloCombo);
@@ -153,7 +153,7 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Universidad"));
 
-        cbUniversidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbUniversidad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbUniversidad.setEnabled(false);
 
         jLabel1.setText("Universidad");
@@ -252,7 +252,7 @@ public class RepUniversidadesIF extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEjecutar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox cbUniversidad;
+    private javax.swing.JComboBox<String> cbUniversidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

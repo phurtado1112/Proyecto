@@ -23,8 +23,8 @@ import util.Globales;
  */
 public class CalendarioIF extends javax.swing.JInternalFrame {
     DefaultTableModel model;
-    DefaultComboBoxModel modeloComboAD;
-    DefaultComboBoxModel modeloComboA;
+    DefaultComboBoxModel<String> modeloComboAD;
+    DefaultComboBoxModel<String> modeloComboA;
     Actividad ac = new Actividad();
     ActividadDet ad = new ActividadDet();
     Asignatura a = new Asignatura();
@@ -116,15 +116,15 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         }
     }
     
-    private DefaultComboBoxModel llenarCBAct() {
+    private DefaultComboBoxModel<String> llenarCBAct() {
         cnx.Conecta();
         try {            
-            modeloComboA = new DefaultComboBoxModel();            
+            modeloComboA = new DefaultComboBoxModel<String>();            
             String SQL = "select actividad from actividad";
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboA.addElement(rs.getObject("actividad"));
+                modeloComboA.addElement(rs.getString("actividad"));
             }
             cbxActividad.setModel(modeloComboA);
         } catch (SQLException ex) {
@@ -135,15 +135,15 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         return modeloComboA;
     }
     
-    private DefaultComboBoxModel llenarCBActDet() {
+    private DefaultComboBoxModel<String> llenarCBActDet() {
         cnx.Conecta();
         try {            
-            modeloComboAD = new DefaultComboBoxModel();            
+            modeloComboAD = new DefaultComboBoxModel<String>();            
             String SQL = "select actividaddet from actividaddet where idactividad = " + ac.consultaIdAct((String)cbxActividad.getSelectedItem());
             stm = cnx.conn.createStatement();            
             rs = stm.executeQuery(SQL);
             while (rs.next()) {
-                modeloComboAD.addElement(rs.getObject("actividaddet"));
+                modeloComboAD.addElement(rs.getString("actividaddet"));
             }
             cbxActividadDet.setModel(modeloComboAD);
         } catch (SQLException ex) {
@@ -231,7 +231,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Detalle de Actividad");
 
-        cbxActividadDet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividadDet.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jdcFecha.setDateFormatString("dd/MM/yyyy");
         jdcFecha.setName("txtFecha"); // NOI18N
@@ -246,7 +246,7 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Actividad");
 
-        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxActividad.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxActividad.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxActividadItemStateChanged(evt);
@@ -543,8 +543,8 @@ public class CalendarioIF extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cbxActividad;
-    private javax.swing.JComboBox cbxActividadDet;
+    private javax.swing.JComboBox<String> cbxActividad;
+    private javax.swing.JComboBox<String> cbxActividadDet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
