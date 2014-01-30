@@ -209,4 +209,39 @@ public class EstructuraEvaluacion {
         cnx.Desconecta();
         return cantidad;
     }
+
+    public int buscarDependencias() {
+        int cantidad = 0;
+        cnx.Conecta();
+        try {
+            String SQL = "select count(*) from notas where idactividaddet=" + idactividaddet + " and idasignatura=" + idasignatura + "";
+            ps = cnx.conn.prepareStatement(SQL);
+            rs = ps.executeQuery();
+            cantidad = rs.getInt("count(*)");
+            ps.close();
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error Busqueda de Registros: " + e.getMessage());
+        }
+        cnx.Desconecta();
+        return cantidad;
+    }
+
+    public void actualizarDependencias(Double notaFinal) {
+        cnx.Conecta();
+        try {
+            String SQL = "update notas set nota=nota*? where idactividaddet=? and idasignatura=?";
+            ps = cnx.conn.prepareStatement(SQL);
+            ps.setDouble(1, notaFinal);
+            ps.setInt(2, idactividaddet);
+            ps.setInt(3, idasignatura);
+            int n = ps.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Se actualizó proporcionalmente la nota de los alumnos de esta prueba.");
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Notas de Alumnos : " + e.getMessage());
+        } finally {
+            cnx.Desconecta();
+        }
+    }
 }

@@ -423,13 +423,20 @@ public class EstructuraEvaluacionIF extends javax.swing.JInternalFrame {
             int i = JOptionPane.showConfirmDialog(null, "Desea Actualizar?", "Confirmar",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
             if (i == JOptionPane.OK_OPTION) {
+                Double notaFinal = Math.rint((Double.parseDouble(txtValor.getText().trim()) / notaActualizar) * 100) / 100;
                 int fila = tblEstructuraEvaluacion.getSelectedRow();
                 ee.setIdactividad(ac.consultaIdAct(cbxActividad.getSelectedItem().toString()));
                 ee.setIdactividaddet(ad.consultaId(cbxActividadDet.getSelectedItem().toString()));
                 ee.setValor(Double.parseDouble(txtValor.getText().trim()));
                 ee.setIdasignatura(a.consultaIdA(txtAsignatura.getText()));
                 ee.setIdestructuraevaluacion(Integer.parseInt(tblEstructuraEvaluacion.getValueAt(fila, 0).toString()));
-                ee.actualizarEstructuraEvaluacion();
+                if (ee.buscarDependencias() > 0) {
+                    ee.actualizarEstructuraEvaluacion();
+                    ee.actualizarDependencias(notaFinal);
+                } else {
+                    ee.actualizarEstructuraEvaluacion();
+                }
+
             }
             LlenarTabla();
             limpiar();
