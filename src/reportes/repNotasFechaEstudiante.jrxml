@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repNotasFechaEstudiante" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="633925e1-69c9-49b4-9e07-c1468c552182">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idAsig" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idEstudiante" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.idestudiante, (nombreE ||" "|| apellidoE) as nombre, nota, actividaddet, actividad, fecha, nombreC, nombreF, nombreU,nombreA
+from estudiante as e left join notas as n
+on (e.idestudiante=n.idestudiante) left join actividaddet as ad
+on (n.idactividaddet=ad.idactividaddet) left join actividad as a
+on (ad.idactividad=a.idactividad) left join calendario as c
+on(n.idcalendario=c.idcalendario) left join asignatura as asi
+on (n.idasignatura=asi.idasignatura) left join carrera as ca
+on (asi.idcarrera=ca.idcarrera) left join facultad as f
+on (ca.idfacultad=f.idfacultad) left join universidad as u
+on (f.iduniversidad=u.iduniversidad)
+where e.idasignatura=$P{idAsig} and e.idestudiante=$P{idEstudiante}
+order by date(fecha) desc;]]>
+	</queryString>
+	<field name="idestudiante" class="java.lang.Object"/>
+	<field name="nombre" class="java.lang.Object"/>
+	<field name="nota" class="java.lang.Double"/>
+	<field name="actividaddet" class="java.lang.Object"/>
+	<field name="actividad" class="java.lang.Object"/>
+	<field name="fecha" class="java.lang.Object"/>
+	<field name="nombreC" class="java.lang.Object"/>
+	<field name="nombreF" class="java.lang.Object"/>
+	<field name="nombreU" class="java.lang.Object"/>
+	<field name="nombreA" class="java.lang.Object"/>
+	<variable name="suma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nota}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="153" splitType="Stretch">
+			<staticText>
+				<reportElement x="206" y="110" width="207" height="30" uuid="8738d02d-6d6e-4db8-8225-10ba9c74ebd6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Notas Estudiante]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="58" width="567" height="20" uuid="68c5a1a6-8ec9-402b-b352-5805f85c95c2"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="79" width="567" height="20" uuid="635cd47e-1874-438f-acde-3eead1d4f112"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="37" width="567" height="20" uuid="a06e95a8-cc84-40ea-841b-cc722b08a7f5"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="10" width="567" height="27" uuid="62f35d9c-0da0-4a6e-aad2-80744107362b"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombreU}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="312" y="10" width="133" height="20" uuid="b08b1c24-65db-42c3-9062-0c179b9aa37d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Emisión]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="441" y="10" width="119" height="20" uuid="ab6396f4-998f-433a-9060-79ed99551c48"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="44" width="100" height="20" uuid="21aa9f06-5482-4582-ba3b-1c7c0831b4ba"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="44" width="228" height="20" uuid="3f00b33c-2c6e-4b3f-a406-5d347e000ead"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="190" y="13" width="190" height="20" uuid="4d68b332-b25a-4de5-8e4e-2eff88321738"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="13" width="147" height="20" uuid="33b09340-02a3-4543-8503-5ae1288d8033"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actividad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="13" width="190" height="20" uuid="7aad1f75-77ed-43c4-9273-a433912ce253"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="380" y="0" width="110" height="20" uuid="bf6ddb0a-bb92-4a66-8196-4d75e997167b"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{nota}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="266" y="0" width="190" height="20" uuid="4807acd9-f98c-450c-bf9f-ec3318d2f11b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{actividaddet}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="147" height="20" uuid="88d3d41f-3137-4bdd-877e-55830e1f265b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{actividad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="88" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="380" y="0" width="190" height="20" uuid="44ba37d1-4272-46e1-8f74-ccef730f6fe6"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{suma}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="524" y="10" width="40" height="20" uuid="b8795621-d8dc-4923-922e-6f83de8cf4a5"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="10" width="80" height="20" uuid="28803a71-6e03-425a-9f97-b3040844e7e9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
